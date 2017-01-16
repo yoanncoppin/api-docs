@@ -1,0 +1,525 @@
+###############################################################################
+##                                                                           ##
+##                            VIEW API (ONE ATLAS)                           ##
+##                                                                           ##
+##                     (c) Airbus Defense and Space Geo                      ##
+##                                                                           ##
+##                                                                           ##
+##       Contact: frederic.bages@airbus.com                         ##
+##                                                                           ##
+###############################################################################
+
+info:
+  title: Airbus Defense and Space Geo - View API (alpha)
+  description: |
+    This document describes Airbus Defense and Space Geo View API provided by One Atlas system. 
+    
+    __ALPHA version subject to change__
+    
+    __IMPORTANT -__ when implementing clients:
+    * Your clients should not rely on properties that are not documented in this specification as such properties could be changed or removed without notice.
+    * Your clients should not assume that the properties described in this specifications are the only ones that will be returned by the API. Not documented or additional properties will be returned in future version of this API without notifications. 
+    * Your clients should not rely on or map properties that are not usefull to them. Doing so will ensure that your clients are not impacted by API changes on properties that are not usefull to them.
+    
+    __DEPRECATION -__ The following image attributes will be renamed in final 1.0 specification:
+    * vehicle will be renamed to satellite.
+    * resolutionMeters will be renamed to resolution.
+    * sunElevation will be renamed to illuminationElevationAngle.
+    * indexDate will ne renamed to insertionDate.
+    * OpenSearch Query object will be modified.
+  version: '1.0-alpha1'
+
+###############################################################################
+##                                                                           ##
+##                           GENERAL CONFIGuRATION                           ##
+##                                                                           ##
+###############################################################################
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+schemes:
+  - https
+
+host: view.geoapi-airbusds.com
+
+securityDefinitions:
+  api_key:
+    description: A recognised anthentication bearer token for a named system user.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: '2.0'
+
+###############################################################################
+##                                                                           ##
+##                           OBJECTS DOCUMENTATION                           ##
+##                                                                           ##
+###############################################################################
+
+definitions:
+
+  # START ------------------ Airbus DS Geo dictionary ------------------- START
+  
+  acquisitionDate:
+    description: Acquisition date of the image in ISO 8601 format
+    type: string
+    format: ISO 8601
+
+  cloudCover:
+    description: Percentage of the image covered by cloud (0 - 100).
+    type: integer
+    
+  constellation:
+    description: The type of satellite used to acquire the image (Pleiades or SPOT 6/7).
+    type: string
+    enum: [ "Pleiades", "SPOT 6/7" ]
+
+  incidenceAngle:
+    description: The incidence angle is the angle from the target point of view. It represents the angle between the ground normal and look direction from the satellite, combining the pitch and roll angles.
+    type: number
+    format: float
+
+  snowCover: 
+    description: Percentage of the image covered by snow (0 - 100).
+    type: integer
+
+  # END   ------------------ Airbus DS Geo dictionary -------------------   END
+
+  Id:
+    description: An internal identifier.
+    type: string
+    
+  userRole:
+    description: The user role in the system.
+    type: string
+    
+  userPreference:
+    description: | 
+     Client defined properties of user preferences. This object must always be retrieved from the API before updating it as it is shared among all client implementations. Each client must add their specific properties in a sub-object.
+     <br/><br/>
+    example: |
+        {
+          "com.intelligence-airbusds.oneatlas": {
+            "lang": "fr",
+            "lastPosition": [ 0 , 0 ]
+          }
+        }
+    type: object
+    
+    
+  Me:
+    description: Describes a user and its properties.
+    type: object
+    properties:
+      canCompose:
+        description: Indicates if the user is allowed to create its own composition of images.
+        type: boolean
+      email: 
+        description: The user registered email address in Airbus Identity Management system (currently UCA).
+        type: string
+      externalId: 
+        description: The user identifier in Airbus Identity Management system (currently UCA).
+        type: integer
+      firstname: 
+        description: The user firstname
+        type: string
+      lastname:
+        description: The user lastname
+        type: string
+      id:
+        description: The user OneAtlas internal identifier
+        type: string
+      subscriptionAdministrator:
+        description: The list of subscription identifiers that the user is an administrator.
+        type: array
+        items: 
+          $ref: '#/definitions/Id'
+      subscriptions: 
+        description: The list of subscription the user belongs to.
+        type: array
+        items: 
+          $ref: '#/definitions/Id'
+      systemRoles:
+        description: The list of the user roles in OneAtlas system.
+        type: array
+        items: 
+          $ref: '#/definitions/userRole'
+      userPreference:         
+          $ref: '#/definitions/userPreference'
+    required:
+      - canCompose
+      - email
+      - externalId
+      - firstname
+      - lastname
+      - id
+      
+  SearchResult: # NOTE: This is an OpenSearch and FeatureCollection compliant object.
+    description: 'OpenSearch response object in JSon format. it is also a GeoJSON FeatureCollection object.'
+    type: object
+    properties:
+      totalResults: 
+        description: The number of search results available for the current search.
+        type: integer
+      startIndex: 
+        description: The index of the first search result in the current set of search results.
+        type: integer
+      itemsPerPage: 
+        description: The number of search results returned per page.
+        type: integer
+      query:
+        $ref: '#/definitions/OpenSearch Query'
+      type:
+        description: the result item type (always equals to "FeatureCollection")
+        type: string
+        enum: [ "FeatureCollection" ]
+      features:
+        description: the array of matching images as GeoJSON feature objects.
+        type: array
+        items:
+          $ref: '#/definitions/GeoJSON Feature'
+      
+  OpenSearch Query:
+      description: 'Query that can be used to recreate the search request that generated the current search response. <b>WARNING:</b> This object will be changed in final version.'
+      type: object
+      properties:
+        constellation: #TODO change type ?
+          description: 'The satellite filter used ex: { Pleiades, SPOT 6/7 }.'
+          type: string 
+        sortKeys: #TODO change type ?
+          description: 'The sort order used for the response ex: constellation,1 acquisitionDate,0'
+          type: string
+        count: #TODO change name and type ?
+          description: The number of search results returned per page.
+          type: string
+        geometry: #TODO change name and type ?
+          description: the bounding box used for filtering images as a GeoJSON polygon.
+          type: string
+        # xuid: # What is this properties used for ?
+        pw: #TODO change name and type ?
+          description: The page number
+          type: string
+      
+  GeoJSON Feature:
+    description: GeoJSON feature object.
+    externalDocs: 
+      description: GeoJSON feature object specification.
+      url: 'http://geojson.org/geojson-spec.html#feature-objects'
+    type: object
+    properties:
+      id:
+        description: The image OneAtlas internal identifier.
+        type: string
+      properties: 
+         $ref: '#/definitions/GeoJSON Feature Properties'
+      geometry:
+         $ref: '#/definitions/GeoJSON Geometry'
+      type:
+        description: The feature type (always equals to "Feature")
+        type: string
+        enum: [ "Feature" ]
+    
+  GeoJSON Feature Properties:
+    description: GeoJSON feature properties object
+    type: object
+    properties: # TODO: Described for image search. Ensure that it is always the same or change the YAML name.
+      constellation:
+        $ref: '#/definitions/constellation'
+      wmtsUrl: 
+        description: Image url link with place holders for the zoom level {z}, the tile x {x} and y {y} coordinates.
+        type: string
+        format: url
+      vehicle: #TODO Should be rename to satellite !
+        description: 'WARNING: will be renamed to satellite. The satellite used to acquire the image.'
+        type: string
+      acquisitionDate:
+        $ref: '#/definitions/acquisitionDate'
+      
+    
+  GeoJSON Geometry:
+    description: A geometry describing the feature (point, polygon, multi-polygon, ...)
+    externalDocs:
+      description: GeoJSON Geometry object specification
+      url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+    type: object
+    properties:
+      type:
+        description: The type of the geometry.
+        type: string
+        enum: ["Point","MultiPoint","LineString","MultiLineString","Polygon","MultiPolygon"]
+      coordinates:
+        description: the geometry coordinates; depends on the geometry type (see GeoJSON specification of Geometry objects).
+        type: array
+        items:
+          $ref: '#/definitions/GeoJSON Point'
+  
+  GeoJSON Point:
+    description: A point definition.
+    type: array
+    example: '[ 10, 10 ]'
+    items:
+      type: integer
+
+  Image Metadata:
+    description: A GeoJSON Feature describing the image, including its properties and geometry.
+    type: object
+    properties:
+      id:
+        description: The image identifier.
+        type: string
+      type:
+        description: The GeoJSON type. Always equals to "Feature".
+        type: string
+        enum: [ "Feature" ]
+      properties:
+         $ref: '#/definitions/Image Metadata Properties'
+      geometry:
+         $ref: '#/definitions/GeoJSON Geometry'
+      
+  Image Metadata Properties:
+    description: The image properties.
+    type: object
+    properties:
+      acquisitionDate:
+        $ref: '#/definitions/acquisitionDate'
+      cloudCover:
+        $ref: '#/definitions/cloudCover'
+      constellation:
+        $ref: '#/definitions/constellation'
+      geometryMinX:
+        description: The minimum X coordinate of the images in geographic coordiante reference system (WGS84).
+        type: number
+        format: float
+      geometryMinY:
+        description: The minimum Y coordinate of the images in geographic coordiante reference system (WGS84).
+        type: number
+        format: float      
+      geometryMaxX:
+        description: The maximum X coordinate of the images in geographic coordiante reference system (WGS84).
+        type: number
+        format: float
+      geometryMaxY:
+        description: The maximum Y coordinate of the images in geographic coordiante reference system (WGS84).
+        type: number
+        format: float
+      incidenceAngle:
+        $ref: '#/definitions/incidenceAngle'
+      indexDate: # WARNING WILL BE RENAMED TO "insertionDate"
+        description: Date at which the images was inserted in One Atlas catalog in ISO 8601 format
+        type: string
+        format: ISO 8601
+      resolutionMeters: # WARNING WILL BE RENAMED TO "resolution"
+        description: 'The image resolution in meter (i.e. the pixel size). WARNING: Will be renamed to _resolution_'
+        type: number
+        format: float
+      snowCover: 
+        $ref: '#/definitions/snowCover'
+      sunElevation: # WARNING WILL BE RENAMED TO "illuminationElevationAngle"
+        description: 'WARNING: Will be renamed to illuminationElevationAngle'
+        type: number
+        format: float # TODO check float or double ?
+      vehicle: #TODO Should be rename to satellite ! # duplicate
+        description: 'WARNING: will be renamed to satellite. The satellite used to acquire the image.'
+        type: string
+      wmtsUrl: # duplicate
+        description: Image url link with place holders for the zoom level {z}, the tile x {x} and y {y} coordinates.
+        type: string
+        
+        
+        
+###############################################################################
+##                                                                           ##
+##                         END POINTS DOCUMENTATION                          ##
+##                                                                           ##
+###############################################################################
+
+paths:
+
+  /api/v1/images:
+    get:
+      summary: Search for images.
+      description: >-
+        Query the catalog for relevant products (images) in a given
+        bounding box. The returned object is an OpenSearch and GeoJSON FeatureCollection 
+        compliant object.
+      security:
+        - api_key: []
+      parameters:
+        - description: "A bounding box array string in geographic coordinate reference system (WGS84). Example: -10.0, -10.0, 10.0, 10.0"
+          in: query
+          name: bbox
+          required: true
+          type: string
+        - description: Page number
+          in: query
+          name: page
+          required: false
+          type: integer
+          default: 1
+        - description: Number of items per page
+          in: query
+          name: size
+          required: false
+          type: integer
+          default: 10
+      responses:
+        '200':
+          description: Request successful # - all results returned
+          schema:
+            $ref: '#/definitions/SearchResult'
+        #'206': # TODO: Currently not implemented ?
+        #  description: Request successful - partial results returned
+        '401':
+          description: 'Unauthorized: the authorization is missing or has expired.'
+      tags:
+        - Search
+
+  '/api/v1/images/{image_id}':
+    get:
+      summary: Retrieve an image metadata.
+      description: Query the catalog for metadata on a particular image (product).
+      security:
+        - api_key: []
+      parameters:
+        - default: 6e9ad9cbed06b32d5660069d24b7bfc3dffafd0c
+          description: An image identifier
+          format: string
+          in: path
+          name: image_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Request successful
+          schema:
+            $ref: '#/definitions/Image Metadata'
+        '401':
+          description: 'Unauthorized: the authorization is missing or has expired.'
+        '404':
+          description: 'Not Found: no image exist with the provided identifier .'
+      tags:
+        - Search
+
+  '/api/v1/map/preview/{xuid}/{zoomLevel}/{tileRow}/{tileColumn}':
+    get:
+      summary: Product preview.
+      description: >-
+        Allows authorized users to retrieve product preview images tiles. __Is
+        currently only supporting 4326. Mercator support is coming
+        soon.__ Returns a 256x256 tile from a layer in PNG format.
+      security:
+        - api_key: []
+      parameters:
+        - description: A product identifier
+          format: string
+          in: path
+          name: xuid
+          required: true
+          type: string
+        - description: Tilegrid depth
+          format: integer
+          in: path
+          name: zoomLevel
+          required: true
+          type: integer
+        - description: Tilegrid row
+          format: integer
+          in: path
+          name: 'tileRow'
+          required: true
+          type: integer
+        - description: Tilegrid column
+          format: integer
+          in: path
+          name: tileColumn
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Request successful
+        '401':
+          description: 'Unauthorized: the authorization is missing or has expired.'
+      tags:
+        - Maps
+
+  '/mugg/wmts/{imagery}?layer={layer}&tilematrixset={tileSet}&Service=WMTS&Request=GetTile&Version=1.0.0&Format={format}&TileMatrix={zoomLevel}&TileCol={tileColumn}&TileRow={tileRow}': 
+    get:
+      summary: Returns a tile from a layer.
+      description: | 
+        Returns a 256x256 tile from a layer in JPEG or PNG format.
+        
+        __IMPORTANT:__ whatever the requested image format is, a transparent image will be delivered in PNG format if no tile is found at the specified location.
+      security:
+        - api_key: []
+      parameters:
+        - name: imagery
+          description: The imagery identifier. Can be retrieved from the GetCapabilities response. 
+          type: string
+          in: path
+          required: true
+        - name: layer
+          description: A product identifier
+          format: string
+          in: path
+          required: true
+          type: string
+        - name: tileSet
+          description: The desired tile set from which to retrieve the tiles (currently supported set are 4326 and 3857).
+          type: string
+          in: path
+          required: true
+        - name: format
+          description: the requested image format (image/jpeg or image/png). 
+          type: string
+          format: mime type
+          enum: [ "image/jpeg", "image/png" ]
+          in: path
+          required: true
+        - name: zoomLevel
+          description: The map zoom level (Tilegrid depth). Starts at 2 and ends at 16 for SPOT layers and at 17 for Pleiades layers.
+          type: string
+          enum: [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 , 13, 14, 15, 16, 17 ]
+          in: path
+          required: true
+        - name: tileColumn
+          description: Tilegrid column
+          type: integer
+          in: path
+          required: true
+        - name: tileRow
+          description: Tilegrid row
+          type: integer
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Request successful - returns the requested tile as an image.
+          headers:
+            Content-Type:
+              description: the image mime type returned (decided by the server)
+              type: string
+        '401':
+          description: 'Unauthorized: the authorization is missing or has expired.'
+      tags:
+        - Maps
+
+  /api/v1/me: 
+    get:
+      summary: Returns details about the current user.
+      description: Returns user personal details and it's system properties (roles, preferences, subscriptions, ...)
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Request successful
+          schema:
+            $ref: '#/definitions/Me'
+        '401':
+          description: 'Unauthorized: the authorization is missing or has expired.'
+      tags:
+        - Personal Settings
+        
