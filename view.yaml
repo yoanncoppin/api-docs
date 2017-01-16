@@ -22,12 +22,25 @@ info:
     * Your clients should not rely on or map properties that are not usefull to them. Doing so will ensure that your clients are not impacted by API changes on properties that are not usefull to them.
     
     __DEPRECATION -__ The following image attributes will be renamed in final 1.0 specification:
-    * vehicle will be renamed to satellite.
-    * resolutionMeters will be renamed to resolution.
-    * sunElevation will be renamed to illuminationElevationAngle.
-    * indexDate will ne renamed to insertionDate.
     * OpenSearch Query object will be modified.
-  version: '1.0-alpha1'
+    
+    __VERSION LOG -__ 
+    
+    1.0-alpha3
+    
+    * image _vehicle_ property has been renamed to _satellite_.
+    * image _id_ property has been renamed to _sourceId_.
+    * image _constellation_ property values have been changed (use of 'SPOT' instead of 'SPOT 6/7')
+    * image _sunElevation_ property has been renamed to _illuminationElevationAngle_.
+    * image _resolutionMeters_ property has been renamed to _resolution_.
+    * image _indexDate_ property has been renamed to _insertionDate_.
+    
+    
+    1.0-alpha2
+    
+    * Initial version
+    
+  version: '1.0-alpha3'
 
 ###############################################################################
 ##                                                                           ##
@@ -74,9 +87,9 @@ definitions:
     type: integer
     
   constellation:
-    description: The type of satellite used to acquire the image (Pleiades or SPOT 6/7).
+    description: The type of satellite used to acquire the image (Pleiades or SPOT).
     type: string
-    enum: [ "Pleiades", "SPOT 6/7" ]
+    enum: [ "Pleiades", "SPOT" ]
 
   incidenceAngle:
     description: The incidence angle is the angle from the target point of view. It represents the angle between the ground normal and look direction from the satellite, combining the pitch and roll angles.
@@ -233,8 +246,8 @@ definitions:
         description: Image url link with place holders for the zoom level {z}, the tile x {x} and y {y} coordinates.
         type: string
         format: url
-      vehicle: #TODO Should be rename to satellite !
-        description: 'WARNING: will be renamed to satellite. The satellite used to acquire the image.'
+      satellite:
+        description: 'The satellite used to acquire the image.'
         type: string
       acquisitionDate:
         $ref: '#/definitions/acquisitionDate'
@@ -308,22 +321,22 @@ definitions:
         format: float
       incidenceAngle:
         $ref: '#/definitions/incidenceAngle'
-      indexDate: # WARNING WILL BE RENAMED TO "insertionDate"
+      insertionDate: 
         description: Date at which the images was inserted in One Atlas catalog in ISO 8601 format
         type: string
         format: ISO 8601
-      resolutionMeters: # WARNING WILL BE RENAMED TO "resolution"
-        description: 'The image resolution in meter (i.e. the pixel size). WARNING: Will be renamed to _resolution_'
+      resolution: 
+        description: 'The image resolution in meter (i.e. the pixel size).'
         type: number
         format: float
       snowCover: 
         $ref: '#/definitions/snowCover'
-      sunElevation: # WARNING WILL BE RENAMED TO "illuminationElevationAngle"
+      illuminationElevationAngle: 
         description: 'WARNING: Will be renamed to illuminationElevationAngle'
         type: number
         format: float # TODO check float or double ?
-      vehicle: #TODO Should be rename to satellite ! # duplicate
-        description: 'WARNING: will be renamed to satellite. The satellite used to acquire the image.'
+      satellite: 
+        description: 'The satellite used to acquire the image.'
         type: string
       wmtsUrl: # duplicate
         description: Image url link with place holders for the zoom level {z}, the tile x {x} and y {y} coordinates.
