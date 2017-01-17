@@ -34,6 +34,7 @@ info:
     * image _sunElevation_ property has been renamed to _illuminationElevationAngle_.
     * image _resolutionMeters_ property has been renamed to _resolution_.
     * image _indexDate_ property has been renamed to _insertionDate_.
+    * _insertdtstart_ and _insertdtend_ parameters were added to _GET /api/v1/images_ endpoint to filter images based on their _insertionDate_ property.
     
     
     1.0-alpha2
@@ -362,11 +363,23 @@ paths:
       security:
         - api_key: []
       parameters:
-        - description: "A bounding box array string in geographic coordinate reference system (WGS84). Example: -10.0, -10.0, 10.0, 10.0"
+        - description: "A bounding box array string in geographic coordinate reference system (WGS84). Example: -10.0, -10.0, 10.0, 10.0 or -180, -90, 180, 90 for whole world in Geographic."
           in: query
           name: bbox
           required: true
           type: string
+        - description: "Images inserted before this date are excluded from the results. this property is compared to image insertionDate property."
+          in: query
+          name: insertdtstart
+          required: false
+          type: string 
+          format: ISO 8601
+        - description: "Images inserted after this date are excluded from the results. this property is compared to image insertionDate property."
+          in: query
+          name: insertdtend
+          required: false
+          type: string 
+          format: ISO 8601
         - description: Page number
           in: query
           name: page
