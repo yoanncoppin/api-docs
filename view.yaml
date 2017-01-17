@@ -21,12 +21,12 @@ info:
     * Your clients should not assume that the properties described in this specifications are the only ones that will be returned by the API. Not documented or additional properties will be returned in future version of this API without notifications. 
     * Your clients should not rely on or map properties that are not usefull to them. Doing so will ensure that your clients are not impacted by API changes on properties that are not usefull to them.
     
-    __DEPRECATION -__ The following image attributes will be renamed in final 1.0 specification:
+    __DEPRECATION -__ The following changes will be included in final 1.0 specification:
     * OpenSearch Query object will be modified.
     
     __VERSION LOG -__ 
     
-    1.0-alpha3
+    1.0-beta1
     
     * image _vehicle_ property has been renamed to _satellite_.
     * image _id_ property has been renamed to _sourceId_.
@@ -41,7 +41,7 @@ info:
     
     * Initial version
     
-  version: '1.0-alpha3'
+  version: '1.0-beta1'
 
 ###############################################################################
 ##                                                                           ##
