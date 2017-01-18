@@ -12,7 +12,10 @@ info:
   title: Airbus Defense and Space Geo - API root specification
   description: |
     This document describes Airbus Defense and Space Geo APIs. 
-    
+contact:
+  name: Frédéric Bages
+  url: https://www.geoapi-airbusds.com
+  email: frederic.bages@airbus.com
 
   version: '1.0'
 
