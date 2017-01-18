@@ -13,7 +13,7 @@ info:
   description: |
     This document describes Airbus Defense and Space Geo APIs. 
   contact:
-    url: https://www.geoapi-airbusds.com
+    url: http://www.geoapi-airbusds.com
 
   version: '1.0'
 
@@ -57,6 +57,7 @@ paths:
   /api-docs/view.yaml: 
     get:
       summary: Returns the yaml specification of the View API.
+      description: View API documentation. A beautified version can be consulted within the [browser](https://airbusgeo.github.io/geoapi-viewer/?url=https://airbusgeo.github.io/api-docs/view.yaml)
       responses:
         '200':
           description: Request successful
