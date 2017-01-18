@@ -1,0 +1,63 @@
+###############################################################################
+##                                                                           ##
+##                            VIEW API (ONE ATLAS)                           ##
+##                                                                           ##
+##                     (c) Airbus Defense and Space Geo                      ##
+##                                                                           ##
+##                                                                           ##
+##       Contact: frederic.bages@airbus.com                         ##
+##                                                                           ##
+###############################################################################
+
+info:
+  title: Airbus Defense and Space Geo - API root specification
+  description: |
+    This document describes Airbus Defense and Space Geo APIs. 
+    
+
+  version: '1.0'
+
+###############################################################################
+##                                                                           ##
+##                           GENERAL CONFIGuRATION                           ##
+##                                                                           ##
+###############################################################################
+
+consumes:
+  - application/json
+
+produces:
+  - application/x-yaml
+
+schemes:
+  - https
+
+host: airbusgeo.github.io
+
+swagger: '2.0'
+
+###############################################################################
+##                                                                           ##
+##                           OBJECTS DOCUMENTATION                           ##
+##                                                                           ##
+###############################################################################
+
+
+
+        
+###############################################################################
+##                                                                           ##
+##                         END POINTS DOCUMENTATION                          ##
+##                                                                           ##
+###############################################################################
+
+paths:
+
+
+  /api-docs/view.yaml: 
+    get:
+      summary: Returns the yaml specification of the View API.
+      responses:
+        '200':
+          description: Request successful
+
