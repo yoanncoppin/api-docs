@@ -1,7 +1,7 @@
 ###############################################################################
 ##                                                                           ##
 ##                                                                           ##
-##                     (c) Airbus Defense and Space Geo                      ##
+##                            (c) Airbus DS Geo                              ##
 ##                                                                           ##
 ##                                                                           ##
 ##                    Contact: frederic.bages@airbus.com                     ##
@@ -61,4 +61,5 @@ paths:
       responses:
         '200':
           description: Request successful
-
+      tags: 
+        - Specification 
