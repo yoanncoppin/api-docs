@@ -437,7 +437,31 @@ paths:
             collectionFormat: csv,
             enum: [ "Pléiades 0.5-m", "Pléiades 0.5-m - STEREO", "Pléiades 0.5-m – TRISTEREO", "SPOT 1.5-m", "SPOT 1.5-m - STEREO", "SPOT 1.5-m - TRISTEREO", "SPOT 2.5-m B&W", "SPOT 2.5-m Color", "SPOT 5-m B&W", "SPOT 5-m Color", "SPOT 10-m B&W", "SPOT 10-m Color", "SPOT 20-m Color", "High Resolution SpotLight (HS)", "ScanSAR (SC)", "SpotLight (SL)", "Staring SpotLight (ST)", "StripMap (SM)", "Wide ScanSAR (WS)", "WorldDEM", "WorldDEM core", "WorldDEM DTM" ]
           }
-          
+
+        # Specific Radar properties
+        - description: "The polarization channels used by the sensor during the product acquisition. Only products acquired with one of the listed polarisation channel will be returned in the response."
+          in: query
+          name: polarisationChannels
+          required: false
+          type: array
+          items: {
+            type: string,
+            collectionFormat: csv,
+            enum: [ "HH", "VV", "HH/HV", "HH/VV", "VV/VH" ]
+          }
+        - description: "The satellite orbit direction during the product acquisition. Only products acquired on the specified orbit direction will be returned in the response."
+          in: query
+          name: orbitDirection
+          required: false
+          type: array
+          enum: [ "ASCENDING", "DESCENDING" ]
+        - description: "The antenna look direction during the product acquisition. Only products acquired with the antenna looking in the specified direction will be returned in the response."
+          in: query
+          name: antennaLookDirection
+          required: false
+          type: array
+          enum: [ "LEFT", "RIGTH" ]
+
         # OpenQuery
         - description: Number of items per page
           in: query
