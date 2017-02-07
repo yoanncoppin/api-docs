@@ -57,6 +57,7 @@ produces:
 
 schemes:
   - https
+  - http
 
 host: search-qual.geoapi-airbusds.com
 
@@ -367,6 +368,8 @@ paths:
         compliant object.
         
         The AOI can be sent using either the bbox parameter or the geometry parameter.
+        
+        __WARNING__: Due to technical limitations in web browsers, proxies and web servers the GET method may not work with complex AOI geometries. If you are unsure of the maximum number of vertices of the AOI polygon you may use, please prefer the POST method with a JSon body instead.
       security:
         - api_key: []
         - param_key: []
@@ -385,7 +388,7 @@ paths:
         - description: "The sensor type used for capturing the product."
           in: query
           name: sensorType
-          required: false
+          required: true
           type: string
           enum: [ "optical", "radar", "terrain" ]
         - description: "A date or date interval that must match the product acquisition date. Only products in this range are returned in the response. Example: [2017-01-01,2017-02-01[ to select all products acquired in January 2017. "
