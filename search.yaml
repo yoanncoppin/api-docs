@@ -447,7 +447,7 @@ paths:
           items: {
             type: string,
             collectionFormat: csv,
-            enum: [ "HH", "VV", "HH/HV", "HH/VV", "VV/VH" ]
+            enum: [ "HH", "VV", "HH,HV", "HH,VV", "VV,VH" ]
           }
         - description: "The satellite orbit direction during the product acquisition. Only products acquired on the specified orbit direction will be returned in the response."
           in: query
