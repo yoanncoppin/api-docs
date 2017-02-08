@@ -56,7 +56,6 @@ produces:
   - application/json
 
 schemes:
-  - https
   - http
 
 host: search-qual.geoapi-airbusds.com
