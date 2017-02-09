@@ -12,7 +12,7 @@
 info:
   title: Airbus Defense and Space Geo - Common Language Definitions
   description: |
-    This document describes Airbus Defense and Space Geo common language definitions. Definitions can be referenced from other Geo API specifications provided that their meaning and format is the same. 
+    This document describes Airbus Defense and Space Geo common language definitions. Definitions are referenced from other Geo API specifications provided that their meaning and format is the same. 
     
   version: '1.0-alpha1'
 
@@ -99,7 +99,7 @@ definitions:
     - "WorldDEM DTM"
 
   bbox:
-    description: A bounding box definition.
+    description: 'A bounding box definition. A bounding box is composed of 4 ordered values: the minimum X value, the minimum Y value, the maximum X value and the maximum Y value.'
     type: array
     example: '[ -10.0, -10.0 , 10, 10 ]'
     items:
@@ -380,14 +380,17 @@ paths:
 
   /api-docs/definitions.yaml:
     get:
-      summary: Return all definitions in YAML format.
-
-          
+      summary: Return all common Airbus DS Geo definitions in YAML format.
+      description: |
+        Definitions are based on the following specifications:
+        * [GeoJSON](http://geojson.org/geojson-spec.html) version 1.0
+        * [OpenSearch](http://www.opensearch.org/Specifications/OpenSearch/1.1) version 1.1 Draft 5
+        * [OpenSearch Geo extension](http://www.opensearch.org/Specifications/OpenSearch/Extensions/Geo/1.0/Draft_1) version 1.0 Draft 1
+        * [OpenSearch Time extension](http://www.opensearch.org/Specifications/OpenSearch/Extensions/Time/1.0/Draft_1) version 1.0 Draft 1
+        * [OpenSearch for Earth Observation extension](https://portal.opengeospatial.org/files/65168) version of October 29th, 2014
       responses:
         '200':
-          description: Request successful # - all results returned
-      tags:
-        - Search
+          description: Request successful
 
 
         
