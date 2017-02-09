@@ -1,6 +1,6 @@
 ###############################################################################
 ##                                                                           ##
-##                                 SEARCH API                                ##
+##                                 DEFINITIONS                               ##
 ##                                                                           ##
 ##                     (c) Airbus Defense and Space Geo                      ##
 ##                                                                           ##
@@ -10,36 +10,9 @@
 ###############################################################################
 
 info:
-  title: Airbus Defense and Space Geo - Search API
+  title: Airbus Defense and Space Geo - Common Language Definitions
   description: |
-    This document describes Airbus Defense and Space Geo Search API. The Search API can be used to query the products available for ordering through the [Order API](https://airbusgeo.github.io/geoapi-viewer/?url=https://airbusgeo.github.io/api-docs/order.yaml). 
-    
-    __ALPHA version subject to change__
-    
-    __IMPORTANT -__ best practices when implementing clients:
-    * Your clients should not rely on properties that are not documented in this specification as such properties could be changed or removed without notice.
-    * Your clients should not assume that the properties described in this specifications are the only ones that will be returned by the API. Not documented or additional properties will be returned in future version of this API without notification. 
-    * Your clients should not rely on or map properties that are not usefull to them. Doing so will ensure that your clients are not impacted by API changes on properties that are not usefull to them.
-    
-    __DEPRECATION -__ The following changes will be included in final 1.0 specification:
-
-    __VERSION LOG -__ 
-    
-    1.0-alpha1
-    
-    * Initial version
-    
-    __STANDARD RULES -__ The following rules apply to attributes format when specifyed.
-    
-    Intervals for numerical values and dates are specified using the standard straights brackets.
-    * [n1,n2] equal to n1 <= field <= n2
-    * [n1,n2[ equals to n1 <= field < n2
-    * ]n1,n2[ equals to n1 < field < n2
-    * ]n1,n2] equal to n1 < field <= n2
-    * [n1 equals to n1<= field
-    * ]n1 equals to n1 < field
-    * n1] equals to field <= n1
-    * n1[ equals to field < n1
+    This document describes Airbus Defense and Space Geo common language definitions. Definitions can be referenced from other Geo API specifications provided that their meaning and format is the same. 
     
   version: '1.0-alpha1'
 
@@ -83,10 +56,10 @@ definitions:
 
   # START ------------------ Airbus DS Geo dictionary ------------------- START
   
-#  acquisitionDate:
-#    description: Acquisition date of the image in ISO 8601 format TODOs
-#    type: string
-#    format: ISO 8601
+  acquisitionDate:
+    description: Acquisition date of the image in ISO 8601 format
+    type: string
+    format: ISO 8601
 
   cloudCover:
     description: Percentage of the image covered by cloud (0 - 100).
@@ -137,7 +110,7 @@ definitions:
     - "WorldDEM DTM"
 
   bbox:
-    description: 'A bounding box definition. It is composed of 4 ordered values: the minimum X, minimum Y, the maximum X and the maximum Y value.'
+    description: A bounding box definition.
     type: array
     example: '[ -10.0, -10.0 , 10, 10 ]'
     items:
@@ -161,7 +134,7 @@ definitions:
       totalResults: 
         description: The number of search results available for the current search.
         type: integer
-      startIndex:
+      startIndex: # TODO: Manaquant dans réponse Catalog API
         description: The index of the first search result in the current set of search results.
         type: integer
       itemsPerPage: 
@@ -231,17 +204,12 @@ definitions:
         format: url
       satellite:
         description: 'The satellite used to acquire the image.'
-        example: 'SPOT6, PHR1B...'
         type: string
       acquisitionDate:
-        $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/acquisitionDate'
+        $ref: '#/definitions/acquisitionDate'
       incidenceAngle:
         $ref: '#/definitions/incidenceAngle'
-      bbox:
-        $ref: '#/definitions/bbox'
-      cloudCover:
-        $ref: '#/definitions/cloudCover'
-
+      
     
   GeoJSON Geometry:
     description: A geometry describing the feature (point, polygon, multi-polygon, ...)
@@ -266,6 +234,67 @@ definitions:
     example: '[ 10, 10 ]'
     items:
       type: integer
+
+  Image Metadata:
+    description: A GeoJSON Feature describing the image, including its properties and geometry.
+    type: object
+    properties:
+      id:
+        description: The image identifier.
+        type: string
+      type:
+        description: The GeoJSON type. Always equals to "Feature".
+        type: string
+        enum: [ "Feature" ]
+      properties:
+         $ref: '#/definitions/Image Metadata Properties'
+      geometry:
+         $ref: '#/definitions/GeoJSON Geometry'
+      
+  Image Metadata Properties:
+    description: The image properties.
+    type: object
+    properties:
+      cloudCover:
+        $ref: '#/definitions/cloudCover'
+      constellation:
+        $ref: '#/definitions/constellation'
+      geometryMinX:
+        description: The minimum X coordinate of the images in geographic coordiante reference system (WGS84).
+        type: number
+        format: float
+      geometryMinY:
+        description: The minimum Y coordinate of the images in geographic coordiante reference system (WGS84).
+        type: number
+        format: float      
+      geometryMaxX:
+        description: The maximum X coordinate of the images in geographic coordiante reference system (WGS84).
+        type: number
+        format: float
+      geometryMaxY:
+        description: The maximum Y coordinate of the images in geographic coordiante reference system (WGS84).
+        type: number
+        format: float
+      insertionDate: 
+        description: Date at which the images was inserted in One Atlas catalog in ISO 8601 format
+        type: string
+        format: ISO 8601
+      resolution: 
+        description: 'The image resolution in meter (i.e. the pixel size).'
+        type: number
+        format: float
+      snowCover: 
+        $ref: '#/definitions/snowCover'
+      illuminationElevationAngle: 
+        description: 'WARNING: Will be renamed to illuminationElevationAngle'
+        type: number
+        format: float # TODO check float or double ?
+      satellite: 
+        description: 'The satellite used to acquire the image.'
+        type: string
+      wmtsUrl: # duplicate
+        description: Image url link with place holders for the zoom level {z}, the tile x {x} and y {y} coordinates.
+        type: string
 
   searchRequest:
     description: A product search request.
