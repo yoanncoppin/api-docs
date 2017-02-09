@@ -45,6 +45,10 @@ definitions:
 
   # START ------------------ Airbus DS Geo dictionary ------------------- START
   
+  Id:
+    description: An internal identifier.
+    type: string
+
   acquisitionDate:
     description: Acquisition date of the image in ISO 8601 format
     type: string
@@ -107,13 +111,63 @@ definitions:
       minItems: 4
       maxItems: 4
 
+  orbitDirection:
+    description: "The satellite orbit direction during the acquisition."
+    type: string
+    enum:
+    - ASCENDING
+    - DESCENDING
+
+  antennaLookDirection:
+    description: "The antenna look direction during the acquisition."
+    type: string
+    enum:
+    - LEFT
+    - RIGTH
 
 
   # END   ------------------ Airbus DS Geo dictionary -------------------   END
 
-  Id:
-    description: An internal identifier.
+  # START -------------- Airbus DS Geo request properties --------------- START
+
+  in_polygon_wkt:
+    description: "A POLYGON geometry in the Well-known text format. Example: POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))"
     type: string
+    format: 'WKT Geometric objects'
+    example: 'POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))'
+
+  in_acquisitionDate_interval:
+    description: "A date or date interval that must match the acquisition date. Example: [2017-01-01,2017-02-01[ to select all products acquired in January 2017. "
+    type: string
+    format: 'Interval of dates in ISO 8601'
+    example: '[2017-01-01,2017-02-01['
+
+  in_resolution_interval:
+    description: "A number or number range that must match the resolution in meter. Example: 1.5] to select all products with a resolution inferior or equal to 1.5 meter."
+    type: string
+    format: 'Interval of resolution in meter'
+    example: '[0.5,1.5]'
+
+  in_incidenceAngle_interval:
+    description: "A number or number range that must match the incidence angle in degrees. Example: 30] to select all products with an incidence angle inferior or equal to 30 degrees."
+    type: string
+    format: 'Interval of incidence angle in degrees'
+    example: '[0,30]'
+
+  in_cloudCover_interval:
+    description: "A number or number range that must match the cloud coverage in percentage (min 0%, max 100%). Example: 10[ to select all products with a cloud coverage less than 10 percent."
+    type: string
+    format: 'Interval of cloud coverage in percent'
+    example: "[0,15]"
+    
+  in_snowCover_interval:
+    description: "A number or number range that must match the product snow coverage in percentage (min 0%, max 100%). Example: [50,90] to select all products with a partial snow coverage of at least 50 percent but no more than 90 percent."
+    type: string
+    format: 'Interval of cloud coverage in percent'
+    example: '[0,15]'
+
+  # END   -------------- Airbus DS Geo request properties ---------------   END
+
 
 
   SearchResult: # NOTE: This is an OpenSearch and FeatureCollection compliant object.
@@ -292,10 +346,6 @@ definitions:
       bbox:
         description: "A bounding box array string in geographic coordinate reference system (WGS84). Example: -10.0, -10.0, 10.0, 10.0 or -180, -90, 180, 90 for whole world in Geographic."
         type: string
-      geometry:
-        description: "A POLYGON geometry describing the AOI in the Well-known text format. Example: POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))"
-        type: string
-        format: WKT Geometric objects
       sensorType:
         description: "The sensor type used for capturing the product."
         type: string
@@ -303,26 +353,6 @@ definitions:
         - optical
         - radar
         - terrain
-      acquisitionDate:
-        description: "A date or date interval that must match the product acquisition date. Only products in this range are returned in the response. Example: [2017-01-01,2017-02-01[ to select all products acquired in January 2017. "
-        type: string
-        format: Interval of dates in ISO 8601
-      resolution:
-        description: "A number or number range that must match the product resolution in meter. Only products in this range are returned in the response. example: 1.5] to select all products with a resolution inferior or equal to 1.5 meter."
-        type: string
-        format: Interval of resolution in meter
-      incidenceAngle:
-        description: "A number or number range that must match the product incidence angle in degrees. Only products in this range are returned in the response. example: 30] to select all products with an incidence angle inferior or equal to 30 degrees."
-        type: string
-        format: Interval of incidence angle in degrees
-      cloudCover:
-        description: "A number or number range that must match the product cloud coverage in percentage (min 0%, max 100%). Only products in this range are returned in the response. example: 10[ to select all products with a cloud coverage less than 10 percent."
-        type: string
-        format: Interval of cloud coverage in percent
-      snowCover:
-        description: "A number or number range that must match the product snow coverage in percentage (min 0%, max 100%). Only products in this range are returned in the response. example: [50,90] to select all products with a partial snow coverage of at least 50 percent but no more than 90 percent."
-        type: string
-        format: Interval of cloud coverage in percent
       constellation:
         description: "The constellation of satelittes used to acquire the product. Setting a constellation is identical as setting all the product types generated by the given satellite constellation. __WARNING__: Mixing constellation and productType parameters result in an unspecified filter."
         type: string
@@ -343,18 +373,6 @@ definitions:
           - HH,HV
           - HH,VV
           - VV,VH
-      orbitDirection:
-        description: "The satellite orbit direction during the product acquisition. Only products acquired on the specified orbit direction will be returned in the response."
-        type: string
-        enum:
-        - ASCENDING
-        - DESCENDING
-      antennaLookDirection:
-        description: "The antenna look direction during the product acquisition. Only products acquired with the antenna looking in the specified direction will be returned in the response."
-        type: string
-        enum:
-        - LEFT
-        - RIGTH
         # OpenQuery
       count:
         description: Number of items per page
