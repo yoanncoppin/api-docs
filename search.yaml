@@ -136,6 +136,16 @@ definitions:
     - "WorldDEM core"
     - "WorldDEM DTM"
 
+  bbox:
+    description: A bounding box definition.
+    type: array
+    example: '[ -10.0, -10.0 , 10, 10 ]'
+    items:
+      type: number
+      minItems: 4
+      maxItems: 4
+
+
 
   # END   ------------------ Airbus DS Geo dictionary -------------------   END
 
@@ -151,7 +161,7 @@ definitions:
       totalResults: 
         description: The number of search results available for the current search.
         type: integer
-      startIndex: 
+      startIndex: # TODO: Manaquant dans réponse Catalog API
         description: The index of the first search result in the current set of search results.
         type: integer
       itemsPerPage: 
@@ -224,6 +234,8 @@ definitions:
         type: string
       acquisitionDate:
         $ref: '#/definitions/acquisitionDate'
+      incidenceAngle:
+        $ref: '#/definitions/incidenceAngle'
       
     
   GeoJSON Geometry:
@@ -270,8 +282,6 @@ definitions:
     description: The image properties.
     type: object
     properties:
-      acquisitionDate:
-        $ref: '#/definitions/acquisitionDate'
       cloudCover:
         $ref: '#/definitions/cloudCover'
       constellation:
@@ -292,8 +302,6 @@ definitions:
         description: The maximum Y coordinate of the images in geographic coordiante reference system (WGS84).
         type: number
         format: float
-      incidenceAngle:
-        $ref: '#/definitions/incidenceAngle'
       insertionDate: 
         description: Date at which the images was inserted in One Atlas catalog in ISO 8601 format
         type: string
