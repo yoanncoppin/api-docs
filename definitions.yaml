@@ -220,9 +220,9 @@ definitions:
         description: The internal identifier.
         type: string
       bbox:
-        $ref: '#/definitions/bbox'
+        $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/bbox'
       geometry:
-         $ref: '#/definitions/GeoJSON Geometry'
+         $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/GeoJSON Geometry'
       type:
         description: The feature type (always equals to "Feature")
         type: string
