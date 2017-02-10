@@ -86,28 +86,18 @@ definitions:
 
   SearchResult: # NOTE: This is an OpenSearch and FeatureCollection compliant object.
     description: 'OpenSearch response object in JSon format. it is also a GeoJSON FeatureCollection object.'
-    type: object
-    properties:
-      totalResults: 
-        description: The number of search results available for the current search.
-        type: integer
-      startIndex:
-        description: The index of the first search result in the current set of search results.
-        type: integer
-      itemsPerPage: 
-        description: The number of search results returned per page.
-        type: integer
-      query:
-        $ref: '#/definitions/OpenSearch Query'
-      type:
-        description: the result item type (always equals to "FeatureCollection")
-        type: string
-        enum: [ "FeatureCollection" ]
-      features:
-        description: the array of matching images as GeoJSON feature objects.
-        type: array
-        items:
-          $ref: '#/definitions/GeoJSON Feature'
+    allOf:
+    - $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/OpenSearch Response'
+    - $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/GeoJSON FeatureCollection'
+    - type: object
+      properties:
+        query:
+          $ref: '#/definitions/OpenSearch Query'
+        features:
+          description: the array of matching products as GeoJSON feature objects.
+          type: array
+          items:
+            $ref: '#/definitions/GeoJSON Feature'
       
   OpenSearch Query:
       description: 'Query that can be used to recreate the search request that generated the current search response. <b>WARNING:</b> This object will be changed in final version.'
@@ -123,7 +113,7 @@ definitions:
           description: The number of search results returned per page.
           type: string
         geometry: #TODO change name and type ?
-          description: the bounding box used for filtering images as a GeoJSON polygon.
+          description: the bounding box used for filtering products as a GeoJSON polygon.
           type: string
         # xuid: # What is this properties used for ?
         pw: #TODO change name and type ?
@@ -132,22 +122,13 @@ definitions:
       
   GeoJSON Feature:
     description: GeoJSON feature object.
-    externalDocs: 
-      description: GeoJSON feature object specification.
-      url: 'http://geojson.org/geojson-spec.html#feature-objects'
-    type: object
-    properties:
-      id:
-        description: The image OneAtlas internal identifier.
-        type: string
-      properties: 
-         $ref: '#/definitions/GeoJSON Feature Properties'
-      geometry:
-         $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/GeoJSON Geometry'
-      type:
-        description: The feature type (always equals to "Feature")
-        type: string
-        enum: [ "Feature" ]
+    allOf:
+    - $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/GeoJSON Feature'
+    - type: object
+      properties:
+        properties:
+           $ref: '#/definitions/GeoJSON Feature Properties'
+
     
   GeoJSON Feature Properties:
     description: GeoJSON feature properties object

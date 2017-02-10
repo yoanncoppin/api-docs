@@ -46,7 +46,7 @@ definitions:
 
   # START ------------------ Airbus DS Geo dictionary ------------------- START
 
-  
+
   Id:
     description: An internal identifier.
     type: string
