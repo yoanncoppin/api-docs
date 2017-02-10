@@ -192,7 +192,7 @@ definitions:
   #       items:
   #          $ref: '#/definitions/GeoJSON Feature'
   GeoJSON FeatureCollection:
-    description: 'GeoJSON FeatureCollection object.'
+    description: 'A GeoJSON FeatureCollection object.'
     type: object
     properties:
       type:
@@ -213,7 +213,7 @@ definitions:
   #       properties:
   #          $ref: '#/definitions/GeoJSON Feature Properties'
   GeoJSON Feature:
-    description: GeoJSON feature object.
+    description: A GeoJSON feature object.
     type: object
     properties:
       id:
@@ -222,17 +222,14 @@ definitions:
       bbox:
         $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/bbox'
       geometry:
-         $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/GeoJSON Geometry'
+        $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/GeoJSON Geometry'
       type:
         description: The feature type (always equals to "Feature")
         type: string
         enum: [ "Feature" ]
 
   GeoJSON Geometry:
-    description: A geometry describing the feature (point, polygon, multi-polygon, ...)
-    externalDocs:
-      description: GeoJSON Geometry object specification
-      url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+    description: A GeoJSON geometry describing the feature (point, polygon, multi-polygon, ...)
     type: object
     properties:
       type:
@@ -246,7 +243,7 @@ definitions:
           $ref: '#/definitions/GeoJSON Point'
 
   GeoJSON Point:
-    description: A point definition.
+    description: A GeoJSON point definition.
     type: array
     example: '[ 10, 10 ]'
     items:
