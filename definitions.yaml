@@ -214,9 +214,6 @@ definitions:
   #          $ref: '#/definitions/GeoJSON Feature Properties'
   GeoJSON Feature:
     description: GeoJSON feature object.
-    externalDocs:
-      description: GeoJSON feature object specification.
-      url: 'http://geojson.org/geojson-spec.html#feature-objects'
     type: object
     properties:
       id:

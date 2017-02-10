@@ -136,10 +136,10 @@ definitions:
     properties: # TODO: Described for image search. Ensure that it is always the same or change the YAML name.
       constellation:
         $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/constellation'
-      wmtsUrl: 
-        description: Image url link with place holders for the zoom level {z}, the tile x {x} and y {y} coordinates.
-        type: string
-        format: url
+#      wmtsUrl:
+#        description: Image url link with place holders for the zoom level {z}, the tile x {x} and y {y} coordinates.
+#        type: string
+#        format: url
       satellite:
         description: 'The satellite used to acquire the image.'
         example: 'SPOT6, PHR1B...'
@@ -148,8 +148,6 @@ definitions:
         $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/acquisitionDate'
       incidenceAngle:
         $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/incidenceAngle'
-      bbox:
-        $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/bbox'
       cloudCover:
         $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/cloudCover'
 
