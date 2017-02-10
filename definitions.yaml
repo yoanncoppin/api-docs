@@ -26,7 +26,7 @@ consumes:
   - application/json
 
 produces:
-  - application/json
+  - application/x-yaml
 
 schemes:
   - https
@@ -43,7 +43,9 @@ swagger: '2.0'
 
 definitions:
 
+
   # START ------------------ Airbus DS Geo dictionary ------------------- START
+
   
   Id:
     description: An internal identifier.
@@ -128,7 +130,9 @@ definitions:
 
   # END   ------------------ Airbus DS Geo dictionary -------------------   END
 
+
   # START -------------- Airbus DS Geo request properties --------------- START
+
 
   in_polygon_wkt:
     description: "A POLYGON geometry in the Well-known text format. Example: POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))"
@@ -166,94 +170,67 @@ definitions:
     format: 'Interval of cloud coverage in percent'
     example: '[0,15]'
 
+
   # END   -------------- Airbus DS Geo request properties ---------------   END
 
 
+  # START ------------------- GeoJSON definitions ----------------------- START
 
-  SearchResult: # NOTE: This is an OpenSearch and FeatureCollection compliant object.
-    description: 'OpenSearch response object in JSon format. it is also a GeoJSON FeatureCollection object.'
+
+  # The GeoJSON FeatureCollection is intended to be extended in API specifications with service specific features.
+  # Example:
+  #
+  # GeoJSON FeatureCollection:
+  #   description: GeoJSON FeatureCollection object.
+  #   allOf:
+  #   - $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/GeoJSON FeatureCollection'
+  #   - type: object
+  #     properties:
+  #       features:
+  #       description: the array of matching products as GeoJSON feature objects.
+  #       type: array
+  #       items:
+  #          $ref: '#/definitions/GeoJSON Feature'
+  GeoJSON FeatureCollection:
+    description: 'GeoJSON FeatureCollection object.'
     type: object
     properties:
-      totalResults: 
-        description: The number of search results available for the current search.
-        type: integer
-      startIndex: # TODO: Manaquant dans réponse Catalog API
-        description: The index of the first search result in the current set of search results.
-        type: integer
-      itemsPerPage: 
-        description: The number of search results returned per page.
-        type: integer
-      query:
-        $ref: '#/definitions/OpenSearch Query'
       type:
         description: the result item type (always equals to "FeatureCollection")
         type: string
         enum: [ "FeatureCollection" ]
-      features:
-        description: the array of matching images as GeoJSON feature objects.
-        type: array
-        items:
-          $ref: '#/definitions/GeoJSON Feature'
-      
-  OpenSearch Query:
-      description: 'Query that can be used to recreate the search request that generated the current search response. <b>WARNING:</b> This object will be changed in final version.'
-      type: object
-      properties:
-        constellation: #TODO change type ?
-          description: 'The satellite filter used ex: { Pleiades, SPOT 6/7 }.'
-          type: string 
-        sortKeys: #TODO change type ?
-          description: 'The sort order used for the response ex: constellation,1 acquisitionDate,0'
-          type: string
-        count: #TODO change name and type ?
-          description: The number of search results returned per page.
-          type: string
-        geometry: #TODO change name and type ?
-          description: the bounding box used for filtering images as a GeoJSON polygon.
-          type: string
-        # xuid: # What is this properties used for ?
-        pw: #TODO change name and type ?
-          description: The page number
-          type: string
-      
+
+
+  # The GeoJSON Feature is intended to be extended in API specifications with service specific properties.
+  # Example:
+  #
+  # GeoJSON Feature:
+  #   description: GeoJSON feature object.
+  #   allOf:
+  #   - $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/GeoJSON Feature'
+  #   - type: object
+  #     properties:
+  #       properties:
+  #          $ref: '#/definitions/GeoJSON Feature Properties'
   GeoJSON Feature:
     description: GeoJSON feature object.
-    externalDocs: 
+    externalDocs:
       description: GeoJSON feature object specification.
       url: 'http://geojson.org/geojson-spec.html#feature-objects'
     type: object
     properties:
       id:
-        description: The image OneAtlas internal identifier.
+        description: The internal identifier.
         type: string
-      properties: 
-         $ref: '#/definitions/GeoJSON Feature Properties'
+      bbox:
+        $ref: '#/definitions/bbox'
       geometry:
          $ref: '#/definitions/GeoJSON Geometry'
       type:
         description: The feature type (always equals to "Feature")
         type: string
         enum: [ "Feature" ]
-    
-  GeoJSON Feature Properties:
-    description: GeoJSON feature properties object
-    type: object
-    properties: # TODO: Described for image search. Ensure that it is always the same or change the YAML name.
-      constellation:
-        $ref: '#/definitions/constellation'
-      wmtsUrl: 
-        description: Image url link with place holders for the zoom level {z}, the tile x {x} and y {y} coordinates.
-        type: string
-        format: url
-      satellite:
-        description: 'The satellite used to acquire the image.'
-        type: string
-      acquisitionDate:
-        $ref: '#/definitions/acquisitionDate'
-      incidenceAngle:
-        $ref: '#/definitions/incidenceAngle'
-      
-    
+
   GeoJSON Geometry:
     description: A geometry describing the feature (point, polygon, multi-polygon, ...)
     externalDocs:
@@ -270,7 +247,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/GeoJSON Point'
-  
+
   GeoJSON Point:
     description: A point definition.
     type: array
@@ -278,114 +255,43 @@ definitions:
     items:
       type: integer
 
-  Image Metadata:
-    description: A GeoJSON Feature describing the image, including its properties and geometry.
-    type: object
-    properties:
-      id:
-        description: The image identifier.
-        type: string
-      type:
-        description: The GeoJSON type. Always equals to "Feature".
-        type: string
-        enum: [ "Feature" ]
-      properties:
-         $ref: '#/definitions/Image Metadata Properties'
-      geometry:
-         $ref: '#/definitions/GeoJSON Geometry'
-      
-  Image Metadata Properties:
-    description: The image properties.
-    type: object
-    properties:
-      cloudCover:
-        $ref: '#/definitions/cloudCover'
-      constellation:
-        $ref: '#/definitions/constellation'
-      geometryMinX:
-        description: The minimum X coordinate of the images in geographic coordiante reference system (WGS84).
-        type: number
-        format: float
-      geometryMinY:
-        description: The minimum Y coordinate of the images in geographic coordiante reference system (WGS84).
-        type: number
-        format: float      
-      geometryMaxX:
-        description: The maximum X coordinate of the images in geographic coordiante reference system (WGS84).
-        type: number
-        format: float
-      geometryMaxY:
-        description: The maximum Y coordinate of the images in geographic coordiante reference system (WGS84).
-        type: number
-        format: float
-      insertionDate: 
-        description: Date at which the images was inserted in One Atlas catalog in ISO 8601 format
-        type: string
-        format: ISO 8601
-      resolution: 
-        description: 'The image resolution in meter (i.e. the pixel size).'
-        type: number
-        format: float
-      snowCover: 
-        $ref: '#/definitions/snowCover'
-      illuminationElevationAngle: 
-        description: 'WARNING: Will be renamed to illuminationElevationAngle'
-        type: number
-        format: float # TODO check float or double ?
-      satellite: 
-        description: 'The satellite used to acquire the image.'
-        type: string
-      wmtsUrl: # duplicate
-        description: Image url link with place holders for the zoom level {z}, the tile x {x} and y {y} coordinates.
-        type: string
 
-  searchRequest:
-    description: A product search request.
+  # END   ------------------- GeoJSON definitions -----------------------   END
+
+
+  # START ----------------- OpenSearch definitions ---------------------- START
+
+
+  # The OpenSearch Response is intended to be extended in API specifications with service specific properties.
+  # Example:
+  #
+  # OpenSearch Response:
+  #   description: 'OpenSearch response object in JSon format.'
+  #   allOf:
+  #   - $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/OpenSearch Response'
+  #   - type: object
+  #     properties:
+  #       query:
+  #          $ref: '#/definitions/OpenSearch Query'
+  OpenSearch Response:
+    description: 'OpenSearch response object in JSon format.'
     type: object
     properties:
-      bbox:
-        description: "A bounding box array string in geographic coordinate reference system (WGS84). Example: -10.0, -10.0, 10.0, 10.0 or -180, -90, 180, 90 for whole world in Geographic."
-        type: string
-      sensorType:
-        description: "The sensor type used for capturing the product."
-        type: string
-        enum:
-        - optical
-        - radar
-        - terrain
-      constellation:
-        description: "The constellation of satelittes used to acquire the product. Setting a constellation is identical as setting all the product types generated by the given satellite constellation. __WARNING__: Mixing constellation and productType parameters result in an unspecified filter."
-        type: string
-        enum: [ "Pleiades", "SPOT", "TerraSAR-X Mission" ]
-      productType:
-        description: "A list of product types used as a filter. Only products of one of these types will be returned in the response."
-        type: array
-        items:
-          $ref: '#/definitions/productType'
-      polarisationChannels:
-        description: "The polarization channels used by the sensor during the product acquisition. Only products acquired with one of the listed polarisation channel will be returned in the response."
-        type: array
-        items:
-          type: string
-          enum:
-          - HH
-          - VV
-          - HH,HV
-          - HH,VV
-          - VV,VH
-        # OpenQuery
-      count:
-        description: Number of items per page
+      totalResults:
+        description: The number of search results available for the current search.
         type: integer
-        default: 10
-      startPage:
-        description: Page number
+      startIndex:
+        description: The index of the first search result in the current set of search results.
         type: integer
-        default: 1
-      sortKeys:
-        description: "A sorting request to the server conforming the OpenSearch SRU specification. Example: sortKeys=acquisitionDate,,0 cloudCover,,1 meaning a request to sort first by newest acquired image first and then by then smallest cloud coverage percentage."
-        type: string
-        format: OpenSearch SRU
+      itemsPerPage:
+        description: The number of search results returned per page.
+        type: integer
+
+
+  # END   ----------------- OpenSearch definitions ----------------------   END
+
+
+
 
         
 ###############################################################################
