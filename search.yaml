@@ -58,7 +58,7 @@ produces:
 schemes:
   - https
 
-host: search-qual.geoapi-airbusds.com
+host: search.geoapi-airbusds.com
 
 securityDefinitions:
   api_key:
