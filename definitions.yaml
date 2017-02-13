@@ -306,6 +306,7 @@ paths:
         * [OpenSearch Geo extension](http://www.opensearch.org/Specifications/OpenSearch/Extensions/Geo/1.0/Draft_1) version 1.0 Draft 1
         * [OpenSearch Time extension](http://www.opensearch.org/Specifications/OpenSearch/Extensions/Time/1.0/Draft_1) version 1.0 Draft 1
         * [OpenSearch for Earth Observation extension](https://portal.opengeospatial.org/files/65168) version of October 29th, 2014
+        * [Earth Observation Metadata profile of Observations & Measurements](http://docs.opengeospatial.org/is/10-157r4/10-157r4.html) version 1.1
       responses:
         '200':
           description: Request successful
