@@ -107,7 +107,7 @@ definitions:
   bbox:
     description: 'A bounding box definition. A bounding box is composed of 4 ordered values: the minimum X value, the minimum Y value, the maximum X value and the maximum Y value.'
     type: array
-    example: '[ -10.0, -10.0 , 10, 10 ]'
+    example: [ -10.0, -10.0 , 10, 10 ]
     items:
       type: number
       minItems: 4
