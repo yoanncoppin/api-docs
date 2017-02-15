@@ -255,7 +255,7 @@ paths:
         
         The AOI can be sent using either the bbox parameter or the geometry parameter.
         
-        __WARNING__: Due to technical limitations in web browsers, proxies and web servers the GET method may not work with complex AOI geometries. If you are unsure of the maximum number of vertices of the AOI polygon you may use, please prefer the POST method with a JSon body instead.
+        __WARNING__: Due to technical limitations in web browsers, proxies and web servers the GET method may not work with complex AOI geometries. If you are unsure of the maximum number of vertices of the AOI polygon you may use or if you are in a machine-to-machine communication pattern, please prefer the POST method with a JSon body instead.
       security:
         - api_key: []
         - param_key: []
@@ -362,9 +362,9 @@ paths:
             enum: 
             - HH
             - VV
-            - HH,HV
-            - HH,VV
-            - VV,VH
+            - HH/HV
+            - HH/VV
+            - VV/VH
           collectionFormat: csv
         - description: "The satellite orbit direction during the product acquisition. Only products acquired on the specified orbit direction will be returned in the response."
           in: query
@@ -426,6 +426,8 @@ paths:
       summary: Search for images.
       description: |
         Same as the GET version but without limitation on AOI complexity and parameters sent using JSon format.
+        
+        __To be prefered for machine-to-machine communication.__
       security:
         - api_key: []
         - param_key: []
