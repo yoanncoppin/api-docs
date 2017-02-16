@@ -435,30 +435,6 @@ paths:
       x-camelContextId: ordering
       x-routeId: getPrice
 definitions:
-  Account:
-    type: object
-    properties:
-      user:
-        type: string
-      firstname:
-        type: string
-        xml:
-          name: firstName
-      lastname:
-        type: string
-        xml:
-          name: lastName
-      email:
-        type: string
-      profile:
-        type: string
-      authorizations:
-        type: array
-        items:
-          $ref: '#/definitions/Authorization'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.followup.Account
   AcquisitionMethod:
     type: object
     properties:
@@ -472,17 +448,6 @@ definitions:
         $ref: '#/definitions/Sensor'
       acquisitionParameters:
         $ref: '#/definitions/AcquisitionParameters'
-  Invoice:
-    type: object
-    properties:
-      invoiceProposalID:
-        type: string
-      invoiceID:
-        type: string
-      status:
-        type: string
-      description:
-        type: string
   OptionsPerProductType:
     type: object
     properties:
@@ -553,29 +518,6 @@ definitions:
           - '_300'
       salesTradeCondition:
         type: string
-  EmployeeFollowup:
-    type: object
-    properties:
-      employeeid:
-        type: string
-        xml:
-          name: ID
-      lastname:
-        type: string
-        xml:
-          name: lastName
-      firstname:
-        type: string
-        xml:
-          name: firstName
-      email:
-        type: string
-      commercialReferent:
-        type: boolean
-        default: false
-      zoneReferent:
-        type: boolean
-        default: false
   AcquisitionParameters:
     type: object
     properties:
@@ -676,15 +618,6 @@ definitions:
     x-className:
       type: string
       format: com.airbus.wois.data.feasibility.ProgCapacityResponseGeoconnector
-  CustomerFollowup:
-    type: object
-    properties:
-      name:
-        type: string
-      shortName:
-        type: string
-      ID:
-        type: string
   QuotationFollowup:
     type: object
     properties:
@@ -773,16 +706,6 @@ definitions:
         $ref: '#/definitions/ValueOption'
       comment:
         $ref: '#/definitions/ValueOption'
-  EmployeesFollowup:
-    type: object
-    properties:
-      employees:
-        type: array
-        items:
-          $ref: '#/definitions/EmployeeFollowup'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.followup.EmployeesFollowup
   FeasibilityRequestGeoconnector:
     type: object
     properties:
@@ -849,17 +772,6 @@ definitions:
     x-className:
       type: string
       format: com.airbus.wois.data.CreateWorkOrderItemRequest
-  AcceptQuotationRequest:
-    type: object
-    properties:
-      customerVouchers:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/definitions/CustomerVoucherCIS'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.AcceptQuotationRequest
   MultiValuedProperties:
     type: object
     properties:
@@ -911,16 +823,6 @@ definitions:
       externallyModified:
         type: boolean
         default: false
-  CatalogueCswResponse:
-    type: object
-    properties:
-      workOrderIds:
-        type: array
-        items:
-          type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.supervision.CatalogueCswResponse
   DateValueOption:
     type: object
     properties:
@@ -938,14 +840,6 @@ definitions:
         type: string
       defaultDuration:
         type: string
-  RefuseQuotationRequest:
-    type: object
-    properties:
-      reason:
-        type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.RefuseQuotationRequest
   MultiValuedProperty:
     type: object
     properties:
@@ -984,18 +878,6 @@ definitions:
     x-className:
       type: string
       format: com.airbus.wois.data.followup.SearchResponse
-  ProgressStatus:
-    type: object
-    properties:
-      tasking:
-        type: number
-        format: double
-      production:
-        type: number
-        format: double
-    x-className:
-      type: string
-      format: com.airbus.wois.data.ProgressStatus
   OnePlanStandardOptions:
     type: object
     properties:
@@ -1014,16 +896,6 @@ definitions:
         type: string
       direction:
         type: string
-  ActivtiRunningResponse:
-    type: object
-    properties:
-      runningProcesses:
-        type: array
-        items:
-          type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.supervision.ActivtiRunningResponse
   RequestDetailAoi:
     type: object
     properties:
@@ -1041,16 +913,6 @@ definitions:
         type: string
       value:
         type: string
-  CheckUserResponse:
-    type: object
-    properties:
-      code:
-        type: string
-      url:
-        type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.CheckUserResponse
   WorkOrderResponse:
     type: object
     properties:
@@ -1133,28 +995,6 @@ definitions:
         type: string
       swathIdentifier:
         type: string
-  InvoiceEmail:
-    type: object
-    properties:
-      invoiceProposalID:
-        type: string
-      invoiceID:
-        type: string
-      emailSubject:
-        type: string
-      emailBody:
-        type: string
-      emailTo:
-        type: array
-        items:
-          type: string
-      emailCc:
-        type: array
-        items:
-          type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.InvoiceEmail
   SearchRequestFilterPeriod:
     type: object
     properties:
@@ -1270,48 +1110,6 @@ definitions:
     x-className:
       type: string
       format: com.airbus.wois.data.WorkOrderDTO
-  CustomersFollowup:
-    type: object
-    properties:
-      customers:
-        type: array
-        items:
-          $ref: '#/definitions/CustomerFollowup'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.followup.CustomersFollowup
-  SalesOrderEmail:
-    type: object
-    properties:
-      salesOrderConfirmID:
-        type: string
-      emailSubject:
-        type: string
-      emailBody:
-        type: string
-      emailTo:
-        type: array
-        items:
-          type: string
-      emailCc:
-        type: array
-        items:
-          type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.SalesOrderEmail
-  Invoices:
-    type: object
-    properties:
-      workOrderID:
-        type: string
-      invoices:
-        type: array
-        items:
-          $ref: '#/definitions/Invoice'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.Invoices
   Segment:
     type: object
     properties:
@@ -1338,20 +1136,6 @@ definitions:
         type: string
       orderDeadline:
         type: string
-  OptionsRequest:
-    type: object
-    properties:
-      technicalProduct:
-        $ref: '#/definitions/TechnicalProduct'
-      aoi:
-        type: array
-        items:
-          $ref: '#/definitions/OptionsAoi'
-      categoryFilter:
-        type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.OptionsRequest
   UpdateWorkOrderItemList:
     type: object
     properties:
@@ -1365,11 +1149,6 @@ definitions:
     x-className:
       type: string
       format: com.airbus.wois.data.UpdateWorkOrderItemList
-  Authorization:
-    type: object
-    properties:
-      key:
-        type: string
   ValueOption:
     type: object
     properties:
@@ -1623,28 +1402,6 @@ definitions:
         type: string
       street:
         type: string
-  QuotationEmail:
-    type: object
-    properties:
-      quotationID:
-        type: string
-      version:
-        type: string
-      emailSubject:
-        type: string
-      emailBody:
-        type: string
-      emailTo:
-        type: array
-        items:
-          type: string
-      emailCc:
-        type: array
-        items:
-          type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.QuotationEmail
   PriceItem:
     type: object
     properties:
@@ -1709,19 +1466,6 @@ definitions:
         default: false
     xml:
       name: options
-  InvoiceProposalResponse:
-    type: object
-    properties:
-      invoiceProposalID:
-        type: string
-      creationTime:
-        type: string
-        format: date-time
-      provider:
-        type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.InvoiceProposalResponse
   CatalogFilter:
     type: object
     properties:
@@ -1786,11 +1530,6 @@ definitions:
     x-className:
       type: string
       format: com.airbus.wois.data.QuotationResponseDTO
-  CustomerVoucherCIS:
-    type: object
-    properties:
-      code:
-        type: string
   LabelledIdentifier:
     type: object
     properties:
@@ -2190,13 +1929,3 @@ definitions:
     x-className:
       type: string
       format: com.airbus.wois.data.feasibility.ProgCapacityRequestGeoconnector
-  DownloadProductsResponse:
-    type: object
-    properties:
-      productUrls:
-        type: array
-        items:
-          type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.DownloadProductsResponse
