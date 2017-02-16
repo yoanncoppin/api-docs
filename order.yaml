@@ -1,7 +1,10 @@
 swagger: '2.0'
 info:
-  description: REST API services for GeoConnector
-  version: '1.0'
+  description: |
+    REST API services for GeoConnector
+    
+    This API version is __deprecated__ and should not be used for production purposes.
+  version: '0'
   title: GeoConnector API
 host: undefined.geoapi-airbusds.com
 basePath: /ordering
