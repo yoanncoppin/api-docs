@@ -1,0 +1,2202 @@
+swagger: '2.0'
+info:
+  description: REST API services for GeoConnector
+  version: '1.0'
+  title: GeoConnector API
+host: undefined.geoapi-airbusds.com
+basePath: /ordering
+schemes:
+  - https
+paths:
+  '/contract/{contractID}/productoffers':
+    get:
+      summary: 'Contract : get product offers'
+      parameters:
+        - name: contractID
+          in: path
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/ProductOffers'
+      x-camelContextId: ordering
+      x-routeId: getProductOffers
+  '/contract/{contractID}/voucher/{vouchercode}':
+    get:
+      summary: 'Contract : get voucher'
+      parameters:
+        - name: contractID
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: vouchercode
+          in: path
+          description: ''
+          required: true
+          type: string
+      x-camelContextId: ordering
+      x-routeId: checkVoucher
+      responses:
+        '200':
+          description: The request has been fulfilled successfully.
+  /contracts:
+    get:
+      summary: 'Contract : get user contracts'
+      parameters: []
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/Contracts'
+      x-camelContextId: ordering
+      x-routeId: getContracts
+  '/contracts/{userID}':
+    get:
+      summary: 'Contract : get user contracts'
+      parameters:
+        - name: userID
+          in: path
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/Contracts'
+      x-camelContextId: ordering
+      x-routeId: getContractsByUserId
+  /generaloptions:
+    get:
+      summary: Get general options
+      parameters: []
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/AvailableOptions'
+      x-camelContextId: ordering
+      x-routeId: getGeneralOptions
+  '/licence/{licenceName}':
+    get:
+      summary: Get licence
+      produces:
+        - text/plain
+      parameters:
+        - name: licenceName
+          in: path
+          description: ''
+          required: true
+          type: string
+      x-camelContextId: ordering
+      x-routeId: getLicence
+      responses:
+        '200':
+          description: The request has been fulfilled successfully.
+  /optionsByProductOffer:
+    post:
+      summary: Get options by product offer
+      parameters:
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/OptionsRequestGeoconnector'
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/AvailableOptions'
+      x-camelContextId: ordering
+      x-routeId: getOptionsByProductOffer
+  /properties:
+    get:
+      summary: Get general properties
+      parameters: []
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/MultiValuedProperties'
+      x-camelContextId: ordering
+      x-routeId: getGeneralProperties
+  /request:
+    post:
+      summary: 'Followup : search quotations'
+      parameters:
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/SearchRequest'
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/SearchResponse'
+      x-camelContextId: ordering
+      x-routeId: searchRequest
+  '/request/{workOrderId}/detail':
+    get:
+      summary: 'Followup : get workorder details'
+      parameters:
+        - name: workOrderId
+          in: path
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/RequestDetail'
+      x-camelContextId: ordering
+      x-routeId: getRequestDetail
+  /tasking/feasibility:
+    post:
+      summary: 'Tasking : feasibility'
+      parameters:
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/FeasibilityRequestGeoconnector'
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/FeasibilityResponseGeoconnector'
+      x-camelContextId: ordering
+      x-routeId: getFeasibility
+  /tasking/progcapacity:
+    post:
+      summary: 'Tasking : programmation capacity'
+      parameters:
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/ProgCapacityRequestGeoconnector'
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/ProgCapacityResponseGeoconnector'
+      x-camelContextId: ordering
+      x-routeId: getProgCapacity
+  /workorder:
+    post:
+      summary: 'Workorder : create'
+      parameters:
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/WorkOrderRequest'
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/WorkOrderResponse'
+      x-camelContextId: ordering
+      x-routeId: createWorkOrder
+  '/workorder/list/{statusRegex}':
+    get:
+      summary: 'Workorder : get list'
+      produces:
+        - text/html
+      parameters:
+        - name: statusRegex
+          in: path
+          description: ''
+          required: true
+          type: string
+      x-camelContextId: ordering
+      x-routeId: list
+      responses:
+        '200':
+          description: The request has been fulfilled successfully.
+  /workorder/price:
+    post:
+      summary: 'Workorder : calculate price'
+      parameters:
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/WorkOrderDTO'
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/PriceResponseDTO'
+      x-camelContextId: ordering
+      x-routeId: calculatePrice
+  /workorder/quotation:
+    post:
+      summary: 'Workorder : create quotation'
+      parameters:
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/WorkOrderDTO'
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/QuotationResponseDTO'
+      x-camelContextId: ordering
+      x-routeId: createQuotation
+  '/workorder/{workorderID}':
+    get:
+      summary: Get workorder
+      parameters:
+        - name: workorderID
+          in: path
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/WorkOrderDTO'
+      x-camelContextId: ordering
+      x-routeId: retrieveWorkOrder
+    post:
+      summary: 'Workorder : update'
+      parameters:
+        - name: workorderID
+          in: path
+          description: ''
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/WorkOrderRequest'
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/WorkOrderDTO'
+      x-camelContextId: ordering
+      x-routeId: updateWorkOrder
+    delete:
+      summary: 'Workorder : delete'
+      parameters:
+        - name: workorderID
+          in: path
+          description: ''
+          required: true
+          type: string
+      x-camelContextId: ordering
+      x-routeId: deleteWorkOrder
+      responses:
+        '200':
+          description: The request has been fulfilled successfully.
+  '/workorder/{workorderID}/feasibility':
+    post:
+      summary: 'Workorder : check tasking feasibility'
+      parameters:
+        - name: workorderID
+          in: path
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/WorkOrderDTO'
+      x-camelContextId: ordering
+      x-routeId: checkFeasibility
+  '/workorder/{workorderID}/items':
+    post:
+      summary: 'Workorder : create item'
+      parameters:
+        - name: workorderID
+          in: path
+          description: ''
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/CreateWorkOrderItemRequest'
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/WorkOrderItemResponse'
+      x-camelContextId: ordering
+      x-routeId: createWorkOrderItem
+    put:
+      summary: 'Workorder : update items'
+      parameters:
+        - name: workorderID
+          in: path
+          description: ''
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateWorkOrderItemList'
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/UpdateWorkOrderItemList'
+      x-camelContextId: ordering
+      x-routeId: updateWorkOrderItemList
+  '/workorder/{workorderID}/items/{workorderItemID}':
+    post:
+      summary: 'Workorder : update item'
+      parameters:
+        - name: workorderID
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: workorderItemID
+          in: path
+          description: ''
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/CreateWorkOrderItemRequest'
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/WorkOrderItemResponse'
+      x-camelContextId: ordering
+      x-routeId: updateWorkOrderItem
+    delete:
+      summary: 'Workorder : delete item'
+      parameters:
+        - name: workorderID
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: workorderItemID
+          in: path
+          description: ''
+          required: true
+          type: string
+      x-camelContextId: ordering
+      x-routeId: deleteWorkOrderItem
+      responses:
+        '200':
+          description: The request has been fulfilled successfully.
+  '/workorder/{workorderID}/{sequenceNumber}/price':
+    get:
+      summary: 'Workorder : get price'
+      parameters:
+        - name: workorderID
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: sequenceNumber
+          in: path
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/PriceResponseDTO'
+      x-camelContextId: ordering
+      x-routeId: getPrice
+definitions:
+  Account:
+    type: object
+    properties:
+      user:
+        type: string
+      firstname:
+        type: string
+        xml:
+          name: firstName
+      lastname:
+        type: string
+        xml:
+          name: lastName
+      email:
+        type: string
+      profile:
+        type: string
+      authorizations:
+        type: array
+        items:
+          $ref: '#/definitions/Authorization'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.followup.Account
+  AcquisitionMethod:
+    type: object
+    properties:
+      id:
+        type: string
+      platform:
+        type: string
+      instrument:
+        type: string
+      sensor:
+        $ref: '#/definitions/Sensor'
+      acquisitionParameters:
+        $ref: '#/definitions/AcquisitionParameters'
+  Invoice:
+    type: object
+    properties:
+      invoiceProposalID:
+        type: string
+      invoiceID:
+        type: string
+      status:
+        type: string
+      description:
+        type: string
+  OptionsPerProductType:
+    type: object
+    properties:
+      technicalProductID:
+        type: string
+      licence:
+        type: string
+      options:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+  Constraint:
+    type: object
+    properties:
+      reject:
+        type: boolean
+        default: false
+      filter:
+        type: string
+      defaultValue:
+        type: string
+  SarParameters:
+    type: object
+    properties:
+      minElevationAngle:
+        type: number
+        format: float
+      maxElevationAngle:
+        type: number
+        format: float
+      orbitDirection:
+        type: string
+        enum:
+          - ASCENDING
+          - DESCENDING
+          - BOTH
+      instrumentMode:
+        type: string
+        enum:
+          - STARING_SPOT_LIGTH
+          - HIGH_RESOLUTION_SPOT_LIGHT
+          - SPOT_LIGHT
+          - STRIP_MAP
+          - SCAN_SAR
+          - WS
+      polarizationMode:
+        type: string
+        enum:
+          - HH
+          - VV
+          - VH
+          - HV
+          - HH_VV
+          - HH_HV
+          - VV_VH
+          - HHVV
+          - HHHV
+          - VVVH
+      antennaLookDirection:
+        type: string
+        enum:
+          - RIGHT
+          - LEFT
+      bandWidth:
+        type: string
+        enum:
+          - '_150'
+          - '_300'
+      salesTradeCondition:
+        type: string
+  EmployeeFollowup:
+    type: object
+    properties:
+      employeeid:
+        type: string
+        xml:
+          name: ID
+      lastname:
+        type: string
+        xml:
+          name: lastName
+      firstname:
+        type: string
+        xml:
+          name: firstName
+      email:
+        type: string
+      commercialReferent:
+        type: boolean
+        default: false
+      zoneReferent:
+        type: boolean
+        default: false
+  AcquisitionParameters:
+    type: object
+    properties:
+      orbitDirection:
+        type: string
+        enum:
+          - ASCENDING
+          - DESCENDING
+          - BOTH
+      orbitNumber:
+        type: integer
+        format: int32
+      antennaLookDirection:
+        type: string
+      minimumIncidenceAngle:
+        $ref: '#/definitions/Angle'
+      maximumIncidenceAngle:
+        $ref: '#/definitions/Angle'
+      polarizationMode:
+        type: string
+        enum:
+          - HH
+          - VV
+          - VH
+          - HV
+          - HH_VV
+          - HH_HV
+          - VV_VH
+          - HHVV
+          - HHHV
+          - VVVH
+      incidence:
+        type: number
+        format: double
+      luminosity:
+        type: number
+        format: double
+      cloudCoverRate:
+        type: number
+        format: double
+      extendedAngle:
+        type: boolean
+        default: false
+      roll:
+        type: number
+        format: double
+      acrossTrackIncidenceAngle:
+        type: number
+        format: double
+  RequestDetailItem:
+    type: object
+    properties:
+      productOfferID:
+        type: string
+      areaKm2:
+        type: number
+        format: float
+      description:
+        type: string
+      minimumOrderApply:
+        type: boolean
+        default: false
+      priceCur:
+        type: number
+        format: float
+      discountPct:
+        type: number
+        format: float
+      discountValue:
+        type: number
+        format: float
+      amountCur:
+        type: number
+        format: float
+      manualFeasibilityStudy:
+        type: boolean
+        default: false
+      workOrderItems:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/definitions/RequestDetailWorkorderItem'
+      polygons:
+        type: array
+        items:
+          $ref: '#/definitions/RequestDetailPolygon'
+      options:
+        type: array
+        items:
+          $ref: '#/definitions/OptionFollowup'
+  ProgCapacityResponseGeoconnector:
+    type: object
+    properties:
+      progCapacity:
+        type: array
+        items:
+          $ref: '#/definitions/ProgCapacity'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.feasibility.ProgCapacityResponseGeoconnector
+  CustomerFollowup:
+    type: object
+    properties:
+      name:
+        type: string
+      shortName:
+        type: string
+      ID:
+        type: string
+  QuotationFollowup:
+    type: object
+    properties:
+      status:
+        type: string
+      contractID:
+        type: string
+      currencyID:
+        type: string
+      requestType:
+        type: string
+      workOrderID:
+        type: string
+      customerID:
+        type: string
+      customerInvoiceID:
+        type: string
+      commercialReferentID:
+        type: string
+      zoneReferentID:
+        type: string
+      endOfValidityDate:
+        type: string
+      totalAmountCur:
+        type: number
+        format: float
+      createdDateTime:
+        type: string
+      marketID:
+        type: string
+      applicationID:
+        type: string
+      contactEmail:
+        type: string
+      deliveryMode:
+        type: string
+      referenceForCustomer:
+        type: string
+      ID:
+        type: string
+  ProductOffer:
+    type: object
+    properties:
+      productOfferID:
+        type: string
+      name:
+        type: string
+      technicalProduct:
+        $ref: '#/definitions/TechnicalProduct'
+      catalogFilters:
+        type: array
+        items:
+          $ref: '#/definitions/CatalogFilter'
+      minimumOrderApplied:
+        type: number
+        format: double
+      manualFeasibilityStudy:
+        type: boolean
+        default: false
+      candidateTemporalSerie:
+        type: boolean
+        default: false
+  ProgCapacityError:
+    type: object
+    properties:
+      code:
+        type: string
+      locator:
+        type: string
+      message:
+        type: string
+  OnePlanAdvancedOptions:
+    type: object
+    properties:
+      acqPeriod:
+        $ref: '#/definitions/DateValueOption'
+      maxCloudCover:
+        $ref: '#/definitions/ValueOption'
+      maxIncidenceAngle:
+        $ref: '#/definitions/ValueOption'
+      acquisitionMode:
+        $ref: '#/definitions/ValueOption'
+      minBH:
+        $ref: '#/definitions/ValueOption'
+      maxBH:
+        $ref: '#/definitions/ValueOption'
+      comment:
+        $ref: '#/definitions/ValueOption'
+  EmployeesFollowup:
+    type: object
+    properties:
+      employees:
+        type: array
+        items:
+          $ref: '#/definitions/EmployeeFollowup'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.followup.EmployeesFollowup
+  FeasibilityRequestGeoconnector:
+    type: object
+    properties:
+      version:
+        type: string
+      progType:
+        type: string
+      mission:
+        type: string
+      aoi:
+        type: string
+      acqStartDate:
+        type: string
+      acqEndDate:
+        type: string
+      acqMode:
+        type: string
+        enum:
+          - MONO
+          - STEREO
+          - TRISTEREO
+      optical:
+        $ref: '#/definitions/OpticalParameters'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.feasibility.FeasibilityRequestGeoconnector
+  CreateWorkOrderItemRequest:
+    type: object
+    properties:
+      catalogID:
+        type: string
+      datastripIDs:
+        type: array
+        items:
+          type: string
+      externalProperties:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+      itemType:
+        type: string
+      licence:
+        type: string
+      polygonID:
+        type: integer
+        format: int32
+      originalPolygonID:
+        type: integer
+        format: int32
+      productOfferID:
+        type: string
+      technicalProduct:
+        $ref: '#/definitions/TechnicalProduct'
+      productID:
+        type: string
+      mediaID:
+        type: string
+      options:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+      workOrderID:
+        type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.CreateWorkOrderItemRequest
+  AcceptQuotationRequest:
+    type: object
+    properties:
+      customerVouchers:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/definitions/CustomerVoucherCIS'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.AcceptQuotationRequest
+  MultiValuedProperties:
+    type: object
+    properties:
+      properties:
+        type: array
+        items:
+          $ref: '#/definitions/MultiValuedProperty'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.MultiValuedProperties
+  Footprint:
+    type: object
+    properties:
+      geometryId:
+        type: string
+      geometry:
+        type: string
+      center:
+        type: string
+  OpticalParameters:
+    type: object
+    properties:
+      maxCloudCover:
+        type: number
+        format: float
+      maxIncidenceAngle:
+        type: number
+        format: float
+  AoiPart:
+    type: object
+    properties:
+      polygonID:
+        type: integer
+        format: int32
+      geometry:
+        type: string
+      externallyModified:
+        type: boolean
+        default: false
+      name:
+        type: string
+  OptionsAoi:
+    type: object
+    properties:
+      polygonID:
+        type: string
+      geometry:
+        type: string
+      externallyModified:
+        type: boolean
+        default: false
+  CatalogueCswResponse:
+    type: object
+    properties:
+      workOrderIds:
+        type: array
+        items:
+          type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.supervision.CatalogueCswResponse
+  DateValueOption:
+    type: object
+    properties:
+      productCode:
+        type: string
+      allowedValue:
+        type: array
+        items:
+          type: string
+      defaultValue:
+        type: string
+      minDate:
+        $ref: '#/definitions/SimpleValueOption'
+      minDuration:
+        type: string
+      defaultDuration:
+        type: string
+  RefuseQuotationRequest:
+    type: object
+    properties:
+      reason:
+        type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.RefuseQuotationRequest
+  MultiValuedProperty:
+    type: object
+    properties:
+      key:
+        type: string
+      values:
+        type: array
+        items:
+          $ref: '#/definitions/LabelledIdentifier'
+  AvailableOptions:
+    type: object
+    properties:
+      availableOptions:
+        type: array
+        items:
+          $ref: '#/definitions/OptionDTO'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.AvailableOptions
+  SearchResponse:
+    type: object
+    properties:
+      result:
+        type: array
+        items:
+          $ref: '#/definitions/QuotationFollowup'
+      total:
+        type: integer
+        format: int64
+      limit:
+        type: integer
+        format: int32
+      offset:
+        type: integer
+        format: int32
+    x-className:
+      type: string
+      format: com.airbus.wois.data.followup.SearchResponse
+  ProgressStatus:
+    type: object
+    properties:
+      tasking:
+        type: number
+        format: double
+      production:
+        type: number
+        format: double
+    x-className:
+      type: string
+      format: com.airbus.wois.data.ProgressStatus
+  OnePlanStandardOptions:
+    type: object
+    properties:
+      acqPeriod:
+        $ref: '#/definitions/DateValueOption'
+      maxCloudCover:
+        $ref: '#/definitions/ValueOption'
+      maxIncidenceAngle:
+        $ref: '#/definitions/ValueOption'
+      comment:
+        $ref: '#/definitions/ValueOption'
+  SearchRequestSort:
+    type: object
+    properties:
+      field:
+        type: string
+      direction:
+        type: string
+  ActivtiRunningResponse:
+    type: object
+    properties:
+      runningProcesses:
+        type: array
+        items:
+          type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.supervision.ActivtiRunningResponse
+  RequestDetailAoi:
+    type: object
+    properties:
+      polygonID:
+        type: integer
+        format: int64
+      name:
+        type: string
+      geometry:
+        type: string
+  SimpleValueOption:
+    type: object
+    properties:
+      productCode:
+        type: string
+      value:
+        type: string
+  CheckUserResponse:
+    type: object
+    properties:
+      code:
+        type: string
+      url:
+        type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.CheckUserResponse
+  WorkOrderResponse:
+    type: object
+    properties:
+      workorderID:
+        type: string
+      creationTime:
+        type: string
+        format: date-time
+      status:
+        type: string
+        enum:
+          - CANCELLED
+          - DELIVERED
+          - DRAFT
+          - ERROR
+          - FEASIBILITY_STUDY_PENDING
+          - FEASIBILITY_STUDY_RECEIVED
+          - FEASIBILITY_STUDY_ERROR
+          - FULFILLED
+          - INVOICED
+          - QUOTATION_ACCEPTED
+          - QUOTATION_REFUSED
+          - QUOTATION_SUBMITTED
+          - RUNNING
+          - FULFILLABLE
+    x-className:
+      type: string
+      format: com.airbus.wois.data.WorkOrderResponse
+  OptionsRequestGeoconnector:
+    type: object
+    properties:
+      technicalProduct:
+        $ref: '#/definitions/TechnicalProduct'
+      aoi:
+        type: array
+        items:
+          $ref: '#/definitions/OptionsAoi'
+      categoryFilter:
+        type: string
+      productOfferId:
+        type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.OptionsRequestGeoconnector
+  Contract:
+    type: object
+    properties:
+      contractID:
+        type: string
+      name:
+        type: string
+      customerID:
+        type: string
+      customerInvoiceID:
+        type: string
+      deliveryName:
+        type: string
+      deliveryStreet:
+        type: string
+      deliveryZipcode:
+        type: string
+      deliveryCity:
+        type: string
+      deliveryCounty:
+        type: string
+      deliveryCountry:
+        type: string
+      tradeAgreementUrl:
+        type: string
+      creditRemaining:
+        type: string
+      currencyID:
+        type: string
+  Sensor:
+    type: object
+    properties:
+      sensorType:
+        type: string
+      operationalMode:
+        type: string
+      swathIdentifier:
+        type: string
+  InvoiceEmail:
+    type: object
+    properties:
+      invoiceProposalID:
+        type: string
+      invoiceID:
+        type: string
+      emailSubject:
+        type: string
+      emailBody:
+        type: string
+      emailTo:
+        type: array
+        items:
+          type: string
+      emailCc:
+        type: array
+        items:
+          type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.InvoiceEmail
+  SearchRequestFilterPeriod:
+    type: object
+    properties:
+      from:
+        type: string
+      to:
+        type: string
+  SearchRequest:
+    type: object
+    properties:
+      limit:
+        type: integer
+        format: int32
+      offset:
+        type: integer
+        format: int32
+      filter:
+        type: array
+        items:
+          $ref: '#/definitions/SearchRequestFilter'
+      sort:
+        type: array
+        items:
+          $ref: '#/definitions/SearchRequestSort'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.followup.SearchRequest
+  WorkOrderDTO:
+    type: object
+    properties:
+      aoi:
+        type: array
+        items:
+          $ref: '#/definitions/AoiPart'
+      application:
+        type: string
+      attachments:
+        type: array
+        items:
+          type: string
+      author:
+        type: string
+      comments:
+        type: string
+      contractID:
+        type: string
+      creationTime:
+        type: string
+        format: date-time
+      customerID:
+        type: string
+      id:
+        type: string
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/WorkOrderItem'
+      market:
+        type: string
+      name:
+        type: string
+      options:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+      optionsPerProductType:
+        type: array
+        items:
+          $ref: '#/definitions/OptionsPerProductType'
+      salesOrderID:
+        type: string
+      quotationID:
+        type: string
+      status:
+        type: string
+        enum:
+          - CANCELLED
+          - DELIVERED
+          - DRAFT
+          - ERROR
+          - FEASIBILITY_STUDY_PENDING
+          - FEASIBILITY_STUDY_RECEIVED
+          - FEASIBILITY_STUDY_ERROR
+          - FULFILLED
+          - INVOICED
+          - QUOTATION_ACCEPTED
+          - QUOTATION_REFUSED
+          - QUOTATION_SUBMITTED
+          - RUNNING
+          - FULFILLABLE
+      statusInfo:
+        type: string
+      externalProperties:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+      invoiceProposalID:
+        type: string
+      endUser:
+        type: string
+      origin:
+        type: string
+      deliveryAddress:
+        $ref: '#/definitions/AddressDelivery'
+      sequenceNumber:
+        type: integer
+        format: int64
+      workorderID:
+        type: string
+      inError:
+        type: boolean
+        default: false
+    x-className:
+      type: string
+      format: com.airbus.wois.data.WorkOrderDTO
+  CustomersFollowup:
+    type: object
+    properties:
+      customers:
+        type: array
+        items:
+          $ref: '#/definitions/CustomerFollowup'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.followup.CustomersFollowup
+  SalesOrderEmail:
+    type: object
+    properties:
+      salesOrderConfirmID:
+        type: string
+      emailSubject:
+        type: string
+      emailBody:
+        type: string
+      emailTo:
+        type: array
+        items:
+          type: string
+      emailCc:
+        type: array
+        items:
+          type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.SalesOrderEmail
+  Invoices:
+    type: object
+    properties:
+      workOrderID:
+        type: string
+      invoices:
+        type: array
+        items:
+          $ref: '#/definitions/Invoice'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.Invoices
+  Segment:
+    type: object
+    properties:
+      id:
+        type: string
+      footprint:
+        $ref: '#/definitions/Footprint'
+      acquisitionStartTime:
+        type: string
+      acquisitionStopTime:
+        type: string
+      acquisitionMethod:
+        $ref: '#/definitions/AcquisitionMethod'
+      status:
+        type: string
+        enum:
+          - POTENTIAL
+          - PLANNED
+          - ACQUIRED
+          - VALIDATED
+          - FAILED
+          - CANCELLED
+      instrumentMode:
+        type: string
+      orderDeadline:
+        type: string
+  OptionsRequest:
+    type: object
+    properties:
+      technicalProduct:
+        $ref: '#/definitions/TechnicalProduct'
+      aoi:
+        type: array
+        items:
+          $ref: '#/definitions/OptionsAoi'
+      categoryFilter:
+        type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.OptionsRequest
+  UpdateWorkOrderItemList:
+    type: object
+    properties:
+      sequenceNumber:
+        type: integer
+        format: int64
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/WorkOrderItem'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.UpdateWorkOrderItemList
+  Authorization:
+    type: object
+    properties:
+      key:
+        type: string
+  ValueOption:
+    type: object
+    properties:
+      productCode:
+        type: string
+      allowedValue:
+        type: array
+        items:
+          type: string
+      alertThreshold:
+        type: string
+      proposalThreshold:
+        type: string
+      defaultValue:
+        type: string
+      minValue:
+        type: string
+      maxValue:
+        type: string
+  WorkOrderRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      author:
+        type: string
+      contractID:
+        type: string
+      customerID:
+        type: string
+      application:
+        type: string
+      attachments:
+        type: array
+        items:
+          type: string
+      comments:
+        type: string
+      aoi:
+        type: array
+        items:
+          $ref: '#/definitions/OptionsAoi'
+      options:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+      optionsPerProductType:
+        type: array
+        items:
+          $ref: '#/definitions/OptionsPerProductType'
+      status:
+        type: string
+        enum:
+          - CANCELLED
+          - DELIVERED
+          - DRAFT
+          - ERROR
+          - FEASIBILITY_STUDY_PENDING
+          - FEASIBILITY_STUDY_RECEIVED
+          - FEASIBILITY_STUDY_ERROR
+          - FULFILLED
+          - INVOICED
+          - QUOTATION_ACCEPTED
+          - QUOTATION_REFUSED
+          - QUOTATION_SUBMITTED
+          - RUNNING
+          - FULFILLABLE
+      externalProperties:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+      endUser:
+        type: string
+      market:
+        type: string
+      origin:
+        type: string
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/WorkOrderItemDTO'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.WorkOrderRequest
+  GeometryPrice:
+    type: object
+    properties:
+      geometryID:
+        type: integer
+        format: int64
+      name:
+        type: string
+      areaKm2:
+        type: number
+        format: double
+  WorkOrderItemResponse:
+    type: object
+    properties:
+      workorderItemID:
+        type: string
+      creationTime:
+        type: string
+        format: date-time
+      status:
+        type: string
+        enum:
+          - DRAFT
+          - LOCKED
+          - READY
+          - ERROR
+          - FEASIBILITY_STUDY_ERROR
+          - RUNNING
+          - COMPLETED
+          - ABORT
+          - PRODUCTION_WAIT
+          - DELIVERY_WAIT
+          - REJECTED
+    x-className:
+      type: string
+      format: com.airbus.wois.data.WorkOrderItemResponse
+  WorkOrderItemDTO:
+    type: object
+    properties:
+      datastripIDs:
+        type: array
+        items:
+          type: string
+      externalProperties:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+      licence:
+        type: string
+      itemType:
+        type: string
+        enum:
+          - INTERMEDIATE
+          - GENERATED
+          - FINAL
+          - CANDIDATE_GEOSA_ORDER
+          - SUBMIT_GEOSA_ORDER
+          - CANDIDATE_GEOGMBH_ARCH_ORDER
+          - SUBMIT_GEOGMBH_ARCH_ORDER
+          - SUBMIT_GEOGMBH_TASK_ORDER
+      polygonID:
+        type: string
+      productOfferID:
+        type: string
+      technicalProduct:
+        $ref: '#/definitions/TechnicalProduct'
+      workOrderItemID:
+        type: string
+      productID:
+        type: string
+      mediaID:
+        type: string
+      aoiTasking:
+        type: string
+      options:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+  RequestDetailPolygon:
+    type: object
+    properties:
+      polygonID:
+        type: integer
+        format: int64
+      areaKm2:
+        type: number
+        format: float
+  TechnicalProduct:
+    type: object
+    properties:
+      id:
+        type: string
+      label:
+        type: string
+      source:
+        $ref: '#/definitions/LabelledIdentifier'
+      sensor:
+        $ref: '#/definitions/LabelledIdentifier'
+      target:
+        $ref: '#/definitions/LabelledIdentifier'
+      licences:
+        type: array
+        items:
+          type: string
+  OptionListItem:
+    type: object
+    properties:
+      id:
+        type: string
+      label:
+        type: string
+      constraint:
+        $ref: '#/definitions/Constraint'
+  Property:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Contracts:
+    type: object
+    properties:
+      contracts:
+        type: array
+        items:
+          $ref: '#/definitions/Contract'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.Contracts
+  ProgFeasibility:
+    type: object
+    properties:
+      mission:
+        type: string
+        enum:
+          - SPOT
+          - PLEIADES
+          - TERRASAR_X
+      progTypes:
+        type: array
+        items:
+          $ref: '#/definitions/ProgType'
+  ProgCapacity:
+    type: object
+    properties:
+      mission:
+        type: string
+        enum:
+          - SPOT
+          - PLEIADES
+          - TERRASAR_X
+      progTypes:
+        type: array
+        items:
+          $ref: '#/definitions/ProgType'
+  AddressDelivery:
+    type: object
+    properties:
+      country:
+        type: string
+      county:
+        type: string
+      zipcode:
+        type: string
+      city:
+        type: string
+      street:
+        type: string
+  QuotationEmail:
+    type: object
+    properties:
+      quotationID:
+        type: string
+      version:
+        type: string
+      emailSubject:
+        type: string
+      emailBody:
+        type: string
+      emailTo:
+        type: array
+        items:
+          type: string
+      emailCc:
+        type: array
+        items:
+          type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.QuotationEmail
+  PriceItem:
+    type: object
+    properties:
+      amount:
+        type: number
+        format: double
+      amountCur:
+        type: number
+        format: double
+      areaKm2:
+        type: number
+        format: double
+      calculation:
+        type: string
+      description:
+        type: string
+      discountPct:
+        type: number
+        format: double
+      discountValue:
+        type: number
+        format: double
+      minimumOrderApply:
+        type: boolean
+        default: false
+      price:
+        type: number
+        format: double
+      priceCur:
+        type: number
+        format: double
+      productOfferID:
+        type: string
+      workOrderItems:
+        type: array
+        items:
+          $ref: '#/definitions/WorkOrderItemPriceRef'
+      manualFeasibilityStudy:
+        type: boolean
+        default: false
+      transID:
+        type: integer
+        format: int64
+      temporalSerie:
+        type: boolean
+        default: false
+      geometries:
+        type: array
+        items:
+          $ref: '#/definitions/GeometryPrice'
+  OptionFollowup:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+      translation:
+        type: string
+      visibility:
+        type: boolean
+        default: false
+    xml:
+      name: options
+  InvoiceProposalResponse:
+    type: object
+    properties:
+      invoiceProposalID:
+        type: string
+      creationTime:
+        type: string
+        format: date-time
+      provider:
+        type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.InvoiceProposalResponse
+  CatalogFilter:
+    type: object
+    properties:
+      filter:
+        type: string
+      catalogID:
+        type: string
+  QuotationResponseDTO:
+    type: object
+    properties:
+      applicationID:
+        type: string
+      calculation:
+        type: string
+      contractID:
+        type: string
+      currency:
+        type: string
+      customerID:
+        type: string
+      discountPct:
+        type: number
+        format: double
+      discountValue:
+        type: number
+        format: double
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/PriceItem'
+      marketID:
+        type: string
+      processDateTime:
+        type: string
+        format: date-time
+      totalAmount:
+        type: number
+        format: double
+      totalAmountCur:
+        type: number
+        format: double
+      totalAmountCurBeforeDiscount:
+        type: number
+        format: double
+      workOrderID:
+        type: string
+      geometries:
+        type: array
+        items:
+          $ref: '#/definitions/GeometryPrice'
+      quotationID:
+        type: string
+      version:
+        type: integer
+        format: int32
+      deliveryAddress:
+        $ref: '#/definitions/AddressDelivery'
+      endUser:
+        type: string
+      provider:
+        type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.QuotationResponseDTO
+  CustomerVoucherCIS:
+    type: object
+    properties:
+      code:
+        type: string
+  LabelledIdentifier:
+    type: object
+    properties:
+      id:
+        type: string
+      label:
+        type: string
+  SearchRequestFilterRange:
+    type: object
+    properties:
+      min:
+        type: number
+        format: float
+      max:
+        type: number
+        format: float
+  FeasibilityResponseGeoconnector:
+    type: object
+    properties:
+      progFeasibility:
+        type: array
+        items:
+          $ref: '#/definitions/ProgFeasibility'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.feasibility.FeasibilityResponseGeoconnector
+  WorkOrderItemPriceRef:
+    type: object
+    properties:
+      workOrderItemID:
+        type: string
+      datastripIDs:
+        type: array
+        items:
+          type: string
+      geometryID:
+        type: integer
+        format: int64
+  SearchRequestFilter:
+    type: object
+    properties:
+      field:
+        type: string
+      values:
+        type: array
+        items:
+          $ref: '#/definitions/SearchRequestFilterValue'
+      range:
+        $ref: '#/definitions/SearchRequestFilterRange'
+      period:
+        $ref: '#/definitions/SearchRequestFilterPeriod'
+      like:
+        type: string
+  Angle:
+    type: object
+    properties:
+      unit:
+        type: string
+      value:
+        type: number
+        format: float
+  ProgOptions:
+    type: object
+    properties:
+      maxIncidenceAngleExtended:
+        type: number
+        format: double
+      maxIncidenceAngleNotExtended:
+        type: number
+        format: double
+      extendedAngle:
+        $ref: '#/definitions/ValueOption'
+      acqPeriod:
+        $ref: '#/definitions/DateValueOption'
+      maxCloudCover:
+        $ref: '#/definitions/ValueOption'
+      maxSnowCover:
+        $ref: '#/definitions/ValueOption'
+      maxIncidenceAngle:
+        $ref: '#/definitions/ValueOption'
+      hazeAccepted:
+        $ref: '#/definitions/ValueOption'
+      sandWindAccepted:
+        $ref: '#/definitions/ValueOption'
+      priority:
+        $ref: '#/definitions/ValueOption'
+      stereoMode:
+        $ref: '#/definitions/ValueOption'
+      delayedPublication:
+        $ref: '#/definitions/ValueOption'
+      comment:
+        $ref: '#/definitions/ValueOption'
+      tristereoMode:
+        $ref: '#/definitions/ValueOption'
+      emergency:
+        $ref: '#/definitions/ValueOption'
+      acqMinDate:
+        $ref: '#/definitions/SimpleValueOption'
+      acqDuration:
+        $ref: '#/definitions/ValueOption'
+      temporalMode:
+        $ref: '#/definitions/ValueOption'
+      minBH:
+        $ref: '#/definitions/ValueOption'
+      maxBH:
+        $ref: '#/definitions/ValueOption'
+      acquisitionMode:
+        $ref: '#/definitions/ValueOption'
+      nbAcqRegularAcq:
+        $ref: '#/definitions/ValueOption'
+      minIntervalRegularAcq:
+        $ref: '#/definitions/ValueOption'
+      advancedOptions:
+        $ref: '#/definitions/OnePlanAdvancedOptions'
+      standardOptions:
+        $ref: '#/definitions/OnePlanStandardOptions'
+  ProgType:
+    type: object
+    properties:
+      name:
+        type: string
+        enum:
+          - ONEPLAN
+          - ONEDAY
+          - ONENOW
+          - ONESERIES
+          - SPECULATIVE
+          - ALL
+      mission:
+        type: string
+      available:
+        type: boolean
+        default: false
+      error:
+        $ref: '#/definitions/ProgCapacityError'
+      expirationDate:
+        type: string
+      successRate:
+        type: number
+        format: float
+      task:
+        type: string
+      procedure:
+        type: string
+      updateTime:
+        type: string
+      informationUsed:
+        type: array
+        items:
+          type: string
+      productCode:
+        type: string
+      progOptions:
+        $ref: '#/definitions/ProgOptions'
+      resizedAoi:
+        type: string
+      segments:
+        type: array
+        items:
+          $ref: '#/definitions/Segment'
+      extendedAngleNotAllowed0020:
+        type: array
+        items:
+          $ref: '#/definitions/Segment'
+      extendedAngleAllowed:
+        type: array
+        items:
+          $ref: '#/definitions/Segment'
+      feasibility:
+        $ref: '#/definitions/Feasibility'
+  ProductOffers:
+    type: object
+    properties:
+      targetOrder:
+        type: array
+        items:
+          type: string
+      productOffers:
+        type: array
+        items:
+          $ref: '#/definitions/ProductOffer'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.ProductOffers
+  SearchRequestFilterValue:
+    type: object
+    properties:
+      value:
+        type: string
+  PriceResponseDTO:
+    type: object
+    properties:
+      applicationID:
+        type: string
+      calculation:
+        type: string
+      contractID:
+        type: string
+      currency:
+        type: string
+      customerID:
+        type: string
+      discountPct:
+        type: number
+        format: double
+      discountValue:
+        type: number
+        format: double
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/PriceItem'
+      marketID:
+        type: string
+      processDateTime:
+        type: string
+        format: date-time
+      totalAmount:
+        type: number
+        format: double
+      totalAmountCur:
+        type: number
+        format: double
+      totalAmountCurBeforeDiscount:
+        type: number
+        format: double
+      workOrderID:
+        type: string
+      geometries:
+        type: array
+        items:
+          $ref: '#/definitions/GeometryPrice'
+      provider:
+        type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.PriceResponseDTO
+  OptionDTO:
+    type: object
+    properties:
+      category:
+        type: string
+      constraint:
+        $ref: '#/definitions/Constraint'
+      label:
+        type: string
+      name:
+        type: string
+      type:
+        type: string
+      values:
+        type: array
+        items:
+          $ref: '#/definitions/OptionListItem'
+      defaultValue:
+        type: string
+      range:
+        type: array
+        items:
+          type: number
+          format: double
+  RequestDetail:
+    type: object
+    properties:
+      workOrderID:
+        type: string
+      quotationID:
+        type: string
+      aoi:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/definitions/RequestDetailAoi'
+      items:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/definitions/RequestDetailItem'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.followup.RequestDetail
+  Feasibility:
+    type: object
+    properties:
+      classification:
+        type: string
+      automation:
+        type: string
+      automationName:
+        type: string
+  RequestDetailWorkorderItem:
+    type: object
+    properties:
+      workOrderItemID:
+        type: string
+      polygonID:
+        type: integer
+        format: int64
+      datastripIDs:
+        type: array
+        items:
+          type: string
+      taskingID:
+        type: string
+  WorkOrderItem:
+    type: object
+    properties:
+      catalogID:
+        type: string
+      comments:
+        type: string
+      creationTime:
+        type: string
+        format: date-time
+      datastripIDs:
+        type: array
+        items:
+          type: string
+      externalProperties:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+      id:
+        type: string
+      itemType:
+        type: string
+        enum:
+          - INTERMEDIATE
+          - GENERATED
+          - FINAL
+          - CANDIDATE_GEOSA_ORDER
+          - SUBMIT_GEOSA_ORDER
+          - CANDIDATE_GEOGMBH_ARCH_ORDER
+          - SUBMIT_GEOGMBH_ARCH_ORDER
+          - SUBMIT_GEOGMBH_TASK_ORDER
+      polygonID:
+        type: integer
+        format: int32
+      originalPolygonID:
+        type: integer
+        format: int32
+      productOfferID:
+        type: string
+      status:
+        type: string
+        enum:
+          - DRAFT
+          - LOCKED
+          - READY
+          - ERROR
+          - FEASIBILITY_STUDY_ERROR
+          - RUNNING
+          - COMPLETED
+          - ABORT
+          - PRODUCTION_WAIT
+          - DELIVERY_WAIT
+          - REJECTED
+      statusInfo:
+        type: string
+      technicalProduct:
+        $ref: '#/definitions/TechnicalProduct'
+      workOrderID:
+        type: string
+      workflowRef:
+        type: string
+      productID:
+        type: string
+      mediaID:
+        type: string
+      icrReference:
+        type: string
+      options:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+  ProgCapacityRequestGeoconnector:
+    type: object
+    properties:
+      version:
+        type: string
+      contractId:
+        type: string
+      progType:
+        type: string
+      mission:
+        type: string
+      aoi:
+        type: string
+      acqStartDate:
+        type: string
+      acqEndDate:
+        type: string
+      optical:
+        $ref: '#/definitions/OpticalParameters'
+      sar:
+        $ref: '#/definitions/SarParameters'
+    x-className:
+      type: string
+      format: com.airbus.wois.data.feasibility.ProgCapacityRequestGeoconnector
+  DownloadProductsResponse:
+    type: object
+    properties:
+      productUrls:
+        type: array
+        items:
+          type: string
+    x-className:
+      type: string
+      format: com.airbus.wois.data.DownloadProductsResponse
