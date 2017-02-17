@@ -52,8 +52,6 @@ paths:
           description: ''
           required: true
           type: string
-      x-camelContextId: ordering
-      x-routeId: getLicence
       responses:
         '200':
           description: The request has been fulfilled successfully.
@@ -293,6 +291,23 @@ paths:
           description: The request has been fulfilled successfully.
       tags:
         - Work order
+  '/ordering/workorder/quotation':
+    post:
+      summary: 'Workorder : create quotation'
+      parameters:
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/WorkOrderDTO'
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/QuotationResponseDTO'
+      tags:
+        - Work order
 definitions:
   AcquisitionMethod:
     type: object
@@ -433,9 +448,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ProgCapacity'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.feasibility.ProgCapacityResponseGeoconnector
   ProductOffer:
     type: object
     properties:
@@ -507,9 +519,6 @@ definitions:
           - TRISTEREO
       optical:
         $ref: '#/definitions/OpticalParameters'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.feasibility.FeasibilityRequestGeoconnector
   CreateWorkOrderItemRequest:
     type: object
     properties:
@@ -547,9 +556,6 @@ definitions:
           $ref: '#/definitions/Property'
       workOrderID:
         type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.CreateWorkOrderItemRequest
   MultiValuedProperties:
     type: object
     properties:
@@ -557,9 +563,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/MultiValuedProperty'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.MultiValuedProperties
   Footprint:
     type: object
     properties:
@@ -634,9 +637,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/OptionDTO'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.AvailableOptions
   OnePlanStandardOptions:
     type: object
     properties:
@@ -680,9 +680,6 @@ definitions:
           - QUOTATION_SUBMITTED
           - RUNNING
           - FULFILLABLE
-    x-className:
-      type: string
-      format: com.airbus.wois.data.WorkOrderResponse
   OptionsRequestGeoconnector:
     type: object
     properties:
@@ -696,9 +693,6 @@ definitions:
         type: string
       productOfferId:
         type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.OptionsRequestGeoconnector
   Contract:
     type: object
     properties:
@@ -822,9 +816,6 @@ definitions:
       inError:
         type: boolean
         default: false
-    x-className:
-      type: string
-      format: com.airbus.wois.data.WorkOrderDTO
   Segment:
     type: object
     properties:
@@ -861,9 +852,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/WorkOrderItem'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.UpdateWorkOrderItemList
   ValueOption:
     type: object
     properties:
@@ -945,9 +933,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/WorkOrderItemDTO'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.WorkOrderRequest
   GeometryPrice:
     type: object
     properties:
@@ -981,9 +966,6 @@ definitions:
           - PRODUCTION_WAIT
           - DELIVERY_WAIT
           - REJECTED
-    x-className:
-      type: string
-      format: com.airbus.wois.data.WorkOrderItemResponse
   WorkOrderItemDTO:
     type: object
     properties:
@@ -1066,9 +1048,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Contract'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.Contracts
   ProgFeasibility:
     type: object
     properties:
@@ -1179,9 +1158,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ProgFeasibility'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.feasibility.FeasibilityResponseGeoconnector
   WorkOrderItemPriceRef:
     type: object
     properties:
@@ -1322,9 +1298,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ProductOffer'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.ProductOffers
   PriceResponseDTO:
     type: object
     properties:
@@ -1370,9 +1343,6 @@ definitions:
           $ref: '#/definitions/GeometryPrice'
       provider:
         type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.PriceResponseDTO
   OptionDTO:
     type: object
     properties:
@@ -1498,6 +1468,57 @@ definitions:
         $ref: '#/definitions/OpticalParameters'
       sar:
         $ref: '#/definitions/SarParameters'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.feasibility.ProgCapacityRequestGeoconnector
+  QuotationResponseDTO:
+    type: object
+    properties:
+      applicationID:
+        type: string
+      calculation:
+        type: string
+      contractID:
+        type: string
+      currency:
+        type: string
+      customerID:
+        type: string
+      discountPct:
+        type: number
+        format: double
+      discountValue:
+        type: number
+        format: double
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/PriceItem'
+      marketID:
+        type: string
+      processDateTime:
+        type: string
+        format: date-time
+      totalAmount:
+        type: number
+        format: double
+      totalAmountCur:
+        type: number
+        format: double
+      totalAmountCurBeforeDiscount:
+        type: number
+        format: double
+      workOrderID:
+        type: string
+      geometries:
+        type: array
+        items:
+          $ref: '#/definitions/GeometryPrice'
+      quotationID:
+        type: string
+      version:
+        type: integer
+        format: int32
+      deliveryAddress:
+        $ref: '#/definitions/AddressDelivery'
+      endUser:
+        type: string
+      provider:
+        type: string
