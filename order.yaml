@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   description: |
-    REST API services for GeoConnector
+    REST API services for Order API
     
     __PRELIMINARY VERSION FOR RESTRICTED DIFFUSION__. 
     
@@ -9,7 +9,7 @@ info:
     
     This API version should not be used for production purposes.
   version: '0'
-  title: GeoConnector API
+  title: Order API
 host: undefined.geoapi-airbusds.com
 schemes:
   - https
