@@ -293,7 +293,7 @@ paths:
         - Work order
   '/ordering/workorder/quotation':
     post:
-      summary: 'Workorder : create quotation'
+      summary: 'Create a quotation for OneSeries and OnePlan tasking modes'
       parameters:
         - in: body
           name: body
