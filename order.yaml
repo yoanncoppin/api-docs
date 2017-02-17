@@ -7,11 +7,10 @@ info:
   version: '0'
   title: GeoConnector API
 host: undefined.geoapi-airbusds.com
-basePath: /ordering
 schemes:
   - https
 paths:
-  '/contract/{contractID}/productoffers':
+  '/ordering/contract/{contractID}/productoffers':
     get:
       summary: 'Contract : get product offers'
       parameters:
@@ -27,26 +26,7 @@ paths:
             $ref: '#/definitions/ProductOffers'
       x-camelContextId: ordering
       x-routeId: getProductOffers
-  '/contract/{contractID}/voucher/{vouchercode}':
-    get:
-      summary: 'Contract : get voucher'
-      parameters:
-        - name: contractID
-          in: path
-          description: ''
-          required: true
-          type: string
-        - name: vouchercode
-          in: path
-          description: ''
-          required: true
-          type: string
-      x-camelContextId: ordering
-      x-routeId: checkVoucher
-      responses:
-        '200':
-          description: The request has been fulfilled successfully.
-  /contracts:
+  '/ordering/contracts':
     get:
       summary: 'Contract : get user contracts'
       parameters: []
@@ -57,34 +37,7 @@ paths:
             $ref: '#/definitions/Contracts'
       x-camelContextId: ordering
       x-routeId: getContracts
-  '/contracts/{userID}':
-    get:
-      summary: 'Contract : get user contracts'
-      parameters:
-        - name: userID
-          in: path
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/Contracts'
-      x-camelContextId: ordering
-      x-routeId: getContractsByUserId
-  /generaloptions:
-    get:
-      summary: Get general options
-      parameters: []
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/AvailableOptions'
-      x-camelContextId: ordering
-      x-routeId: getGeneralOptions
-  '/licence/{licenceName}':
+  '/ordering/licence/{licenceName}':
     get:
       summary: Get licence
       produces:
@@ -100,7 +53,7 @@ paths:
       responses:
         '200':
           description: The request has been fulfilled successfully.
-  /optionsByProductOffer:
+  '/ordering/optionsByProductOffer':
     post:
       summary: Get options by product offer
       parameters:
@@ -117,7 +70,7 @@ paths:
             $ref: '#/definitions/AvailableOptions'
       x-camelContextId: ordering
       x-routeId: getOptionsByProductOffer
-  /properties:
+  '/ordering/properties':
     get:
       summary: Get general properties
       parameters: []
@@ -128,40 +81,7 @@ paths:
             $ref: '#/definitions/MultiValuedProperties'
       x-camelContextId: ordering
       x-routeId: getGeneralProperties
-  /request:
-    post:
-      summary: 'Followup : search quotations'
-      parameters:
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/SearchRequest'
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/SearchResponse'
-      x-camelContextId: ordering
-      x-routeId: searchRequest
-  '/request/{workOrderId}/detail':
-    get:
-      summary: 'Followup : get workorder details'
-      parameters:
-        - name: workOrderId
-          in: path
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/RequestDetail'
-      x-camelContextId: ordering
-      x-routeId: getRequestDetail
-  /tasking/feasibility:
+  '/ordering/tasking/feasibility':
     post:
       summary: 'Tasking : feasibility'
       parameters:
@@ -178,7 +98,7 @@ paths:
             $ref: '#/definitions/FeasibilityResponseGeoconnector'
       x-camelContextId: ordering
       x-routeId: getFeasibility
-  /tasking/progcapacity:
+  '/ordering/tasking/progcapacity':
     post:
       summary: 'Tasking : programmation capacity'
       parameters:
@@ -195,7 +115,7 @@ paths:
             $ref: '#/definitions/ProgCapacityResponseGeoconnector'
       x-camelContextId: ordering
       x-routeId: getProgCapacity
-  /workorder:
+  '/ordering/workorder':
     post:
       summary: 'Workorder : create'
       parameters:
@@ -212,23 +132,7 @@ paths:
             $ref: '#/definitions/WorkOrderResponse'
       x-camelContextId: ordering
       x-routeId: createWorkOrder
-  '/workorder/list/{statusRegex}':
-    get:
-      summary: 'Workorder : get list'
-      produces:
-        - text/html
-      parameters:
-        - name: statusRegex
-          in: path
-          description: ''
-          required: true
-          type: string
-      x-camelContextId: ordering
-      x-routeId: list
-      responses:
-        '200':
-          description: The request has been fulfilled successfully.
-  /workorder/price:
+  '/ordering/workorder/price':
     post:
       summary: 'Workorder : calculate price'
       parameters:
@@ -245,24 +149,7 @@ paths:
             $ref: '#/definitions/PriceResponseDTO'
       x-camelContextId: ordering
       x-routeId: calculatePrice
-  /workorder/quotation:
-    post:
-      summary: 'Workorder : create quotation'
-      parameters:
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/WorkOrderDTO'
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/QuotationResponseDTO'
-      x-camelContextId: ordering
-      x-routeId: createQuotation
-  '/workorder/{workorderID}':
+  '/ordering/workorder/{workorderID}':
     get:
       summary: Get workorder
       parameters:
@@ -312,7 +199,7 @@ paths:
       responses:
         '200':
           description: The request has been fulfilled successfully.
-  '/workorder/{workorderID}/feasibility':
+  '/ordering/workorder/{workorderID}/feasibility':
     post:
       summary: 'Workorder : check tasking feasibility'
       parameters:
@@ -328,7 +215,7 @@ paths:
             $ref: '#/definitions/WorkOrderDTO'
       x-camelContextId: ordering
       x-routeId: checkFeasibility
-  '/workorder/{workorderID}/items':
+  '/ordering/workorder/{workorderID}/items':
     post:
       summary: 'Workorder : create item'
       parameters:
@@ -371,7 +258,7 @@ paths:
             $ref: '#/definitions/UpdateWorkOrderItemList'
       x-camelContextId: ordering
       x-routeId: updateWorkOrderItemList
-  '/workorder/{workorderID}/items/{workorderItemID}':
+  '/ordering/workorder/{workorderID}/items/{workorderItemID}':
     post:
       summary: 'Workorder : update item'
       parameters:
@@ -416,27 +303,6 @@ paths:
       responses:
         '200':
           description: The request has been fulfilled successfully.
-  '/workorder/{workorderID}/{sequenceNumber}/price':
-    get:
-      summary: 'Workorder : get price'
-      parameters:
-        - name: workorderID
-          in: path
-          description: ''
-          required: true
-          type: string
-        - name: sequenceNumber
-          in: path
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/PriceResponseDTO'
-      x-camelContextId: ordering
-      x-routeId: getPrice
 definitions:
   AcquisitionMethod:
     type: object
@@ -570,47 +436,6 @@ definitions:
       acrossTrackIncidenceAngle:
         type: number
         format: double
-  RequestDetailItem:
-    type: object
-    properties:
-      productOfferID:
-        type: string
-      areaKm2:
-        type: number
-        format: float
-      description:
-        type: string
-      minimumOrderApply:
-        type: boolean
-        default: false
-      priceCur:
-        type: number
-        format: float
-      discountPct:
-        type: number
-        format: float
-      discountValue:
-        type: number
-        format: float
-      amountCur:
-        type: number
-        format: float
-      manualFeasibilityStudy:
-        type: boolean
-        default: false
-      workOrderItems:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/definitions/RequestDetailWorkorderItem'
-      polygons:
-        type: array
-        items:
-          $ref: '#/definitions/RequestDetailPolygon'
-      options:
-        type: array
-        items:
-          $ref: '#/definitions/OptionFollowup'
   ProgCapacityResponseGeoconnector:
     type: object
     properties:
@@ -621,46 +446,6 @@ definitions:
     x-className:
       type: string
       format: com.airbus.wois.data.feasibility.ProgCapacityResponseGeoconnector
-  QuotationFollowup:
-    type: object
-    properties:
-      status:
-        type: string
-      contractID:
-        type: string
-      currencyID:
-        type: string
-      requestType:
-        type: string
-      workOrderID:
-        type: string
-      customerID:
-        type: string
-      customerInvoiceID:
-        type: string
-      commercialReferentID:
-        type: string
-      zoneReferentID:
-        type: string
-      endOfValidityDate:
-        type: string
-      totalAmountCur:
-        type: number
-        format: float
-      createdDateTime:
-        type: string
-      marketID:
-        type: string
-      applicationID:
-        type: string
-      contactEmail:
-        type: string
-      deliveryMode:
-        type: string
-      referenceForCustomer:
-        type: string
-      ID:
-        type: string
   ProductOffer:
     type: object
     properties:
@@ -862,25 +647,6 @@ definitions:
     x-className:
       type: string
       format: com.airbus.wois.data.AvailableOptions
-  SearchResponse:
-    type: object
-    properties:
-      result:
-        type: array
-        items:
-          $ref: '#/definitions/QuotationFollowup'
-      total:
-        type: integer
-        format: int64
-      limit:
-        type: integer
-        format: int32
-      offset:
-        type: integer
-        format: int32
-    x-className:
-      type: string
-      format: com.airbus.wois.data.followup.SearchResponse
   OnePlanStandardOptions:
     type: object
     properties:
@@ -892,23 +658,6 @@ definitions:
         $ref: '#/definitions/ValueOption'
       comment:
         $ref: '#/definitions/ValueOption'
-  SearchRequestSort:
-    type: object
-    properties:
-      field:
-        type: string
-      direction:
-        type: string
-  RequestDetailAoi:
-    type: object
-    properties:
-      polygonID:
-        type: integer
-        format: int64
-      name:
-        type: string
-      geometry:
-        type: string
   SimpleValueOption:
     type: object
     properties:
@@ -998,33 +747,6 @@ definitions:
         type: string
       swathIdentifier:
         type: string
-  SearchRequestFilterPeriod:
-    type: object
-    properties:
-      from:
-        type: string
-      to:
-        type: string
-  SearchRequest:
-    type: object
-    properties:
-      limit:
-        type: integer
-        format: int32
-      offset:
-        type: integer
-        format: int32
-      filter:
-        type: array
-        items:
-          $ref: '#/definitions/SearchRequestFilter'
-      sort:
-        type: array
-        items:
-          $ref: '#/definitions/SearchRequestSort'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.followup.SearchRequest
   WorkOrderDTO:
     type: object
     properties:
@@ -1314,15 +1036,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Property'
-  RequestDetailPolygon:
-    type: object
-    properties:
-      polygonID:
-        type: integer
-        format: int64
-      areaKm2:
-        type: number
-        format: float
   TechnicalProduct:
     type: object
     properties:
@@ -1455,20 +1168,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/GeometryPrice'
-  OptionFollowup:
-    type: object
-    properties:
-      key:
-        type: string
-      value:
-        type: string
-      translation:
-        type: string
-      visibility:
-        type: boolean
-        default: false
-    xml:
-      name: options
   CatalogFilter:
     type: object
     properties:
@@ -1476,63 +1175,6 @@ definitions:
         type: string
       catalogID:
         type: string
-  QuotationResponseDTO:
-    type: object
-    properties:
-      applicationID:
-        type: string
-      calculation:
-        type: string
-      contractID:
-        type: string
-      currency:
-        type: string
-      customerID:
-        type: string
-      discountPct:
-        type: number
-        format: double
-      discountValue:
-        type: number
-        format: double
-      items:
-        type: array
-        items:
-          $ref: '#/definitions/PriceItem'
-      marketID:
-        type: string
-      processDateTime:
-        type: string
-        format: date-time
-      totalAmount:
-        type: number
-        format: double
-      totalAmountCur:
-        type: number
-        format: double
-      totalAmountCurBeforeDiscount:
-        type: number
-        format: double
-      workOrderID:
-        type: string
-      geometries:
-        type: array
-        items:
-          $ref: '#/definitions/GeometryPrice'
-      quotationID:
-        type: string
-      version:
-        type: integer
-        format: int32
-      deliveryAddress:
-        $ref: '#/definitions/AddressDelivery'
-      endUser:
-        type: string
-      provider:
-        type: string
-    x-className:
-      type: string
-      format: com.airbus.wois.data.QuotationResponseDTO
   LabelledIdentifier:
     type: object
     properties:
@@ -1540,15 +1182,6 @@ definitions:
         type: string
       label:
         type: string
-  SearchRequestFilterRange:
-    type: object
-    properties:
-      min:
-        type: number
-        format: float
-      max:
-        type: number
-        format: float
   FeasibilityResponseGeoconnector:
     type: object
     properties:
@@ -1571,21 +1204,6 @@ definitions:
       geometryID:
         type: integer
         format: int64
-  SearchRequestFilter:
-    type: object
-    properties:
-      field:
-        type: string
-      values:
-        type: array
-        items:
-          $ref: '#/definitions/SearchRequestFilterValue'
-      range:
-        $ref: '#/definitions/SearchRequestFilterRange'
-      period:
-        $ref: '#/definitions/SearchRequestFilterPeriod'
-      like:
-        type: string
   Angle:
     type: object
     properties:
@@ -1717,11 +1335,6 @@ definitions:
     x-className:
       type: string
       format: com.airbus.wois.data.ProductOffers
-  SearchRequestFilterValue:
-    type: object
-    properties:
-      value:
-        type: string
   PriceResponseDTO:
     type: object
     properties:
@@ -1794,26 +1407,6 @@ definitions:
         items:
           type: number
           format: double
-  RequestDetail:
-    type: object
-    properties:
-      workOrderID:
-        type: string
-      quotationID:
-        type: string
-      aoi:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/definitions/RequestDetailAoi'
-      items:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/definitions/RequestDetailItem'
-    x-className:
-      type: string
-      format: com.airbus.wois.data.followup.RequestDetail
   Feasibility:
     type: object
     properties:
@@ -1822,20 +1415,6 @@ definitions:
       automation:
         type: string
       automationName:
-        type: string
-  RequestDetailWorkorderItem:
-    type: object
-    properties:
-      workOrderItemID:
-        type: string
-      polygonID:
-        type: integer
-        format: int64
-      datastripIDs:
-        type: array
-        items:
-          type: string
-      taskingID:
         type: string
   WorkOrderItem:
     type: object
