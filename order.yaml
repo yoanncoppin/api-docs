@@ -28,8 +28,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/ProductOffers'
-      x-camelContextId: ordering
-      x-routeId: getProductOffers
+      tags:
+      - product
   '/ordering/contracts':
     get:
       summary: 'Return the list of contracts of a user'
@@ -39,8 +39,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/Contracts'
-      x-camelContextId: ordering
-      x-routeId: getContracts
+      tags:
+        - contract
   '/ordering/licence/{licenceName}':
     get:
       summary: Return the licence of a product
@@ -57,6 +57,8 @@ paths:
       responses:
         '200':
           description: The request has been fulfilled successfully.
+      tags:
+        - product
   '/ordering/optionsByProductOffer':
     post:
       summary: Return the options of a product (including licence name)
@@ -72,8 +74,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/AvailableOptions'
-      x-camelContextId: ordering
-      x-routeId: getOptionsByProductOffer
+      tags:
+        - product
   '/ordering/properties':
     get:
       summary: Return markets list
@@ -83,8 +85,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/MultiValuedProperties'
-      x-camelContextId: ordering
-      x-routeId: getGeneralProperties
+      tags:
+        - general
   '/ordering/tasking/feasibility':
     post:
       summary: 'For OnePlan only: indicates if the tasking order is easy or challenging'
@@ -100,8 +102,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/FeasibilityResponseGeoconnector'
-      x-camelContextId: ordering
-      x-routeId: getFeasibility
+      tags:
+        - Tasking
   '/ordering/tasking/progcapacity':
     post:
       summary: 'Indicates which tasking modes are available on the AOI'
@@ -117,8 +119,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/ProgCapacityResponseGeoconnector'
-      x-camelContextId: ordering
-      x-routeId: getProgCapacity
+      tags:
+        - Tasking
   '/ordering/workorder':
     post:
       summary: 'Create a new workorder'
@@ -134,8 +136,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/WorkOrderResponse'
-      x-camelContextId: ordering
-      x-routeId: createWorkOrder
+      tags:
+        - Work order
   '/ordering/workorder/price':
     post:
       summary: 'Calculate and return the price of a workorder'
@@ -151,8 +153,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/PriceResponseDTO'
-      x-camelContextId: ordering
-      x-routeId: calculatePrice
+      tags:
+        - Work order
   '/ordering/workorder/{workorderID}':
     get:
       summary: Return a workorder
@@ -167,8 +169,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/WorkOrderDTO'
-      x-camelContextId: ordering
-      x-routeId: retrieveWorkOrder
+      tags:
+        - Work order
     post:
       summary: 'Update a workorder'
       parameters:
@@ -188,8 +190,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/WorkOrderDTO'
-      x-camelContextId: ordering
-      x-routeId: updateWorkOrder
+      tags:
+        - Work order
     delete:
       summary: 'Delete a workorder'
       parameters:
@@ -198,27 +200,11 @@ paths:
           description: ''
           required: true
           type: string
-      x-camelContextId: ordering
-      x-routeId: deleteWorkOrder
       responses:
         '200':
           description: The request has been fulfilled successfully.
-  '/ordering/workorder/{workorderID}/feasibility':
-    post:
-      summary: 'Workorder : check tasking feasibility'
-      parameters:
-        - name: workorderID
-          in: path
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/WorkOrderDTO'
-      x-camelContextId: ordering
-      x-routeId: checkFeasibility
+      tags:
+        - Work order
   '/ordering/workorder/{workorderID}/items':
     post:
       summary: 'Create a workorder item'
@@ -239,8 +225,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/WorkOrderItemResponse'
-      x-camelContextId: ordering
-      x-routeId: createWorkOrderItem
+      tags:
+        - Work order
     put:
       summary: 'Replace the list of workorder items'
       parameters:
@@ -260,8 +246,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/UpdateWorkOrderItemList'
-      x-camelContextId: ordering
-      x-routeId: updateWorkOrderItemList
+      tags:
+        - Work order
   '/ordering/workorder/{workorderID}/items/{workorderItemID}':
     post:
       summary: 'Update only one workorder item'
@@ -287,8 +273,8 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/WorkOrderItemResponse'
-      x-camelContextId: ordering
-      x-routeId: updateWorkOrderItem
+      tags:
+        - Work order
     delete:
       summary: 'Delete a workorder item'
       parameters:
@@ -302,11 +288,11 @@ paths:
           description: ''
           required: true
           type: string
-      x-camelContextId: ordering
-      x-routeId: deleteWorkOrderItem
       responses:
         '200':
           description: The request has been fulfilled successfully.
+      tags:
+        - Work order
 definitions:
   AcquisitionMethod:
     type: object
