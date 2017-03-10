@@ -24,6 +24,10 @@ info:
     __DEPRECATION -__ The following changes will be included in final 1.0 specification:
 
     __VERSION LOG -__ 
+
+    1.0-alpha2
+
+    ProductType identifiers have been changed ('.' was replaced by '_')
     
     1.0-alpha1
     
@@ -41,7 +45,7 @@ info:
     * n1] equals to field <= n1
     * n1[ equals to field < n1
     
-  version: '1.0-alpha1'
+  version: '1.0-alpha2'
 
 ###############################################################################
 ##                                                                           ##
@@ -329,14 +333,14 @@ paths:
           items:
             type: string
             enum:
-            - "PHR_0.5"
-            - "PHR_0.5_STEREO"
-            - "PHR_0.5_TRISTEREO"
-            - "SPOT_1.5"
-            - "SPOT_1.5_STEREO"
-            - "SPOT_1.5_TRISTEREO"
-            - "SPOT_2.5_BW"
-            - "SPOT_2.5_COLOR"
+            - "PHR_0_5"
+            - "PHR_0_5_STEREO"
+            - "PHR_0_5_TRISTEREO"
+            - "SPOT_1_5"
+            - "SPOT_1_5_STEREO"
+            - "SPOT_1_5_TRISTEREO"
+            - "SPOT_2_5_BW"
+            - "SPOT_2_5_COLOR"
             - "SPOT_5_BW"
             - "SPOT_5_COLOR"
             - "SPOT_10_BW"
