@@ -26,6 +26,11 @@ info:
     
     __VERSION LOG -__ 
     
+    1.0-beta2
+    
+    * new endpoint GET /api/v1/map/imagery.wmts replaces GET /mugg/wmts/{imagery}.
+    * endpoint GET /mugg/wmts/{imagery} is now deprecated.
+    
     1.0-beta1
     
     * image _vehicle_ property has been renamed to _satellite_.
@@ -41,7 +46,7 @@ info:
     
     * Initial version
     
-  version: '1.0-beta1'
+  version: '1.0-beta2'
 
 ###############################################################################
 ##                                                                           ##
@@ -220,9 +225,9 @@ definitions:
       
   GeoJSON Feature:
     description: GeoJSON feature object.
-    externalDocs: 
-      description: GeoJSON feature object specification.
-      url: 'http://geojson.org/geojson-spec.html#feature-objects'
+    #externalDocs: 
+    #  description: GeoJSON feature object specification.
+    #  url: 'http://geojson.org/geojson-spec.html#feature-objects'
     type: object
     properties:
       id:
@@ -256,9 +261,9 @@ definitions:
     
   GeoJSON Geometry:
     description: A geometry describing the feature (point, polygon, multi-polygon, ...)
-    externalDocs:
-      description: GeoJSON Geometry object specification
-      url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+    #externalDocs:
+    #  description: GeoJSON Geometry object specification
+    #  url: 'http://geojson.org/geojson-spec.html#geometry-objects'
     type: object
     properties:
       type:
@@ -472,10 +477,69 @@ paths:
       tags:
         - Maps
 
-  '/mugg/wmts/{imagery}?layer={layer}&tilematrixset={tileSet}&Service=WMTS&Request=GetTile&Version=1.0.0&Format={format}&TileMatrix={zoomLevel}&TileCol={tileColumn}&TileRow={tileRow}': 
+  '/api/v1/map/imagery.wmts?layer={layer}&tilematrixset={tileSet}&Service=WMTS&Request=GetTile&Version=1.0.0&Format={format}&TileMatrix={zoomLevel}&TileCol={tileColumn}&TileRow={tileRow}': 
     get:
       summary: Returns a tile from a layer.
       description: | 
+        Returns a 256x256 tile from a layer in JPEG or PNG format.
+        
+        __IMPORTANT:__ whatever the requested image format is, a transparent image will be delivered in PNG format if no tile is found at the specified location.
+      security:
+        - api_key: []
+      parameters:
+        - name: layer
+          description: A product identifier
+          format: string
+          in: path
+          required: true
+          type: string
+        - name: tileSet
+          description: The desired tile set from which to retrieve the tiles (currently supported set are 4326 and 3857).
+          type: string
+          in: path
+          required: true
+        - name: format
+          description: the requested image format (image/jpeg or image/png). 
+          type: string
+          format: mime type
+          enum: [ "image/jpeg", "image/png" ]
+          in: path
+          required: true
+        - name: zoomLevel
+          description: The map zoom level (Tilegrid depth). Starts at 2 and ends at 16 for SPOT layers and at 17 for Pleiades layers.
+          type: string
+          enum: [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 , 13, 14, 15, 16, 17 ]
+          in: path
+          required: true
+        - name: tileColumn
+          description: Tilegrid column
+          type: integer
+          in: path
+          required: true
+        - name: tileRow
+          description: Tilegrid row
+          type: integer
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Request successful - returns the requested tile as an image.
+          headers:
+            Content-Type:
+              description: the image mime type returned (decided by the server)
+              type: string
+        '401':
+          description: 'Unauthorized: the authorization is missing or has expired.'
+      tags:
+        - Maps
+
+  '/mugg/wmts/{imagery}?layer={layer}&tilematrixset={tileSet}&Service=WMTS&Request=GetTile&Version=1.0.0&Format={format}&TileMatrix={zoomLevel}&TileCol={tileColumn}&TileRow={tileRow}': 
+    get:
+      deprecated: true
+      summary: Returns a tile from a layer.
+      description: |
+        This enpoint is deprecated, please use the _/api/v1/map/imagery.wmts_ endpoint instead.
+        
         Returns a 256x256 tile from a layer in JPEG or PNG format.
         
         __IMPORTANT:__ whatever the requested image format is, a transparent image will be delivered in PNG format if no tile is found at the specified location.
