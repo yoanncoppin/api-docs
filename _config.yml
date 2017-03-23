@@ -1,0 +1,7 @@
+theme: jekyll-theme-cayman
+
+title: "API Documentation"
+description: "Guides and How-to on how to use Geo APIs"
+
+show_downloads: false
+site.github.is_project_page: false
