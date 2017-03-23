@@ -23,7 +23,7 @@ export MY_API_KEY=***INSERT YOUR API KEY HERE***
 You can now request the desired images using a POST search request. Here we request all images that:
 - are in the bounding box 1.18, 43.52, 1.25, 43.56 expressed in geographic coordinates
 - are of type optical
-- were acquired with one of the satellite of the SPOT constellation (i.e. SPOT 1 to 6)
+- were acquired with one of the satellite of the SPOT constellation (i.e. SPOT 1 to 7)
 - were acquired in July 2016
 - have an incidence angle less or equal to 20 degrees
 - have less than 10 percent of it covered by clouds
