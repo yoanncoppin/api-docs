@@ -66,7 +66,7 @@ definitions:
     enum: 
     - Pleiades
     - SPOT
-    - TerraSAR-X Mission
+    - TerraSAR_X_Mission
 
   incidenceAngle:
     description: The incidence angle is the angle from the target point of view. It represents the angle between the ground normal and look direction from the satellite, combining the pitch and roll angles.

@@ -324,7 +324,7 @@ paths:
             enum:
             - "Pleiades"
             - "SPOT"
-            - "TerraSAR-X Mission"
+            - "TerraSAR_X_Mission"
         - description: "A list of product types used as a filter. Only products of one of these types will be returned in the response."
           in: query
           name: productType
