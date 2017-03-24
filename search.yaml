@@ -115,7 +115,7 @@ definitions:
           type: string
         count: #TODO change name and type ?
           description: The number of search results returned per page.
-          type: string
+          type: integer
         geometry: #TODO change name and type ?
           description: the bounding box used for filtering products as a GeoJSON polygon.
           type: string
