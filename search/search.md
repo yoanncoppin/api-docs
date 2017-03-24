@@ -29,7 +29,7 @@ You can now request the desired images using a POST search request. Here we requ
 - have less than 10 percent of it covered by clouds
 
 ```shell
-curl -X POST -H "Authorization: APIKEY $MY_API_KEY" -H "Content-Type: application/json" -d '{
+curl -X POST -H "Authorization: $MY_API_KEY" -H "Content-Type: application/json" -d '{
   "bbox": [
     1.18,
     43.52,
@@ -48,7 +48,7 @@ curl -X POST -H "Authorization: APIKEY $MY_API_KEY" -H "Content-Type: applicatio
 }' "https://search.geoapi-airbusds.com/api/v1/search"
 ```
 
-The response should look like:
+Each mathing image is returned as a GeoJSON feature under the ```/features[]``` property. The response should look like:
 
 ```json
 {
@@ -156,10 +156,10 @@ The response should look like:
 }
 ```
 
-To verify that the image is of the desired quality, you can request a quicklook of it. Here we choose to check the LARGE and unprojected quicklook:
+To verify that the image is of the desired quality, you can request one of the quicklooks of it (under ```/features[]/quicklooks[]```). Here we choose to check the LARGE and unprojected quicklook:
 
 ```shell
-curl -X GET -H "Authorization: APIKEY $MY_API_KEY" "https://search.geoapi-airbusds.com/api/v1/productTypes/SPOT_1_5/products/DS_SPOT7_201607291038129_FR1_FR1_FR1_FR1_E001N44_01140?size=LARGE"
+curl -X GET -H "Authorization: $MY_API_KEY" "https://search.geoapi-airbusds.com/api/v1/productTypes/SPOT_1_5/products/DS_SPOT7_201607291038129_FR1_FR1_FR1_FR1_E001N44_01140?size=LARGE"
 ```
 
 The quicklook should look like the following image:
