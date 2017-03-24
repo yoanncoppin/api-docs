@@ -121,7 +121,7 @@ definitions:
           type: string
         # xuid: # What is this properties used for ?
         pw: #TODO change name and type ?
-          description: The page number
+          description: The desired page, starting from 1 for the first page.
           type: string
       
   GeoJSON Feature:
@@ -232,7 +232,7 @@ definitions:
         type: integer
         default: 10
       startPage:
-        description: Page number
+        description: The desired page, starting from 1 for the first page.
         type: integer
         default: 1
       sortKeys:
