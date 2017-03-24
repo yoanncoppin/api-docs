@@ -105,7 +105,7 @@ Each mathing image is returned as a GeoJSON feature under the ```/features[]``` 
             1.84076579791152,
             43.7046518627418
          ],
-         "quickLooks" : [
+         "quicklooks" : [
             {
                "size" : "SMALL",
                "projection" : null,
