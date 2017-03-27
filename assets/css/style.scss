@@ -6,6 +6,19 @@
 $header-bg-color: #94C0FF;
 $section-headings-color: #155799;
 
+// Define space for logo placement.
+
+.swagger-ui-wrap {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.swagger-section #header #logo .logo__img {
+    margin-right: 5em;
+}
+
+// Header look and feel
+
 .page-header {
   background-image: linear-gradient(120deg, $header-bg-color-secondary, $header-bg-color);
 
