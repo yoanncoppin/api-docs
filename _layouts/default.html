@@ -7,6 +7,17 @@
     <meta name="theme-color" content="#157878">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link href="{{ '/assets/css/theme-material.css'| relative_url }}" media='screen' rel='stylesheet' type='text/css'/>
+
+<!-- START Imports for MaterializeCss -->
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!-- END Imports for MaterializeCss -->
+
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <style>
       .swagger-section #header {
@@ -15,7 +26,13 @@
     </style>
   </head>
   <body>
-    
+   
+<!-- START Imports for MaterializeCss -->
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+<!-- END Imports for MaterializeCss -->
+ 
     <section class="swagger-section">
       <div id='header'>
         <div class="swagger-ui-wrap">
