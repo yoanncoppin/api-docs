@@ -35,6 +35,10 @@ $section-headings-color: #155799;
   }
 }
 
+.swagger-section #header {
+    background-color: #00205b !important;
+}
+
 .main-content {
 
     max-width: 95%
@@ -42,7 +46,7 @@ $section-headings-color: #155799;
 }
 
 .main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
-    color: #00205b !important;
+    color: #005587 !important;
 }
 
 // Override MaterializeCss font sizes
