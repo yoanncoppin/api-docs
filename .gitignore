@@ -1,2 +1,5 @@
 .idea
 geoapi-airbusds.iml
+Gemfile
+Gemfile.lock
+_site/
