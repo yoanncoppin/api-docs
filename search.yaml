@@ -16,10 +16,7 @@ info:
     
     __ALPHA version subject to change__
     
-    __IMPORTANT -__ best practices when implementing clients:
-    * Your clients should not rely on properties that are not documented in this specification as such properties could be changed or removed without notice.
-    * Your clients should not assume that the properties described in this specifications are the only ones that will be returned by the API. Not documented or additional properties will be returned in future version of this API without notification. 
-    * Your clients should not rely on or map properties that are not usefull to them. Doing so will ensure that your clients are not impacted by API changes on properties that are not usefull to them.
+    __IMPORTANT -__ You should follow the [Geo APIs recommendations](recommendations.html) when implementing clients.
     
     __DEPRECATION -__ The following changes will be included in final 1.0 specification:
 
