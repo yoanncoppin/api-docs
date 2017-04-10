@@ -16,7 +16,7 @@ info:
     
     __ALPHA version subject to change__
     
-    __IMPORTANT -__ You should follow the [Geo APIs recommendations](recommendations.html) when implementing clients.
+    __IMPORTANT -__ You should follow the [Geo APIs recommendations](/api-docs/recommendations.html) when implementing clients.
     
     __DEPRECATION -__ The following changes will be included in final 1.0 specification:
 
