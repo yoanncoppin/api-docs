@@ -18,15 +18,7 @@ info:
     
     __IMPORTANT -__ You should follow the [Geo APIs recommendations](/api-docs/recommendations.html) when implementing clients.
     
-    __VERSION LOG -__ 
-
-    1.0-alpha2
-
-    ProductType identifiers have been changed ('.' was replaced by '_')
-    
-    1.0-alpha1
-    
-    * Initial version
+    You can consult the [version log](/api-docs/search/CHANGELOG.html) for information about modification history.
     
     __STANDARD RULES -__ The following rules apply to attributes format when specifyed.
     
