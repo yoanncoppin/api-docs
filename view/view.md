@@ -91,7 +91,7 @@ The response should look like:
 }
 ```
 
-The available layers can be found under the ```/maps/imagery/layers``` path. Depending one the offers you have subscribed to, you can see one to many layers. In our Example, the user has subscribed to the ```OneLive``` layer with the identifier ```53744984-9999-11E7-80B3-420189964461```. This identifier is user specific and must be retrieved from the previous request.
+The available layers can be found under the ```/maps/imagery/layers``` path. Depending on the offers you have subscribed to, you can see one to many layers. In our Example, the user has subscribed to the ```OneLive``` layer with the identifier ```53744984-9999-11E7-80B3-420189964461```. This identifier is user specific and must be retrieved from the previous request.
 
 ```json
 {
@@ -128,7 +128,7 @@ curl -X GET -H "Authorization: $MY_API_KEY" "https://view.geoapi-airbusds.com/ap
 curl -X GET -H "Authorization: $MY_API_KEY" "https://view.geoapi-airbusds.com/api/v1/map/imagery.wmts?layer=$MY_LAYER_ID&tilematrixset=4326&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix=17&TileCol=132123&TileRow=33784"
 ```
 
-The 4 tiles should display Toulouse Capitol:
+The 4 requested tiles should display Toulouse Capitol:
 
 ![capitol](images/capitol.png "Tiles of toulouse Capitol")
 

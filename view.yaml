@@ -14,8 +14,6 @@ info:
   description: |
     This document describes Airbus Defense and Space Geo View API provided by One Atlas system. 
     
-    __BETA version subject to change__
-    
     __IMPORTANT -__ You should follow the [Geo APIs recommendations](/api-docs/recommendations.html) when implementing clients.
     
     __DEPRECATION -__ The following changes will be included in final 1.0 specification:
@@ -23,7 +21,7 @@ info:
 
     You can consult the [version log](/api-docs/view/CHANGELOG.html) for information about modification history.
         
-  version: '1.0-beta2'
+  version: '1.0-beta3'
 
 ###############################################################################
 ##                                                                           ##

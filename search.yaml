@@ -14,8 +14,6 @@ info:
   description: |
     This document describes Airbus Defense and Space Geo Search API. The Search API can be used to query the products available for ordering.
     
-    __ALPHA version subject to change__
-    
     __IMPORTANT -__ You should follow the [Geo APIs recommendations](/api-docs/recommendations.html) when implementing clients.
     
     You can consult the [version log](/api-docs/search/CHANGELOG.html) for information about modification history.
@@ -32,7 +30,7 @@ info:
     * n1] equals to field <= n1
     * n1[ equals to field < n1
     
-  version: '1.0-alpha2'
+  version: '1.0-beta1'
 
 ###############################################################################
 ##                                                                           ##
