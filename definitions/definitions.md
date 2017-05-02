@@ -21,6 +21,7 @@ Whenever possible, property names, meaning and values are reused from:
 | --- | --- | --- | --- 
 | acquisitionDate | Date at which the image was acquired by the satellite. | [W3C ISO 8601] subset: `1997-07-16`| [W3C ISO 8601] subset [range] : `[2016-2017]`
 | bbox | The bounding box of a geometry as described in the [GeoJSON specification](https://tools.ietf.org/html/rfc7946#section-5). | An array of number: `[-10.0, -10.0, 10.0, 10.0]` | An array of number: `[-10.0, -10.0, 10.0, 10.0]`. When used in a query parameter, the brackets are omitted: `-10.0, -10.0, 10.0, 10.0`
+| sourceId | Identifier of the segment acquired by the satellite which is used to produce products | String : `DS_PHR1A_201704141032506_FR1_PX_W001N07_0418_03164` | String
 
 # Annexes
 
