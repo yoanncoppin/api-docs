@@ -12,7 +12,7 @@ In order to use the Search API you need first to obtain an API key by requesting
 
 ### Search and image and retrieve its identifier
 
-This example demonstrate how to find a SPOT image and extract its identifier to be able to order it through the [Order API](../order.md).
+This example demonstrate how to find a SPOT image and extract its identifier to be able to order it through the [Order API](../order/order.html).
 
 First, define your API key so that the example commands can use it:
 
