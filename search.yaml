@@ -2,7 +2,7 @@
 ##                                                                           ##
 ##                                 SEARCH API                                ##
 ##                                                                           ##
-##                     (c) Airbus Defense and Space Geo                      ##
+##                     (c) Airbus Defence and Space Geo                      ##
 ##                                                                           ##
 ##                                                                           ##
 ##                    Contact: frederic.bages@airbus.com                     ##
@@ -10,7 +10,7 @@
 ###############################################################################
 
 info:
-  title: Airbus Defense and Space Geo - Search API
+  title: Airbus Defence and Space Geo - Search API
   description: |
     This document describes Airbus Defense and Space Geo Search API. The Search API can be used to query the products available for ordering.
     

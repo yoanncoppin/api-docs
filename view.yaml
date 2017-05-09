@@ -2,7 +2,7 @@
 ##                                                                           ##
 ##                            VIEW API (ONE ATLAS)                           ##
 ##                                                                           ##
-##                     (c) Airbus Defense and Space Geo                      ##
+##                     (c) Airbus Defence and Space Geo                      ##
 ##                                                                           ##
 ##                                                                           ##
 ##                    Contact: frederic.bages@airbus.com                     ##
@@ -10,7 +10,7 @@
 ###############################################################################
 
 info:
-  title: Airbus Defense and Space Geo - View API
+  title: Airbus Defence and Space Geo - View API
   description: |
     This document describes Airbus Defense and Space Geo View API provided by One Atlas system. 
     
