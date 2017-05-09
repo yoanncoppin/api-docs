@@ -12,7 +12,7 @@
 info:
   title: Airbus Defence and Space Geo - Search API
   description: |
-    This document describes Airbus Defense and Space Geo Search API. The Search API can be used to query the products available for ordering.
+    This document describes Airbus Defence and Space Geo Search API. The Search API can be used to query the products available for ordering.
     
     __IMPORTANT -__ You should follow the [Geo APIs recommendations](/api-docs/recommendations.html) when implementing clients.
     
