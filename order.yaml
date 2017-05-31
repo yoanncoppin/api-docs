@@ -1,446 +1,94 @@
-swagger: '2.0'
+###############################################################################
+##                                                                           ##
+##                                 ORDER API                                 ##
+##                                                                           ##
+##                     (c) Airbus Defence and Space Geo                      ##
+##                                                                           ##
+##                                                                           ##
+##                    Contact: frederic.bages@airbus.com                     ##
+##                                                                           ##
+###############################################################################
+# TODO: check URLs
 info:
-  description: |
-    REST API services for Order API
+  title: Airbus Defence and Space Geo - Order API
+  description: <p>This document describes Airbus Defence and Space Geo Order API. The Order API can be used to order products.<br />
+    __IMPORTANT -__ You should follow the [Geo APIs recommendations](/api-docs/recommendations.html) when implementing clients.</p>
     
-    __PRELIMINARY VERSION FOR RESTRICTED DIFFUSION__. 
+    <p>You can consult the [version log](/api-docs/order/CHANGELOG.html) for information about modification history.</p>
     
-    This version should only be used to get an insight on future functionalities. End points, attributes and values _will_ change before final production version.
+    <p>__STANDARD RULES -__ The following rules apply to attributes format when specifyed.</p>
     
-    This API version should not be used for production purposes.
-  version: '0'
-  title: Order API
-host: undefined.geoapi-airbusds.com
+    <p>Intervals for numerical values and dates are specified using the standard straights brackets.<br />
+    <ul><li>* [n1,n2] equal to n1 <= field <= n2</li>
+    <li>* [n1,n2[ equals to n1 <= field < n2</li>
+    <li>* ]n1,n2[ equals to n1 < field < n2</li>
+    <li>* ]n1,n2] equal to n1 < field <= n2</li>
+    <li>* [n1 equals to n1 <= field</li>
+    <li>* ]n1 equals to n1 < field</li>
+    <li>* n1] equals to field <= n1</li>
+    <li>* n1[ equals to field < n1 </li> </ul></p>
+    
+  version: '1.0'
+
+###############################################################################
+##                                                                           ##
+##                           GENERAL CONFIGURATION                           ##
+##                                                                           ##
+###############################################################################
+swagger: "2.0"
+#info:
+#  description: "REST services for Order API. TODO: Check authorization"
+
+consumes:
+  - application/json
+produces:
+  - application/json
+  
+host: toBeDefined
+basePath: "/api/v1"
 schemes:
-  - https
-paths:
-  '/ordering/contract/{contractID}/productoffers':
-    get:
-      summary: 'Return the product offers of a contract.'
-      parameters:
-        - name: contractID
-          in: path
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/ProductOffers'
-      tags:
-      - product
-  '/ordering/contracts':
-    get:
-      summary: 'Return the list of contracts of a user'
-      parameters: []
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/Contracts'
-      tags:
-        - contract
-  '/ordering/licence/{licenceName}':
-    get:
-      summary: Return the licence of a product
-      produces:
-        - text/plain
-      parameters:
-        - name: licenceName
-          in: path
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          description: The request has been fulfilled successfully.
-      tags:
-        - product
-  '/ordering/optionsByProductOffer':
-    post:
-      summary: Return the options of a product (including licence name)
-      parameters:
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/OptionsRequestGeoconnector'
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/AvailableOptions'
-      tags:
-        - product
-  '/ordering/properties':
-    get:
-      summary: Return markets list
-      parameters: []
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/MultiValuedProperties'
-      tags:
-        - general
-  '/ordering/tasking/feasibility':
-    post:
-      summary: 'For OnePlan only: indicates if the tasking order is easy or challenging'
-      parameters:
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/FeasibilityRequestGeoconnector'
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/FeasibilityResponseGeoconnector'
-      tags:
-        - Tasking
-  '/ordering/tasking/progcapacity':
-    post:
-      summary: 'Indicates which tasking modes are available on the AOI'
-      parameters:
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/ProgCapacityRequestGeoconnector'
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/ProgCapacityResponseGeoconnector'
-      tags:
-        - Tasking
-  '/ordering/workorder':
-    post:
-      summary: 'Create a new workorder'
-      parameters:
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/WorkOrderRequest'
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/WorkOrderResponse'
-      tags:
-        - Work order
-  '/ordering/workorder/price':
-    post:
-      summary: 'Calculate and return the price of a workorder'
-      parameters:
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/WorkOrderDTO'
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/PriceResponseDTO'
-      tags:
-        - Work order
-  '/ordering/workorder/{workorderID}':
-    get:
-      summary: Return a workorder
-      parameters:
-        - name: workorderID
-          in: path
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/WorkOrderDTO'
-      tags:
-        - Work order
-    post:
-      summary: 'Update a workorder'
-      parameters:
-        - name: workorderID
-          in: path
-          description: ''
-          required: true
-          type: string
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/WorkOrderRequest'
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/WorkOrderDTO'
-      tags:
-        - Work order
-    delete:
-      summary: 'Delete a workorder'
-      parameters:
-        - name: workorderID
-          in: path
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          description: The request has been fulfilled successfully.
-      tags:
-        - Work order
-  '/ordering/workorder/{workorderID}/items':
-    post:
-      summary: 'Create a workorder item'
-      parameters:
-        - name: workorderID
-          in: path
-          description: ''
-          required: true
-          type: string
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/CreateWorkOrderItemRequest'
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/WorkOrderItemResponse'
-      tags:
-        - Work order
-    put:
-      summary: 'Replace the list of workorder items'
-      parameters:
-        - name: workorderID
-          in: path
-          description: ''
-          required: true
-          type: string
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/UpdateWorkOrderItemList'
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/UpdateWorkOrderItemList'
-      tags:
-        - Work order
-  '/ordering/workorder/{workorderID}/items/{workorderItemID}':
-    post:
-      summary: 'Update only one workorder item'
-      parameters:
-        - name: workorderID
-          in: path
-          description: ''
-          required: true
-          type: string
-        - name: workorderItemID
-          in: path
-          description: ''
-          required: true
-          type: string
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/CreateWorkOrderItemRequest'
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/WorkOrderItemResponse'
-      tags:
-        - Work order
-    delete:
-      summary: 'Delete a workorder item'
-      parameters:
-        - name: workorderID
-          in: path
-          description: ''
-          required: true
-          type: string
-        - name: workorderItemID
-          in: path
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          description: The request has been fulfilled successfully.
-      tags:
-        - Work order
-  '/ordering/workorder/quotation':
-    post:
-      summary: 'Create a quotation for OneSeries and OnePlan tasking modes'
-      parameters:
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/WorkOrderDTO'
-      responses:
-        '200':
-          description: Output type
-          schema:
-            $ref: '#/definitions/QuotationResponseDTO'
-      tags:
-        - Work order
+- "https"
+
+###############################################################################
+##                                                                           ##
+##                           OBJECTS DOCUMENTATION                           ##
+##                                                                           ##
+###############################################################################
 definitions:
-  AcquisitionMethod:
+  AoiGeometry:
+    type: object
+    format: GeoJSON
+    description: Area Of Interest defined by coordinates in GeoJSON format
+  ProgTypeName:
+    type: string
+    description: refer to one-tasking online documentation at http://www.intelligence-airbusds.com/ for more information
+    enum: 
+      - ONEPLAN
+      - ONEDAY
+      - ONENOW
+  IsoDate:
+    type: string
+    format: ISO-8601
+    description: date string in ISO-8601 format 'YYYY-MM-DDTHH:mm:ssZ'
+  DateRange:
     type: object
     properties:
-      id:
-        type: string
-      platform:
-        type: string
-      instrument:
-        type: string
-      sensor:
-        $ref: '#/definitions/Sensor'
-      acquisitionParameters:
-        $ref: '#/definitions/AcquisitionParameters'
-  OptionsPerProductType:
-    type: object
-    properties:
-      technicalProductID:
-        type: string
-      licence:
-        type: string
-      options:
-        type: array
-        items:
-          $ref: '#/definitions/Property'
-  Constraint:
-    type: object
-    properties:
-      reject:
-        type: boolean
-        default: false
-      filter:
-        type: string
-      defaultValue:
-        type: string
-  SarParameters:
-    type: object
-    properties:
-      minElevationAngle:
-        type: number
-        format: float
-      maxElevationAngle:
-        type: number
-        format: float
-      orbitDirection:
-        type: string
-        enum:
-          - ASCENDING
-          - DESCENDING
-          - BOTH
-      instrumentMode:
-        type: string
-        enum:
-          - STARING_SPOT_LIGTH
-          - HIGH_RESOLUTION_SPOT_LIGHT
-          - SPOT_LIGHT
-          - STRIP_MAP
-          - SCAN_SAR
-          - WS
-      polarizationMode:
-        type: string
-        enum:
-          - HH
-          - VV
-          - VH
-          - HV
-          - HH_VV
-          - HH_HV
-          - VV_VH
-          - HHVV
-          - HHHV
-          - VVVH
-      antennaLookDirection:
-        type: string
-        enum:
-          - RIGHT
-          - LEFT
-      bandWidth:
-        type: string
-        enum:
-          - '_150'
-          - '_300'
-      salesTradeCondition:
-        type: string
-  AcquisitionParameters:
-    type: object
-    properties:
-      orbitDirection:
-        type: string
-        enum:
-          - ASCENDING
-          - DESCENDING
-          - BOTH
-      orbitNumber:
-        type: integer
-        format: int32
-      antennaLookDirection:
-        type: string
-      minimumIncidenceAngle:
-        $ref: '#/definitions/Angle'
-      maximumIncidenceAngle:
-        $ref: '#/definitions/Angle'
-      polarizationMode:
-        type: string
-        enum:
-          - HH
-          - VV
-          - VH
-          - HV
-          - HH_VV
-          - HH_HV
-          - VV_VH
-          - HHVV
-          - HHHV
-          - VVVH
-      incidence:
-        type: number
-        format: double
-      luminosity:
-        type: number
-        format: double
-      cloudCoverRate:
-        type: number
-        format: double
-      extendedAngle:
-        type: boolean
-        default: false
-      roll:
-        type: number
-        format: double
-      acrossTrackIncidenceAngle:
-        type: number
-        format: double
+      startDate:
+        $ref: '#/definitions/IsoDate'
+      endDate:
+        $ref: '#/definitions/IsoDate'
+  Currency:
+    type: string
+    format:  ISO 4217
+    enum:
+      - EUR
+      - USD
+  MissionName:
+    type: string
+    description: Constellation Name
+    enum:
+     - SPOT
+     - PLEIADES
   ProgCapacityResponseGeoconnector:
     type: object
     properties:
@@ -448,592 +96,117 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ProgCapacity'
-  ProductOffer:
+    description: response from the ProgServer to the request of programming capacity.
+  OptionsRequest:
     type: object
     properties:
-      productOfferID:
-        type: string
-      name:
-        type: string
-      technicalProduct:
-        $ref: '#/definitions/TechnicalProduct'
-      catalogFilters:
-        type: array
-        items:
-          $ref: '#/definitions/CatalogFilter'
-      minimumOrderApplied:
-        type: number
-        format: double
-      manualFeasibilityStudy:
-        type: boolean
-        default: false
-      candidateTemporalSerie:
-        type: boolean
-        default: false
-  ProgCapacityError:
-    type: object
-    properties:
-      code:
-        type: string
-      locator:
-        type: string
-      message:
-        type: string
-  OnePlanAdvancedOptions:
-    type: object
-    properties:
-      acqPeriod:
-        $ref: '#/definitions/DateValueOption'
-      maxCloudCover:
-        $ref: '#/definitions/ValueOption'
-      maxIncidenceAngle:
-        $ref: '#/definitions/ValueOption'
-      acquisitionMode:
-        $ref: '#/definitions/ValueOption'
-      minBH:
-        $ref: '#/definitions/ValueOption'
-      maxBH:
-        $ref: '#/definitions/ValueOption'
-      comment:
-        $ref: '#/definitions/ValueOption'
-  FeasibilityRequestGeoconnector:
-    type: object
-    properties:
-      version:
-        type: string
-      progType:
-        type: string
-      mission:
-        type: string
-      aoi:
-        type: string
-      acqStartDate:
-        type: string
-      acqEndDate:
-        type: string
-      acqMode:
-        type: string
-        enum:
-          - MONO
-          - STEREO
-          - TRISTEREO
-      optical:
-        $ref: '#/definitions/OpticalParameters'
-  CreateWorkOrderItemRequest:
-    type: object
-    properties:
-      catalogID:
-        type: string
-      datastripIDs:
-        type: array
-        items:
-          type: string
-      externalProperties:
-        type: array
-        items:
-          $ref: '#/definitions/Property'
-      itemType:
-        type: string
-      licence:
-        type: string
-      polygonID:
-        type: integer
-        format: int32
-      originalPolygonID:
-        type: integer
-        format: int32
-      productOfferID:
-        type: string
-      technicalProduct:
-        $ref: '#/definitions/TechnicalProduct'
-      productID:
-        type: string
-      mediaID:
-        type: string
-      options:
-        type: array
-        items:
-          $ref: '#/definitions/Property'
-      workOrderID:
-        type: string
-  MultiValuedProperties:
-    type: object
-    properties:
-      properties:
-        type: array
-        items:
-          $ref: '#/definitions/MultiValuedProperty'
-  Footprint:
-    type: object
-    properties:
-      geometryId:
-        type: string
-      geometry:
-        type: string
-      center:
-        type: string
-  OpticalParameters:
-    type: object
-    properties:
-      maxCloudCover:
-        type: number
-        format: float
-      maxIncidenceAngle:
-        type: number
-        format: float
-  AoiPart:
-    type: object
-    properties:
-      polygonID:
-        type: integer
-        format: int32
-      geometry:
-        type: string
-      externallyModified:
-        type: boolean
-        default: false
-      name:
-        type: string
-  OptionsAoi:
-    type: object
-    properties:
-      polygonID:
-        type: string
-      geometry:
-        type: string
-      externallyModified:
-        type: boolean
-        default: false
-  DateValueOption:
-    type: object
-    properties:
-      productCode:
-        type: string
-      allowedValue:
-        type: array
-        items:
-          type: string
-      defaultValue:
-        type: string
-      minDate:
-        $ref: '#/definitions/SimpleValueOption'
-      minDuration:
-        type: string
-      defaultDuration:
-        type: string
-  MultiValuedProperty:
-    type: object
-    properties:
-      key:
-        type: string
-      values:
-        type: array
-        items:
-          $ref: '#/definitions/LabelledIdentifier'
-  AvailableOptions:
-    type: object
-    properties:
-      availableOptions:
-        type: array
-        items:
-          $ref: '#/definitions/OptionDTO'
-  OnePlanStandardOptions:
-    type: object
-    properties:
-      acqPeriod:
-        $ref: '#/definitions/DateValueOption'
-      maxCloudCover:
-        $ref: '#/definitions/ValueOption'
-      maxIncidenceAngle:
-        $ref: '#/definitions/ValueOption'
-      comment:
-        $ref: '#/definitions/ValueOption'
-  SimpleValueOption:
-    type: object
-    properties:
-      productCode:
-        type: string
-      value:
-        type: string
-  WorkOrderResponse:
-    type: object
-    properties:
-      workorderID:
-        type: string
-      creationTime:
-        type: string
-        format: date-time
-      status:
-        type: string
-        enum:
-          - CANCELLED
-          - DELIVERED
-          - DRAFT
-          - ERROR
-          - FEASIBILITY_STUDY_PENDING
-          - FEASIBILITY_STUDY_RECEIVED
-          - FEASIBILITY_STUDY_ERROR
-          - FULFILLED
-          - INVOICED
-          - QUOTATION_ACCEPTED
-          - QUOTATION_REFUSED
-          - QUOTATION_SUBMITTED
-          - RUNNING
-          - FULFILLABLE
-  OptionsRequestGeoconnector:
-    type: object
-    properties:
-      technicalProduct:
-        $ref: '#/definitions/TechnicalProduct'
       aoi:
         type: array
         items:
           $ref: '#/definitions/OptionsAoi'
       categoryFilter:
         type: string
-      productOfferId:
-        type: string
-  Contract:
+        enum:
+          - CATEGORY_TECHNICAL_PRODUCT
+          - CATEGORY_PROPERTIES
+          - NO_CATEGORY
+    description: input of the Get Options request. Contains a list of areas of interest with their ID (mandatory to return the projection option) and a filter to get the expected productType options (CATEGORY_TECHNICAL_PRODUCT), the expected item properties (CATEGORY_PROPERTIES) or all options/properties (NO_CATEGORY). By default the category filter is set to CATEGORY_TECHNICAL_PRODUCT.
+    example: {
+      aoi: [ {
+          polygonId: 1,
+          geometry: {
+              type: "Polygon",
+              coordinates: [[8.492431640625004, 43.04480541304369],[9.591064453125002, 43.04480541304369],
+                [9.591064453125002, 41.10419094457646], [8.492431640625004, 41.10419094457646],[8.492431640625004, 43.04480541304369]]
+            }
+        }
+      ]
+    }
+  OptionsPerProductType:
     type: object
     properties:
-      contractID:
-        type: string
-      name:
-        type: string
-      customerID:
-        type: string
-      customerInvoiceID:
-        type: string
-      deliveryName:
-        type: string
-      deliveryStreet:
-        type: string
-      deliveryZipcode:
-        type: string
-      deliveryCity:
-        type: string
-      deliveryCounty:
-        type: string
-      deliveryCountry:
-        type: string
-      tradeAgreementUrl:
-        type: string
-      creditRemaining:
-        type: string
-      currencyID:
-        type: string
-  Sensor:
-    type: object
-    properties:
-      sensorType:
-        type: string
-      operationalMode:
-        type: string
-      swathIdentifier:
-        type: string
-  WorkOrderDTO:
-    type: object
-    properties:
-      aoi:
-        type: array
-        items:
-          $ref: '#/definitions/AoiPart'
-      application:
-        type: string
-      attachments:
-        type: array
-        items:
-          type: string
-      author:
-        type: string
-      comments:
-        type: string
-      contractID:
-        type: string
-      creationTime:
-        type: string
-        format: date-time
-      customerID:
-        type: string
-      id:
-        type: string
-      items:
-        type: array
-        items:
-          $ref: '#/definitions/WorkOrderItem'
-      market:
-        type: string
-      name:
+      productType:
+        $ref: '#/definitions/ProductType'
+      licence:
         type: string
       options:
         type: array
         items:
           $ref: '#/definitions/Property'
-      optionsPerProductType:
-        type: array
-        items:
-          $ref: '#/definitions/OptionsPerProductType'
-      salesOrderID:
-        type: string
-      quotationID:
-        type: string
-      status:
-        type: string
-        enum:
-          - CANCELLED
-          - DELIVERED
-          - DRAFT
-          - ERROR
-          - FEASIBILITY_STUDY_PENDING
-          - FEASIBILITY_STUDY_RECEIVED
-          - FEASIBILITY_STUDY_ERROR
-          - FULFILLED
-          - INVOICED
-          - QUOTATION_ACCEPTED
-          - QUOTATION_REFUSED
-          - QUOTATION_SUBMITTED
-          - RUNNING
-          - FULFILLABLE
-      statusInfo:
-        type: string
-      externalProperties:
-        type: array
-        items:
-          $ref: '#/definitions/Property'
-      invoiceProposalID:
-        type: string
-      endUser:
-        type: string
-      origin:
-        type: string
-      deliveryAddress:
-        $ref: '#/definitions/AddressDelivery'
-      sequenceNumber:
-        type: integer
-        format: int64
-      workorderID:
-        type: string
-      inError:
-        type: boolean
-        default: false
-  Segment:
-    type: object
-    properties:
-      id:
-        type: string
-      footprint:
-        $ref: '#/definitions/Footprint'
-      acquisitionStartTime:
-        type: string
-      acquisitionStopTime:
-        type: string
-      acquisitionMethod:
-        $ref: '#/definitions/AcquisitionMethod'
-      status:
-        type: string
-        enum:
-          - POTENTIAL
-          - PLANNED
-          - ACQUIRED
-          - VALIDATED
-          - FAILED
-          - CANCELLED
-      instrumentMode:
-        type: string
-      orderDeadline:
-        type: string
-  UpdateWorkOrderItemList:
-    type: object
-    properties:
-      sequenceNumber:
-        type: integer
-        format: int64
-      items:
-        type: array
-        items:
-          $ref: '#/definitions/WorkOrderItem'
-  ValueOption:
-    type: object
-    properties:
-      productCode:
-        type: string
-      allowedValue:
-        type: array
-        items:
-          type: string
-      alertThreshold:
-        type: string
-      proposalThreshold:
-        type: string
-      defaultValue:
-        type: string
-      minValue:
-        type: string
-      maxValue:
-        type: string
-  WorkOrderRequest:
-    type: object
-    properties:
-      name:
-        type: string
-      author:
-        type: string
-      contractID:
-        type: string
-      customerID:
-        type: string
-      application:
-        type: string
-      attachments:
-        type: array
-        items:
-          type: string
-      comments:
-        type: string
-      aoi:
-        type: array
-        items:
-          $ref: '#/definitions/OptionsAoi'
-      options:
-        type: array
-        items:
-          $ref: '#/definitions/Property'
-      optionsPerProductType:
-        type: array
-        items:
-          $ref: '#/definitions/OptionsPerProductType'
-      status:
-        type: string
-        enum:
-          - CANCELLED
-          - DELIVERED
-          - DRAFT
-          - ERROR
-          - FEASIBILITY_STUDY_PENDING
-          - FEASIBILITY_STUDY_RECEIVED
-          - FEASIBILITY_STUDY_ERROR
-          - FULFILLED
-          - INVOICED
-          - QUOTATION_ACCEPTED
-          - QUOTATION_REFUSED
-          - QUOTATION_SUBMITTED
-          - RUNNING
-          - FULFILLABLE
-      externalProperties:
-        type: array
-        items:
-          $ref: '#/definitions/Property'
-      endUser:
-        type: string
-      market:
-        type: string
-      origin:
-        type: string
-      items:
-        type: array
-        items:
-          $ref: '#/definitions/WorkOrderItemDTO'
+    description: defines the production options and licence for a productType. Contains the productType identifier, the licence identifier, and a list of the selected production options (key/value for each option corresponding to Option.name/OptionListItem.id or Option.name/value of expected option).
+    example: {
+      productType:"PleiadesArchiveMono",
+      licence:"eula_5",
+      options: [
+        {
+          key:"processing_level",
+          value:"primary"
+        }
+      ]
+    }
   GeometryPrice:
     type: object
     properties:
-      geometryID:
+      geometryId:
         type: integer
         format: int64
+        description: geometry identifier.
       name:
         type: string
+        description: geometry name.
       areaKm2:
         type: number
         format: double
-  WorkOrderItemResponse:
+        description: area surface of this geometry.
+    description: Define geometries informations returned in GetPrice.
+  PriceResponse:
     type: object
     properties:
-      workorderItemID:
+      calculation:
         type: string
-      creationTime:
+        description: Calculation description at total level.
+      contractId:
         type: string
-        format: date-time
-      status:
+        description: Contract identifier.
+      currency:
+        $ref: '#/definitions/Currency'
+      customerId:
         type: string
-        enum:
-          - DRAFT
-          - LOCKED
-          - READY
-          - ERROR
-          - FEASIBILITY_STUDY_ERROR
-          - RUNNING
-          - COMPLETED
-          - ABORT
-          - PRODUCTION_WAIT
-          - DELIVERY_WAIT
-          - REJECTED
-  WorkOrderItemDTO:
-    type: object
-    properties:
-      datastripIDs:
+        description: Customer identifier.
+      discountPct:
+        type: number
+        format: double
+        description: Discount percent at total level.
+      discountValue:
+        type: number
+        format: double
+        description: Discount value at total level.
+      items:
         type: array
         items:
-          type: string
-      externalProperties:
+          $ref: '#/definitions/PriceItem'
+      processDateTime:
+        $ref: '#/definitions/IsoDate'
+      totalAmount:
+        type: number
+        format: double
+        description: Work order total amount (valued  in reference currency).
+      totalAmountCur:
+        type: number
+        format: double
+        description: Work order total amount (valued  in contract currency).
+      totalAmountCurBeforeDiscount:
+        type: number
+        format: double
+        description: Work order total amount before discount (valued  in contract currency).
+      workOrderId:
+        type: string
+        description: Work order identifier (managed by WOIS).
+      geometries:
         type: array
         items:
-          $ref: '#/definitions/Property'
-      licence:
-        type: string
-      itemType:
-        type: string
-        enum:
-          - INTERMEDIATE
-          - GENERATED
-          - FINAL
-          - CANDIDATE_GEOSA_ORDER
-          - SUBMIT_GEOSA_ORDER
-          - CANDIDATE_GEOGMBH_ARCH_ORDER
-          - SUBMIT_GEOGMBH_ARCH_ORDER
-          - SUBMIT_GEOGMBH_TASK_ORDER
-      polygonID:
-        type: string
-      productOfferID:
-        type: string
-      technicalProduct:
-        $ref: '#/definitions/TechnicalProduct'
-      workOrderItemID:
-        type: string
-      productID:
-        type: string
-      mediaID:
-        type: string
-      aoiTasking:
-        type: string
-      options:
-        type: array
-        items:
-          $ref: '#/definitions/Property'
-  TechnicalProduct:
-    type: object
-    properties:
-      id:
-        type: string
-      label:
-        type: string
-      source:
-        $ref: '#/definitions/LabelledIdentifier'
-      sensor:
-        $ref: '#/definitions/LabelledIdentifier'
-      target:
-        $ref: '#/definitions/LabelledIdentifier'
-      licences:
-        type: array
-        items:
-          type: string
-  OptionListItem:
-    type: object
-    properties:
-      id:
-        type: string
-      label:
-        type: string
-      constraint:
-        $ref: '#/definitions/Constraint'
+          $ref: '#/definitions/GeometryPrice'
+    description: Provices price(s) estimate for a work order. 
   Property:
     type: object
     properties:
@@ -1048,78 +221,95 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Contract'
-  ProgFeasibility:
+    description: list of all the contracts linked to the user.
+  Aoi:
     type: object
+    description: Area Of Interest. Contains the ID of the AOI, the GeoJSON coordinates and the name to use in invoice.
     properties:
-      mission:
+      id:
+        type: integer
+        format: int32
+      geometry:
+        $ref: '#/definitions/AoiGeometry'
+      name:
         type: string
-        enum:
-          - SPOT
-          - PLEIADES
-          - TERRASAR_X
-      progTypes:
-        type: array
-        items:
-          $ref: '#/definitions/ProgType'
   ProgCapacity:
     type: object
     properties:
       mission:
-        type: string
-        enum:
-          - SPOT
-          - PLEIADES
-          - TERRASAR_X
+        $ref: '#/definitions/MissionName'
       progTypes:
         type: array
         items:
           $ref: '#/definitions/ProgType'
-  AddressDelivery:
+    description: item of the response from the ProgServer to the request of programming capacity.
+  OptionsAoi:
     type: object
     properties:
-      country:
+      polygonId: # todo : remplacer par aoiId
         type: string
-      county:
-        type: string
-      zipcode:
-        type: string
-      city:
-        type: string
-      street:
-        type: string
+      geometry:
+        $ref: '#/definitions/AoiGeometry'
+    description: the Area Of Interest definition to give in Get Options request. Contains the GeoJSON coordinates and the ID of the AOI (Get Options returns for each AOI an option with the name projection_[aoiId] with a specific list of available projection codes).
+#  DateValueOption:
+#    type: object
+#    properties:
+#      allowedValue:
+#        type: array
+#        items:
+#          type: string
+#      defaultValue:
+#        type: string
+#      minDate:
+#        $ref: '#/definitions/SimpleValueOption'
+#      minDuration:
+#        type: string
+#      defaultDuration:
+#        type: string
   PriceItem:
     type: object
     properties:
       amount:
         type: number
         format: double
+        description: Amount (valued  in reference currency) after discount.
       amountCur:
         type: number
         format: double
+        description: Amount (valued  in contract currency) after discount.
       areaKm2:
         type: number
         format: double
+        description: Total area surface relevant for the product offer.
       calculation:
         type: string
+        description: Calculation description at product offer level.
       description:
         type: string
+        description: Product description.
       discountPct:
         type: number
         format: double
+        description: Discount percent applied on price.
       discountValue:
         type: number
         format: double
+        description: Discount value applied on price.
       minimumOrderApply:
         type: boolean
         default: false
+        description: Does minimum surface value has been applied.
       price:
         type: number
         format: double
+        description: Price (valued  in reference currency).
       priceCur:
         type: number
         format: double
-      productOfferID:
+        description: Price (valued  in contract currency).
+      productTypeId:
         type: string
+        description: total amount in defined currency and with discount.
       workOrderItems:
         type: array
         items:
@@ -1127,57 +317,420 @@ definitions:
       manualFeasibilityStudy:
         type: boolean
         default: false
-      transID:
+        description: Value "Yes" if the customer's tasking request requires a feasibility study (for OnePlan and OneSeries only). Value "No" if the tasking can be activated automatically.
+      transId:
         type: integer
         format: int64
+        description: transaction identifier.
       temporalSerie:
         type: boolean
         default: false
+        description: Value "Yes" if the customer orders at least 2 archives on the same AOI and reports that these archives are ordered as temporal series
       geometries:
         type: array
         items:
           $ref: '#/definitions/GeometryPrice'
-  CatalogFilter:
+      oneSeriesType:
+        type: string
+        description: Accepted values are "Critical" or "Routine" according to the result of the feasibility study.
+      oneSeriesRoutineCategory:
+        type: string
+        description: the feasibility information for tasking capacity. Classification possible values are EASY and CHALLENGING.
+      commitment:
+        type: boolean
+        default: false
+        description: Value "Yes" if GEO is committed according to the OneTasking Offer (by default). Value "No" if GEO is not committed according to the result of the feasibility study.
+      voucherCode:
+        type: string
+        description: Voucher code.
+    description: Define price informations for work order item of priceResponse.
+
+  OrderRequest:
     type: object
     properties:
-      filter:
-        type: string
-      catalogID:
-        type: string
-  LabelledIdentifier:
-    type: object
-    properties:
-      id:
-        type: string
-      label:
-        type: string
-  FeasibilityResponseGeoconnector:
-    type: object
-    properties:
-      progFeasibility:
+      aoi:
         type: array
         items:
-          $ref: '#/definitions/ProgFeasibility'
+          $ref: '#/definitions/Aoi'
+      contractId:
+        type: string
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/WorkOrderItem'
+      primaryMarket:
+        type: string
+        enum:
+          - AGRI
+          - ASSUR
+          - AUTRE
+          - CARTO
+          - DEFSEC
+          - DISTRI
+          - ENERGIE
+          - ENV
+          - FORET
+          - GDPUBLIC
+          - GENIE
+          - MARITIME
+          - MOBIL
+          - NQUAL
+          - PRESSE
+          - RISQUE
+          - SANTE
+          - TELECOM
+          - TOURISME
+          - TRANSPORT
+      secondaryMarket:
+        type: string
+        enum:
+          - AGRI_AUTRE
+          - AGRI_CTRL
+          - AGRI_ENV
+          - AGRI_INT
+          - AGRI_NQ
+          - AGRI_PREC
+          - AGRI_PROD
+          - AGRI_SI
+          - ASSUR
+          - AUTRE
+          - CARTO_AUTRE
+          - CARTO_CAD
+          - CARTO_NQ
+          - CARTO_RSMT
+          - CARTO_THEM
+          - CARTO_TOPO
+          - DEFSEC_AUTRE
+          - DEFSEC_CARTO
+          - DEFSEC_GEO
+          - DEFSEC_INT
+          - DEFSEC_NQ
+          - DEFSEC_RSGNT
+          - DISTRI
+          - ENERGIE_AUTRE
+          - ENERGIE_ECO
+          - ENERGIE_ENV
+          - ENERGIE_EXPLOIT
+          - ENERGIE_INFRA
+          - ENERGIE_NQ
+          - ENERGIE_PROD
+          - ENV_AUTRE
+          - ENV_EAU
+          - ENV_NQ
+          - ENV_SURV
+          - FORET_AUTRE
+          - FORET_CARB
+          - FORET_DEFOR
+          - FORET_ECO
+          - FORET_EXPLOIT
+          - FORET_INV
+          - FORET_NQ
+          - GDPUBLIC
+          - GENIE
+          - MARITIME_AUTRE
+          - MARITIME_CTRL
+          - MARITIME_ENV
+          - MARITIME_NQ
+          - MARITIME_ROUT
+          - MARITIME_RSGNT
+          - MOBIL_AUTRE
+          - MOBIL_COMM
+          - MOBIL_GDPUB
+          - MOBIL_INSTIT
+          - MOBIL_NQ
+          - NQUAL
+          - PRESSE
+          - RISQUE_ANTICIP
+          - RISQUE_AUTRE
+          - RISQUE_CRISE
+          - RISQUE_NQ
+          - RISQUE_POST
+          - RISQUE_PREV
+          - SANTE
+          - TELECOM
+          - TELECOM_AUTRE
+          - TELECOM_NQ
+          - TOURISME
+          - TOURISME_AUTRE
+          - TOURISME_NQ
+          - TRANSPORT
+      customerReference:
+        type: string
+      options:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+      optionsPerProductType:
+        type: array
+        items:
+          $ref: '#/definitions/OptionsPerProductType'
+      voucherCodes:
+        type: array
+        uniqueItems: true
+        items:
+          type: string
+    description: the WorkOrder to compute for price calculation or ordering. Contains a list of AOI, a list of WorkOrderItems, commercial data, a list of global options (key/value, with the mandatory deliveryType/network pair), the list of production options for each productType and a list of voucher codes.
+    example: {
+        aoi: [
+          {
+            id: 1,
+            geometry: {
+              type: "Polygon",
+              coordinates: [[8.492431640625004, 43.04480541304369],[9.591064453125002, 43.04480541304369],
+                [9.591064453125002, 41.10419094457646], [8.492431640625004, 41.10419094457646],[8.492431640625004, 43.04480541304369]]
+            },
+            name: "test_for_partners"
+          }
+        ],
+        contractId:  "toBeDefined",
+        items: [
+          {
+            datastripIds: [
+              "40582651209160926432R5"
+            ],
+            aoiId: 1,
+            productTypeId: "SPOTArchive10Color",
+            properties: [
+              {
+                key: "http://adm.i3.com/ont/scene#shift",
+                value: "5"
+              },
+              {
+                key: "date",
+                value: "2012-09-16T09:26:43Z"
+              },
+              {
+                key: "geometryMaxX",
+                value: "9.07687956225646"
+              },
+              {
+                key: "geometryMaxY",
+                value: "42.27393795330642"
+              },
+              {
+                key: "geometryMinX",
+                value: "8.189353632881046"
+              },
+              {
+                key: "geometryMinY",
+                value: "41.645365338986835"
+              },
+              {
+                key: "indexDate",
+                value: "2016-08-23T12:40:03.077254Z"
+              },
+              {
+                key: "uid",
+                value: "a4550d93280b4afc70e3949ffec78df1"
+              },
+              {
+                key: "browseLarge",
+                value: "http://api.astrium-geo.com/catalog/img/getfeatureimage.aspx?id=40582651209160926432R&IT=QL&shift=5"
+              },
+              {
+                key: "browseMedium",
+                value: "http://api.astrium-geo.com/catalog/img/getfeatureimage.aspx?id=40582651209160926432R&IT=QL&shift=5"
+              },
+              {
+                key: "browseSmall",
+                value: "http://api.astrium-geo.com/catalog/img/getfeatureimage.aspx?id=40582651209160926432R&IT=QK&shift=5"
+              },
+              {
+                key: "overlayGeographic",
+                value: "http://api.astrium-geo.com/catalog/img/getfeatureimage.aspx?id=40582651209160926432R&PR=32662&shift=5"
+              },
+              {
+                key: "overlayMercator",
+                value: "http://api.astrium-geo.com/catalog/img/getfeatureimage.aspx?id=40582651209160926432R&PR=3857&shift=5"
+              },
+              {
+                key: "resolutionMeters",
+                value: "10"
+              },
+              {
+                key: "id",
+                value: "40582651209160926432R5"
+              },
+              {
+                key: "spectralGrouping",
+                value: "grnm"
+              },
+              {
+                key: "vehicle",
+                value: "SPOT4"
+              },
+              {
+                key: "archivingStation",
+                value: "TT"
+              },
+              {
+                key: "cloudCover",
+                value: "0"
+              },
+              {
+                key: "groundStation",
+                value: "TT"
+              },
+              {
+                key: "incidenceAngle",
+                value: "3.88784"
+              },
+              {
+                key: "lookDirection",
+                value: "right"
+              },
+              {
+                key: "name",
+                value: "40582651209160926432R5"
+              },
+              {
+                key: "snowCover",
+                value: "0"
+              },
+              {
+                key: "remoteRaster",
+                value: "remoteRaster"
+              },
+              {
+                key: "archiveName",
+                value: "SPOT archive"
+              },
+              {
+                key: "archiveUid",
+                value: "982d0cd3-2e65-4f5f-a828-5a2690b95a07"
+              },
+              {
+                key: "category",
+                value: "scene"
+              },
+              {
+                key: "productName",
+                value: "SPOT 10-m Colour"
+              },
+              {
+                key: "productUid",
+                value: "b72c1de2-4ce9-4812-a96a-24fdd8ac39bd"
+              },
+              {
+                key: "pin",
+                value: "true"
+              },
+              {
+                key: "browse",
+                value: "true"
+              },
+              {
+                key: "polygonIndex",
+                value: "aoi_polygon_1"
+              },
+              {
+                key: "polygonLabel",
+                value: "Polygon 1"
+              }
+            ]
+          }
+        ],
+        primaryMarket: "AGRI",
+        secondaryMarket: "AGRI_ENV",  
+        customerReference: "The order reference that will appear in invoicing",
+        options: [
+          {
+            key: "deliveryType",
+            value: "network"
+          }
+        ],
+        optionsPerProductType: [
+          {
+            productTypeId: "SPOTArchive10Color",
+            licence: "eula_5",
+            options: [
+                {
+                  key: "image_format",
+                  value: "dimap_geotiff"
+                },
+                {
+                  key: "Account",
+                  value: "DDPORTAL"
+                },
+                {
+                  key: "projection_1",
+                  value: "32632"
+                },
+                {
+                  key: "processing_level",
+                  value: "level_3"
+                }
+            ]
+          }
+        ],
+        voucherCodes:  [
+
+        ]
+      }
+  Voucher:
+    type: object
+    properties:
+      code:
+        type: string
+      period:
+        $ref: '#/definitions/DateRange'
+      amount:
+        type: number
+        format: double
+      currency:
+        $ref: '#/definitions/Currency'
+      consumed:
+        type: boolean
+        default: false
+    description: a payment method. Contains the code identifying this voucher, its period of validity, amount and currency, and if it is already consumed.
+  OrderResponse:
+    type: object
+    properties:
+      salesOrderId:
+        type: string
+    description: response to the order service. Contains the identifier for order follow-up.
+  AvailableOptions:
+    type: object
+    properties:
+      availableOptions:
+        type: array
+        items:
+          $ref: '#/definitions/Option'
+    description: the response to the Get Options service. Returns a list of expected options of production and/or item properties
   WorkOrderItemPriceRef:
     type: object
     properties:
-      workOrderItemID:
+      workOrderItemId:
         type: string
-      datastripIDs:
+        description: Work order item unique identifier (managed by WOIS).
+      datastripIds:
         type: array
         items:
           type: string
-      geometryID:
+          description: Datastrip identifier.
+      geometryId:
         type: integer
         format: int64
-  Angle:
+        description: Work order item unique identifier (managed by WOIS).
+      taskingId:
+        type: string
+        description: Tasking id for the work order item (optional as it applies only to a tasking product).
+      quotationExternalId:
+        type: string
+        description: Work order item unique identifier (managed by WOIS).
+    description: Work order informations returned for getPrice.
+  OnePlanStandardOptions:
     type: object
     properties:
-      unit:
-        type: string
-      value:
-        type: number
-        format: float
+      acquisitionPeriod: #TODO: Frédéric B. : acq or acquisition? (for all)
+        $ref: '#/definitions/DateRange'
+      maxCloudCover:
+        $ref: '#/definitions/ValueOption'
+      maxIncidenceAngle:
+        $ref: '#/definitions/ValueOption'
+      comment:
+        $ref: '#/definitions/ValueOption'
+    description: options for Automatic OnePlan tasking capacity.
   ProgOptions:
     type: object
     properties:
@@ -1189,33 +742,21 @@ definitions:
         format: double
       extendedAngle:
         $ref: '#/definitions/ValueOption'
-      acqPeriod:
-        $ref: '#/definitions/DateValueOption'
+      acquisitionPeriod:
+        $ref: '#/definitions/DateRange'
       maxCloudCover:
         $ref: '#/definitions/ValueOption'
-      maxSnowCover:
-        $ref: '#/definitions/ValueOption'
       maxIncidenceAngle:
-        $ref: '#/definitions/ValueOption'
-      hazeAccepted:
-        $ref: '#/definitions/ValueOption'
-      sandWindAccepted:
         $ref: '#/definitions/ValueOption'
       priority:
         $ref: '#/definitions/ValueOption'
       stereoMode:
         $ref: '#/definitions/ValueOption'
-      delayedPublication:
-        $ref: '#/definitions/ValueOption'
-      comment:
-        $ref: '#/definitions/ValueOption'
       tristereoMode:
         $ref: '#/definitions/ValueOption'
-      emergency:
-        $ref: '#/definitions/ValueOption'
-      acqMinDate:
-        $ref: '#/definitions/SimpleValueOption'
-      acqDuration:
+      #acquisitionMinDate:
+      #  $ref: '#/definitions/SimpleValueOption'
+      acquisitionDuration:
         $ref: '#/definitions/ValueOption'
       temporalMode:
         $ref: '#/definitions/ValueOption'
@@ -1225,54 +766,30 @@ definitions:
         $ref: '#/definitions/ValueOption'
       acquisitionMode:
         $ref: '#/definitions/ValueOption'
-      nbAcqRegularAcq:
+      nbacquisitionRegularacquisition:
         $ref: '#/definitions/ValueOption'
-      minIntervalRegularAcq:
+      minIntervalRegularacquisition:
         $ref: '#/definitions/ValueOption'
       advancedOptions:
         $ref: '#/definitions/OnePlanAdvancedOptions'
       standardOptions:
         $ref: '#/definitions/OnePlanStandardOptions'
+    description: options returned by the ProgServer for tasking capacity.
   ProgType:
     type: object
     properties:
       name:
-        type: string
-        enum:
-          - ONEPLAN
-          - ONEDAY
-          - ONENOW
-          - ONESERIES
-          - SPECULATIVE
-          - ALL
+        $ref: '#/definitions/ProgTypeName'
       mission:
-        type: string
-      available:
-        type: boolean
-        default: false
-      error:
-        $ref: '#/definitions/ProgCapacityError'
+        $ref: '#/definitions/MissionName'
       expirationDate:
-        type: string
+        $ref: '#/definitions/IsoDate'
       successRate:
+        description: percentage of success rate
         type: number
         format: float
-      task:
-        type: string
-      procedure:
-        type: string
-      updateTime:
-        type: string
-      informationUsed:
-        type: array
-        items:
-          type: string
-      productCode:
-        type: string
       progOptions:
         $ref: '#/definitions/ProgOptions'
-      resizedAoi:
-        type: string
       segments:
         type: array
         items:
@@ -1287,63 +804,79 @@ definitions:
           $ref: '#/definitions/Segment'
       feasibility:
         $ref: '#/definitions/Feasibility'
-  ProductOffers:
+    description: TODO voir progserver doc
+  Segment:
     type: object
     properties:
-      targetOrder:
+      extendedAngle:
+        type: boolean
+        default: false
+    description: TODO voir progserver doc
+  ProductType:
+    type: object
+    properties:
+      productTypeId:
+        type: string
+      minimumAreaOrderApplied:
+        type: number
+        format: double
+      descriptionUrl:
+        type: string
+    description: the commercial product offer. Contains the minimum are to order a product of this type and an URL displaying the description of this product.
+  ProductTypes:
+    type: object
+    properties:
+      productTypes:
+        type: array
+        items:
+          $ref: '#/definitions/ProductType'
+    description: the list of available products for a user/contract.
+#  ProgCapacityError:
+#    type: object
+#    properties:
+#      code:
+#        type: string
+#      locator:
+#        type: string
+#      message:
+#        type: string
+  ValueOption:
+    type: object
+    properties:
+      allowedValue:
         type: array
         items:
           type: string
-      productOffers:
-        type: array
-        items:
-          $ref: '#/definitions/ProductOffer'
-  PriceResponseDTO:
+      alertThreshold:
+        type: string
+      proposalThreshold:
+        type: string
+      defaultValue:
+        type: string
+      minValue:
+        type: string
+      maxValue:
+        type: string
+    description: TODO voir doc progserver
+  OnePlanAdvancedOptions:
     type: object
     properties:
-      applicationID:
-        type: string
-      calculation:
-        type: string
-      contractID:
-        type: string
-      currency:
-        type: string
-      customerID:
-        type: string
-      discountPct:
-        type: number
-        format: double
-      discountValue:
-        type: number
-        format: double
-      items:
-        type: array
-        items:
-          $ref: '#/definitions/PriceItem'
-      marketID:
-        type: string
-      processDateTime:
-        type: string
-        format: date-time
-      totalAmount:
-        type: number
-        format: double
-      totalAmountCur:
-        type: number
-        format: double
-      totalAmountCurBeforeDiscount:
-        type: number
-        format: double
-      workOrderID:
-        type: string
-      geometries:
-        type: array
-        items:
-          $ref: '#/definitions/GeometryPrice'
-      provider:
-        type: string
-  OptionDTO:
+      acquisitionPeriod:
+        $ref: '#/definitions/DateRange'
+      maxCloudCover:
+        $ref: '#/definitions/ValueOption'
+      maxIncidenceAngle:
+        $ref: '#/definitions/ValueOption'
+      acquisitionMode:
+        $ref: '#/definitions/ValueOption'
+      minBH:
+        $ref: '#/definitions/ValueOption'
+      maxBH:
+        $ref: '#/definitions/ValueOption'
+      comment:
+        $ref: '#/definitions/ValueOption'
+    description: options for Manual OnePlan tasking capacity.
+  Option:
     type: object
     properties:
       category:
@@ -1367,158 +900,483 @@ definitions:
         items:
           type: number
           format: double
+      format:
+        type: string
+      mandatory:
+        type: string
+      description: definition of an expected option. Contains a category defining its location (category=technical_product -> optionsPerProductType, category=item_properties -> properties of WorkOrderItem), a constraint defining its validity, a name that can be used in another option's constraint, a type (double, list, periods or string), the expected values it type=list, the range if type=double, the expected format of the string/periods and if the option is mandatory. 
+      example: {
+        category: "technical_product",
+        defaultValue: "ortho",
+        label: "PROCESSING_LEVEL",
+        mandatory: "true",
+        name: "processing_level",
+        type: "list",
+        values: [
+          {
+            id: "ortho",
+            label: "Ortho"
+          },
+          {
+            id: "projected",
+            label: "Projected"
+          },
+          {
+            id: "primary",
+            label: "Primary"
+          }
+        ]
+      }
+  OptionListItem:
+    type: object
+    properties:
+      id:
+        type: string
+      label:
+        type: string
+    description: the definition of a possible value for an option. Only the id must be used in constraints (see Constraint) or options selection (see OptionsPerProductType).
+    example: {
+      id: "primary",
+      label: "Processing Level PRIMARY"
+    }
+  Constraint:
+    type: object
+    properties:
+      reject:
+        type: boolean
+        default: false
+      filter:
+        type: string
+        description: a query filter to be applied on the resulting option domain object
+      description: the constraint to be applied on the option. Contains two fields, reject (boolean) and filter (string) a query filter to be applied on the resulting option domain object)  
+    example: {
+      reject: true,
+      filter: "processing_level:primary"
+    }
   Feasibility:
     type: object
     properties:
       classification:
         type: string
-      automation:
+    description: the feasibility information for tasking capacity. Classification possible values are EASY and CHALLENGING.
+  Contract:
+    type: object
+    properties:
+      contractId:
         type: string
-      automationName:
+        description: contract identifier
+      name:
         type: string
+        description: contract name
+      tradeAgreementUrl:
+        type: string
+      creditRemaining:
+        type: string
+      currency:
+        $ref: '#/definitions/Currency'
+      language:
+        type: string
+        format: ISO 639-1
+    description: defines a contract for a user. Contains an URL displaying the trade agreement, the remaining credit on this contract, and commercial data.
   WorkOrderItem:
     type: object
     properties:
-      catalogID:
-        type: string
       comments:
         type: string
-      creationTime:
-        type: string
-        format: date-time
-      datastripIDs:
+      datastripIds:
         type: array
         items:
           type: string
-      externalProperties:
+      aoiId:
+        type: integer
+        format: int32
+        description: identifier of area Of Interest
+      productTypeId:
+        type: string
+      properties:
         type: array
         items:
           $ref: '#/definitions/Property'
-      id:
-        type: string
-      itemType:
-        type: string
-        enum:
-          - INTERMEDIATE
-          - GENERATED
-          - FINAL
-          - CANDIDATE_GEOSA_ORDER
-          - SUBMIT_GEOSA_ORDER
-          - CANDIDATE_GEOGMBH_ARCH_ORDER
-          - SUBMIT_GEOGMBH_ARCH_ORDER
-          - SUBMIT_GEOGMBH_TASK_ORDER
-      polygonID:
-        type: integer
-        format: int32
-      originalPolygonID:
-        type: integer
-        format: int32
-      productOfferID:
-        type: string
-      status:
-        type: string
-        enum:
-          - DRAFT
-          - LOCKED
-          - READY
-          - ERROR
-          - FEASIBILITY_STUDY_ERROR
-          - RUNNING
-          - COMPLETED
-          - ABORT
-          - PRODUCTION_WAIT
-          - DELIVERY_WAIT
-          - REJECTED
-      statusInfo:
-        type: string
-      technicalProduct:
-        $ref: '#/definitions/TechnicalProduct'
-      workOrderID:
-        type: string
-      workflowRef:
-        type: string
-      productID:
-        type: string
-      mediaID:
-        type: string
-      icrReference:
-        type: string
-      options:
-        type: array
-        items:
-          $ref: '#/definitions/Property'
-  ProgCapacityRequestGeoconnector:
+    description: defines an item in a WorkOrder. Contains the datastrips ID for an archive item, the AOI identifier for which the item has been selected, the product type of the item and the item properties. Expected properties can be retrieved from the Get Options service.
+  TaskingCapacityRequest:
     type: object
     properties:
-      version:
-        type: string
       contractId:
         type: string
-      progType:
-        type: string
+      progTypeName:
+        type: array
+        items:
+          $ref: '#/definitions/ProgTypeName'
       mission:
-        type: string
+        $ref: '#/definitions/MissionName'
       aoi:
+        $ref: '#/definitions/AoiGeometry'
+      acquisitiontDate:
+        $ref: '#/definitions/DateRange'
+#      acquisitionEndDate:
+#        type: string
+      acquisitionMode:
         type: string
-      acqStartDate:
-        type: string
-      acqEndDate:
-        type: string
-      optical:
-        $ref: '#/definitions/OpticalParameters'
-      sar:
-        $ref: '#/definitions/SarParameters'
-  QuotationResponseDTO:
-    type: object
-    properties:
-      applicationID:
-        type: string
-      calculation:
-        type: string
-      contractID:
-        type: string
-      currency:
-        type: string
-      customerID:
-        type: string
-      discountPct:
+        enum:
+          - MONO
+          - STEREO
+          - TRISTEREO
+      maxCloudCover:
+        description: maximum cloud coverage percentage
         type: number
-        format: double
-      discountValue:
+        format: float
+      maxIncidenceAngle:
         type: number
-        format: double
-      items:
-        type: array
-        items:
-          $ref: '#/definitions/PriceItem'
-      marketID:
-        type: string
-      processDateTime:
-        type: string
-        format: date-time
-      totalAmount:
-        type: number
-        format: double
-      totalAmountCur:
-        type: number
-        format: double
-      totalAmountCurBeforeDiscount:
-        type: number
-        format: double
-      workOrderID:
-        type: string
-      geometries:
-        type: array
-        items:
-          $ref: '#/definitions/GeometryPrice'
-      quotationID:
-        type: string
-      version:
-        type: integer
-        format: int32
-      deliveryAddress:
-        $ref: '#/definitions/AddressDelivery'
-      endUser:
-        type: string
-      provider:
-        type: string
+        format: float
+    description: request to get the capacities of the ProgServer for potential tasking.
+    example: {
+        contractId: "toBeDefined",
+        progTypeName: "ONEPLAN",
+        mission: "PLEIADES",
+        aoi: {
+            geometry: {
+              type: "Polygon",
+              coordinates: [[8.492431640625004, 43.04480541304369],[9.591064453125002, 43.04480541304369],
+                [9.591064453125002, 41.10419094457646], [8.492431640625004, 41.10419094457646],[8.492431640625004, 43.04480541304369]]
+            }
+          },
+        acquisitionDate: {
+          startDate : "2018-01-01T01:00:00Z",
+          endDate: "2018-01-05T01:00:00Z"
+        },
+        acquisitionMode: "STEREO",
+        maxCloudCover: 20.0,
+        maxIncidenceAngle: 50.0
+      }
+paths:
+  /me/contracts:
+    get:
+      summary: >-
+        Get information about your contract(s). 
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/Contracts'
+          examples:
+            {
+              "contracts": [
+                {
+                  "contractID": "Account",
+                  "name": "Account",
+                  "customerID": "DEFAULT",
+                  "tradeAgreementUrl": "https://www.intelligence-airbusds.com/fr/4971-cgf",
+                  "creditRemaining": "0.0",
+                  "currencyID": "EUR",
+                  "languageID": "fr"
+                }
+              ]
+            }
+      tags:
+        - Contract
+      parameters:
+        - name: "token"
+          in : "header"
+          required: true
+          type: "string"
+      
+  # /contracts/{contractId}:
+  #   get:
+  #     summary: Get information about a specific contract
+  #     parameters:
+  #       - name: contractId
+  #         in: path
+  #         description: ''
+  #         required: true
+  #         type: string
+  #       - name: "token"
+  #         in : "header"
+  #         required: true
+  #         type: "string"
+  #     responses:
+  #       '200':
+  #         description: Output type
+  #         schema:
+  #           $ref: '#/definitions/Contract'
+  #     tags:
+  #       - Contract
+  # /contracts/{contractId}/productTypes:
+  #   get:
+  #     summary: Get product types allowed to be ordered on a specific contract
+  #     parameters:
+  #       - name: contractId
+  #         in: path
+  #         description: ''
+  #         required: true
+  #         type: string
+  #       - name: "token"
+  #         in : "header"
+  #         required: true
+  #         type: "string"
+  #     responses:
+  #       '200':
+  #         description: Output type
+  #         schema:
+  #           $ref: '#/definitions/ProductTypes'
+  #     tags:
+  #       - productType
+  # /contracts/{contractId}/vouchers/{voucherCode}:
+  #   get:
+  #     summary: Get contract's voucher
+  #     parameters:
+  #       - name: contractId
+  #         in: path
+  #         description: ''
+  #         required: true
+  #         type: string
+  #       - name: voucherCode
+  #         in: path
+  #         description: ''
+  #         required: true
+  #         type: string
+  #       - name: "token"
+  #         in : "header"
+  #         required: true
+  #         type: "string"
+  #     responses:
+  #       '200':
+  #         description: Output type
+  #         schema:
+  #           $ref: '#/definitions/Voucher'
+  #     tags:
+  #       - order
+  /licences/{licenceName}:
+    get:
+      summary: Get licence
+      produces:
+        - text/plain
+      parameters:
+        - name: licenceName
+          in: path
+          description: 'example: "eula_5"'
+          required: true
+          type: string
+        - name: "token"
+          in : "header"
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: Output type
+          schema:
+            type: string
+          examples: "ENGLISH STANDARD LICENCE ETC..."
+      tags:
+        - order
+      
+  /orders:
+    post:
+      summary: Order
+      parameters:
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/OrderRequest'
+        - name: "token"
+          in : "header"
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/OrderResponse'
+          examples: {
+            "salesOrderId": "order1"
+          }
+      tags:
+        - order
+  /prices:
+    post:
+      summary: Calculate price
+      parameters:
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/OrderRequest'
+        - name: "token"
+          in : "header"
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/PriceResponse'
+          examples: {
+            "calculation": "",
+            "contractId": "contract_test",
+            "currency": "EUR",
+            "customerId": "customer_test",
+            "discountPct": 0,
+            "discountValue": 0,
+            
+          }
+      tags:
+        - order
+  /productTypes:
+    get:
+      summary: Get product types when user has only one contract
+      parameters:
+        - name: "token"
+          in : "header"
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/ProductTypes'
+          examples:
+            {
+              "productTypes": [
+                {
+                  "productTypeId": "Elevation30DSM",
+                  "technicalProduct": {
+                    "id": "Elevation30DSM",
+                    "label": "E30 - DSM",
+                    "source": {
+                      "id": "ots",
+                      "label": " "
+                    },
+                    "sensor": {
+                      "id": "elevation",
+                      "label": "Elevation30"
+                    },
+                    "target": {
+                      "id": "dsm",
+                      "label": "Elevation30 DSM"
+                    },
+                    "licences": null
+                  },
+                  "minimumOrderAreaApplied": 500,
+                  "descriptionUrl": "https://www.intelligence-airbusds.com/elevation30/"
+                },
+                {
+                  "productTypeId": "Elevation30DSMQualityLayers",
+                  "technicalProduct": {
+                    "id": "Elevation30DSMQualityLayers",
+                    "label": "E30 - DSM + Quality Layers",
+                    "source": {
+                      "id": "ots",
+                      "label": " "
+                    },
+                    "sensor": {
+                      "id": "elevation",
+                      "label": "Elevation30"
+                    },
+                    "target": {
+                      "id": "dsm_layers",
+                      "label": "Elevation30 - DSM + Quality Layers"
+                    },
+                    "licences": null
+                  },
+                  "minimumOrderAreaApplied": 500,
+                  "descriptionUrl": "https://www.intelligence-airbusds.com/elevation30/"
+                }
+              ]
+            }
+      tags:
+        - productType
+  /productTypes/{productTypeId}/options:
+    post:
+      summary: Get options for a product type
+      parameters:
+        - name: productTypeId
+          in: path
+          description: ''
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/OptionsRequest'
+        - name: "token"
+          in : "header"
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/AvailableOptions'
+          examples: 
+            [
+              availableOptions: {
+                category: "technical_product",
+                defaultValue: "ortho",
+                label: "PROCESSING_LEVEL",
+                mandatory: "true",
+                name: "processing_level",
+                type: "list",
+                values: [
+                  {
+                    id: "ortho",
+                    label: "Ortho"
+                  },
+                  {
+                    id: "projected",
+                    label: "Projected"
+                  },
+                  {
+                    id: "primary",
+                    label: "Primary"
+                  }
+                ]
+              }
+            ]  
+      tags:
+        - productType
+        - order
+  /vouchers/{voucherCode}:
+    get:
+      summary: Get voucher
+      parameters:
+        - name: voucherCode
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: "token"
+          in : "header"
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/Voucher'
+      tags:
+        - order
+  /tasking/capacity:
+    post:
+      summary: 'Tasking : programmation capacity and feasibility'
+      parameters:
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/TaskingCapacityRequest'
+        - name: "token"
+          in : "header"
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: Output type
+          schema:
+            $ref: '#/definitions/ProgCapacityResponseGeoconnector'
+      tags:
+        - tasking
