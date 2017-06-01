@@ -47,7 +47,14 @@ produces:
 host: toBeDefined
 basePath: "/api/v1"
 schemes:
-- "https"
+  - "https"
+
+securityDefinitions:
+  api_key:
+    description: A recognised anthentication API key for a named system user.
+    in: header
+    name: Authorization
+    type: apiKey
 
 ###############################################################################
 ##                                                                           ##
@@ -162,18 +169,18 @@ definitions:
   PriceResponse:
     type: object
     properties:
-      calculation:
-        type: string
-        description: Calculation description at total level.
+      # calculation:
+      #   type: string
+      #   description: Calculation description at total level.
       contractId:
         type: string
         description: Contract identifier.
       currency:
         $ref: '#/definitions/Currency'
-      customerId:
-        type: string
-        description: Customer identifier.
-      discountPct:
+      # customerId:
+      #   type: string
+      #   description: Customer identifier.
+      discountPercentage:
         type: number
         format: double
         description: Discount percent at total level.
@@ -181,31 +188,28 @@ definitions:
         type: number
         format: double
         description: Discount value at total level.
-      items:
+      productTypes:
         type: array
         items:
           $ref: '#/definitions/PriceItem'
-      processDateTime:
-        $ref: '#/definitions/IsoDate'
-      totalAmount:
-        type: number
-        format: double
-        description: Work order total amount (valued  in reference currency).
-      totalAmountCur:
+      # processDateTime:
+      #   $ref: '#/definitions/IsoDate'
+      # totalAmount:
+      #   type: number
+      #   format: double
+      #   description: Work order total amount (valued  in reference currency).
+      totalAmountCurrency:
         type: number
         format: double
         description: Work order total amount (valued  in contract currency).
-      totalAmountCurBeforeDiscount:
-        type: number
-        format: double
-        description: Work order total amount before discount (valued  in contract currency).
-      workOrderId:
-        type: string
-        description: Work order identifier (managed by WOIS).
-      geometries:
-        type: array
-        items:
-          $ref: '#/definitions/GeometryPrice'
+      # totalAmountCurBeforeDiscount:
+      #   type: number
+      #   format: double
+      #   description: Work order total amount before discount (valued  in contract currency).
+      # geometries:
+      #   type: array
+      #   items:
+      #     $ref: '#/definitions/GeometryPrice'
     description: Provices price(s) estimate for a work order. 
   Property:
     type: object
@@ -251,43 +255,40 @@ definitions:
       geometry:
         $ref: '#/definitions/AoiGeometry'
     description: the Area Of Interest definition to give in Get Options request. Contains the GeoJSON coordinates and the ID of the AOI (Get Options returns for each AOI an option with the name projection_[aoiId] with a specific list of available projection codes).
-#  DateValueOption:
-#    type: object
-#    properties:
-#      allowedValue:
-#        type: array
-#        items:
-#          type: string
-#      defaultValue:
-#        type: string
-#      minDate:
-#        $ref: '#/definitions/SimpleValueOption'
-#      minDuration:
-#        type: string
-#      defaultDuration:
-#        type: string
+  DateValueOption:
+    type: object
+    properties:
+      allowedValue:
+        type: array
+        items:
+          type: string
+      defaultValue:
+        type: string
+    #  minDate:
+    #    $ref: '#/definitions/SimpleValueOption'
+    #  minDuration:
+    #    type: string
+    #  defaultDuration:
+    #    type: string
   PriceItem:
     type: object
     properties:
       amount:
         type: number
         format: double
-        description: Amount (valued  in reference currency) after discount.
-      amountCur:
-        type: number
-        format: double
         description: Amount (valued  in contract currency) after discount.
+      # amountCurrency:
+      #   type: number
+      #   format: double
+      #   description: Amount (valued  in contract currency) after discount.
       areaKm2:
         type: number
         format: double
         description: Total area surface relevant for the product offer.
-      calculation:
-        type: string
-        description: Calculation description at product offer level.
-      description:
-        type: string
-        description: Product description.
-      discountPct:
+      # description:
+      #   type: string
+      #   description: Product description.
+      discountPercentage:
         type: number
         format: double
         description: Discount percent applied on price.
@@ -295,51 +296,51 @@ definitions:
         type: number
         format: double
         description: Discount value applied on price.
-      minimumOrderApply:
-        type: boolean
-        default: false
-        description: Does minimum surface value has been applied.
+      # minimumOrderApply:
+      #   type: boolean
+      #   default: false
+      #   description: Does minimum surface value has been applied.
       price:
         type: number
         format: double
-        description: Price (valued  in reference currency).
-      priceCur:
-        type: number
-        format: double
         description: Price (valued  in contract currency).
+      # priceCurrency:
+      #   type: number
+      #   format: double
+      #   description: Price (valued  in contract currency).
       productTypeId:
         type: string
         description: total amount in defined currency and with discount.
-      workOrderItems:
+      items:
         type: array
         items:
           $ref: '#/definitions/WorkOrderItemPriceRef'
-      manualFeasibilityStudy:
-        type: boolean
-        default: false
-        description: Value "Yes" if the customer's tasking request requires a feasibility study (for OnePlan and OneSeries only). Value "No" if the tasking can be activated automatically.
-      transId:
-        type: integer
-        format: int64
-        description: transaction identifier.
-      temporalSerie:
-        type: boolean
-        default: false
-        description: Value "Yes" if the customer orders at least 2 archives on the same AOI and reports that these archives are ordered as temporal series
-      geometries:
-        type: array
-        items:
-          $ref: '#/definitions/GeometryPrice'
-      oneSeriesType:
-        type: string
-        description: Accepted values are "Critical" or "Routine" according to the result of the feasibility study.
-      oneSeriesRoutineCategory:
-        type: string
-        description: the feasibility information for tasking capacity. Classification possible values are EASY and CHALLENGING.
-      commitment:
-        type: boolean
-        default: false
-        description: Value "Yes" if GEO is committed according to the OneTasking Offer (by default). Value "No" if GEO is not committed according to the result of the feasibility study.
+      # manualFeasibilityStudy:
+      #   type: boolean
+      #   default: false
+      #   description: Value "Yes" if the customer's tasking request requires a feasibility study (for OnePlan and OneSeries only). Value "No" if the tasking can be activated automatically.
+      # transId:
+      #   type: integer
+      #   format: int64
+      #   description: transaction identifier.
+      # temporalSerie:
+      #   type: boolean
+      #   default: false
+      #   description: Value "Yes" if the customer orders at least 2 archives on the same AOI and reports that these archives are ordered as temporal series
+      # geometries:
+      #   type: array
+      #   items:
+      #     $ref: '#/definitions/GeometryPrice'
+      # oneSeriesType:
+      #   type: string
+      #   description: Accepted values are "Critical" or "Routine" according to the result of the feasibility study.
+      # oneSeriesRoutineCategory:
+      #   type: string
+      #   description: the feasibility information for tasking capacity. Classification possible values are EASY and CHALLENGING.
+      # commitment:
+      #   type: boolean
+      #   default: false
+      #   description: Value "Yes" if GEO is committed according to the OneTasking Offer (by default). Value "No" if GEO is not committed according to the result of the feasibility study.
       voucherCode:
         type: string
         description: Voucher code.
@@ -700,24 +701,24 @@ definitions:
   WorkOrderItemPriceRef:
     type: object
     properties:
-      workOrderItemId:
-        type: string
-        description: Work order item unique identifier (managed by WOIS).
+      # workOrderItemId:  
+      #   type: string
+      #   description: Work order item unique identifier (managed by WOIS).
       datastripIds:
         type: array
         items:
           type: string
           description: Datastrip identifier.
-      geometryId:
-        type: integer
-        format: int64
-        description: Work order item unique identifier (managed by WOIS).
-      taskingId:
-        type: string
-        description: Tasking id for the work order item (optional as it applies only to a tasking product).
-      quotationExternalId:
-        type: string
-        description: Work order item unique identifier (managed by WOIS).
+      # geometryId:
+      #   type: integer
+      #   format: int64
+      #   description: Work order item unique identifier (managed by WOIS).
+      # taskingId:
+      #   type: string
+      #   description: Tasking id for the work order item (optional as it applies only to a tasking product).
+      # quotationExternalId:
+      #   type: string
+      #   description: Work order item unique identifier (managed by WOIS).
     description: Work order informations returned for getPrice.
   OnePlanStandardOptions:
     type: object
@@ -743,7 +744,7 @@ definitions:
       extendedAngle:
         $ref: '#/definitions/ValueOption'
       acquisitionPeriod:
-        $ref: '#/definitions/DateRange'
+        $ref: '#/definitions/DateValueOption'
       maxCloudCover:
         $ref: '#/definitions/ValueOption'
       maxIncidenceAngle:
@@ -790,10 +791,10 @@ definitions:
         format: float
       progOptions:
         $ref: '#/definitions/ProgOptions'
-      segments:
-        type: array
-        items:
-          $ref: '#/definitions/Segment'
+      # segments:
+      #   type: array
+      #   items:
+      #     $ref: '#/definitions/Segment'
       extendedAngleNotAllowed0020:
         type: array
         items:
@@ -904,29 +905,30 @@ definitions:
         type: string
       mandatory:
         type: string
-      description: definition of an expected option. Contains a category defining its location (category=technical_product -> optionsPerProductType, category=item_properties -> properties of WorkOrderItem), a constraint defining its validity, a name that can be used in another option's constraint, a type (double, list, periods or string), the expected values it type=list, the range if type=double, the expected format of the string/periods and if the option is mandatory. 
-      example: {
-        category: "technical_product",
-        defaultValue: "ortho",
-        label: "PROCESSING_LEVEL",
-        mandatory: "true",
-        name: "processing_level",
-        type: "list",
-        values: [
-          {
-            id: "ortho",
-            label: "Ortho"
-          },
-          {
-            id: "projected",
-            label: "Projected"
-          },
-          {
-            id: "primary",
-            label: "Primary"
-          }
-        ]
-      }
+    description: definition of an expected option. Contains a category defining its location (category=technical_product ->  optionsPerProductType, category=item_properties -> properties of WorkOrderItem), a constraint defining its validity, a name  that can be used in another option's constraint, a type (double, list, periods or string), the expected values it type=list, the range if type=double, the expected format of the string/periods and if the option is mandatory. 
+    example: {
+      category: "technical_product",
+      defaultValue: "ortho",
+      label: "PROCESSING_LEVEL",
+      mandatory: "true",
+      name: "processing_level",
+      type: "list",
+      values: 
+      [
+        {
+          id: "ortho",
+          label: "Ortho"
+        },
+        {
+          id: "projected",
+          label: "Projected"
+        },
+        {
+          id: "primary",
+          label: "Primary"
+        }
+      ]
+    }
   OptionListItem:
     type: object
     properties:
@@ -1060,25 +1062,19 @@ paths:
             $ref: '#/definitions/Contracts'
           examples:
             {
-              "contracts": [
+              contracts: [
                 {
-                  "contractID": "Account",
-                  "name": "Account",
-                  "customerID": "DEFAULT",
-                  "tradeAgreementUrl": "https://www.intelligence-airbusds.com/fr/4971-cgf",
-                  "creditRemaining": "0.0",
-                  "currencyID": "EUR",
-                  "languageID": "fr"
+                  contractId: "Account",
+                  name: "Account",
+                  tradeAgreementUrl: "https://www.intelligence-airbusds.com/fr/4971-cgf",
+                  creditRemaining: "0.0",
+                  currency: "EUR",
+                  language: "fr"
                 }
               ]
             }
       tags:
         - Contract
-      parameters:
-        - name: "token"
-          in : "header"
-          required: true
-          type: "string"
       
   # /contracts/{contractId}:
   #   get:
@@ -1089,10 +1085,6 @@ paths:
   #         description: ''
   #         required: true
   #         type: string
-  #       - name: "token"
-  #         in : "header"
-  #         required: true
-  #         type: "string"
   #     responses:
   #       '200':
   #         description: Output type
@@ -1109,10 +1101,6 @@ paths:
   #         description: ''
   #         required: true
   #         type: string
-  #       - name: "token"
-  #         in : "header"
-  #         required: true
-  #         type: "string"
   #     responses:
   #       '200':
   #         description: Output type
@@ -1134,10 +1122,6 @@ paths:
   #         description: ''
   #         required: true
   #         type: string
-  #       - name: "token"
-  #         in : "header"
-  #         required: true
-  #         type: "string"
   #     responses:
   #       '200':
   #         description: Output type
@@ -1156,10 +1140,6 @@ paths:
           description: 'example: "eula_5"'
           required: true
           type: string
-        - name: "token"
-          in : "header"
-          required: true
-          type: "string"
       responses:
         '200':
           description: Output type
@@ -1179,17 +1159,13 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/OrderRequest'
-        - name: "token"
-          in : "header"
-          required: true
-          type: "string"
       responses:
         '200':
           description: Output type
           schema:
             $ref: '#/definitions/OrderResponse'
           examples: {
-            "salesOrderId": "order1"
+            salesOrderId: "order1"
           }
       tags:
         - order
@@ -1203,34 +1179,34 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/OrderRequest'
-        - name: "token"
-          in : "header"
-          required: true
-          type: "string"
       responses:
         '200':
           description: Output type
           schema:
             $ref: '#/definitions/PriceResponse'
           examples: {
-            "calculation": "",
-            "contractId": "contract_test",
-            "currency": "EUR",
-            "customerId": "customer_test",
-            "discountPct": 0,
-            "discountValue": 0,
-            
+            contractId: "contract_test",
+            currency: "EUR",
+            discountPercentage: 0.0,
+            discountValue: 0.0,
+            productTypes" : [
+              amount: 200.0,
+              areaKm2" : 20.0,
+              discountPercentage: 0.0,
+              discountValue: 0.0,
+              price: 200.0,
+              productTypeId: "PleiadesTaskingOnePlan",
+              items: [
+                dataStripIds: ["5015487D8"]
+              ]
+            ],
+            totalAmountCurrency: 200.0            
           }
       tags:
         - order
   /productTypes:
     get:
       summary: Get product types when user has only one contract
-      parameters:
-        - name: "token"
-          in : "header"
-          required: true
-          type: "string"
       responses:
         '200':
           description: Output type
@@ -1238,50 +1214,50 @@ paths:
             $ref: '#/definitions/ProductTypes'
           examples:
             {
-              "productTypes": [
+              productTypes: [
                 {
-                  "productTypeId": "Elevation30DSM",
-                  "technicalProduct": {
-                    "id": "Elevation30DSM",
-                    "label": "E30 - DSM",
-                    "source": {
-                      "id": "ots",
-                      "label": " "
+                  productTypeId: "Elevation30DSM",
+                  technicalProduct: {
+                    id: "Elevation30DSM",
+                    label: "E30 - DSM",
+                    source: {
+                      id: "ots",
+                      label: " "
                     },
-                    "sensor": {
-                      "id": "elevation",
-                      "label": "Elevation30"
+                    sensor: {
+                      id: "elevation",
+                      label: "Elevation30"
                     },
-                    "target": {
-                      "id": "dsm",
-                      "label": "Elevation30 DSM"
+                    target: {
+                      id: "dsm",
+                      label: "Elevation30 DSM"
                     },
-                    "licences": null
+                    licences: null
                   },
-                  "minimumOrderAreaApplied": 500,
-                  "descriptionUrl": "https://www.intelligence-airbusds.com/elevation30/"
+                  minimumOrderAreaApplied: 500,
+                  descriptionUrl: "https://www.intelligence-airbusds.com/elevation30/"
                 },
                 {
-                  "productTypeId": "Elevation30DSMQualityLayers",
-                  "technicalProduct": {
-                    "id": "Elevation30DSMQualityLayers",
-                    "label": "E30 - DSM + Quality Layers",
-                    "source": {
-                      "id": "ots",
-                      "label": " "
+                  productTypeId: "Elevation30DSMQualityLayers",
+                  technicalProduct: {
+                    id: "Elevation30DSMQualityLayers",
+                    label: "E30 - DSM + Quality Layers",
+                    source: {
+                      id: "ots",
+                      label: " "
                     },
-                    "sensor": {
-                      "id": "elevation",
-                      "label": "Elevation30"
+                    sensor: {
+                      id: "elevation",
+                      label: "Elevation30"
                     },
-                    "target": {
-                      "id": "dsm_layers",
-                      "label": "Elevation30 - DSM + Quality Layers"
+                    target: {
+                      id: "dsm_layers",
+                      label: "Elevation30 - DSM + Quality Layers"
                     },
-                    "licences": null
+                    licences: null
                   },
-                  "minimumOrderAreaApplied": 500,
-                  "descriptionUrl": "https://www.intelligence-airbusds.com/elevation30/"
+                  minimumOrderAreaApplied: 500,
+                  descriptionUrl: "https://www.intelligence-airbusds.com/elevation30/"
                 }
               ]
             }
@@ -1302,10 +1278,6 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/OptionsRequest'
-        - name: "token"
-          in : "header"
-          required: true
-          type: "string"
       responses:
         '200':
           description: Output type
@@ -1348,15 +1320,21 @@ paths:
           description: ''
           required: true
           type: string
-        - name: "token"
-          in : "header"
-          required: true
-          type: "string"
       responses:
         '200':
           description: Output type
           schema:
             $ref: '#/definitions/Voucher'
+          examples: {
+            code: "VZM8M8P5",
+            period: {
+              startdate: "2017-01-01T01:00:00Z",
+              endDate: "2018-01-01T01:00:00Z"
+            },
+            amount: 300,
+            currency: "EUR",
+            consumed: false
+          }
       tags:
         - order
   /tasking/capacity:
@@ -1369,14 +1347,32 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/TaskingCapacityRequest'
-        - name: "token"
-          in : "header"
-          required: true
-          type: "string"
       responses:
         '200':
           description: Output type
           schema:
             $ref: '#/definitions/ProgCapacityResponseGeoconnector'
+          examples: {
+            progCapacity: [
+              {
+               mission: "PLEIADES",
+                progTypes: [
+                  {
+                    name: "ONEDAY",
+                    mission: "PLEIADES",
+                    available: true,
+                    progOptions: {
+                      maxIncidenceAngleExtended: 50,
+                      maxIncidenceAngleNotExtended: 30,
+                      acquisitionPeriod: {
+                        allowedValue: ["2017-08-05T17:00:00.000Z 2018-08-06T17:00:00.000Z"],
+                        defaultValue: ""
+                      }
+                    }
+                  }
+                ]
+            }
+          ]
+        }
       tags:
         - tasking
