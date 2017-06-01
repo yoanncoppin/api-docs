@@ -1232,7 +1232,7 @@ paths:
                       id: "dsm",
                       label: "Elevation30 DSM"
                     },
-                    licences: null
+                    licences: "null"
                   },
                   minimumOrderAreaApplied: 500,
                   descriptionUrl: "https://www.intelligence-airbusds.com/elevation30/"
@@ -1254,7 +1254,7 @@ paths:
                       id: "dsm_layers",
                       label: "Elevation30 - DSM + Quality Layers"
                     },
-                    licences: null
+                    licences: "null"
                   },
                   minimumOrderAreaApplied: 500,
                   descriptionUrl: "https://www.intelligence-airbusds.com/elevation30/"
