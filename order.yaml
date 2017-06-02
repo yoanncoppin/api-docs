@@ -1069,20 +1069,6 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/Contracts'
-          examples:
-            application/json: |- 
-              {
-                contracts: [
-                  {
-                    contractId: "Account",
-                    name: "Account",
-                    tradeAgreementUrl: "https://www.intelligence-airbusds.com/fr/4971-cgf",
-                    creditRemaining: "0.0",
-                    currency: "EUR",
-                    language: "fr"
-                  }
-                ]
-              }
       tags:
         - Contract
       
@@ -1157,9 +1143,6 @@ paths:
           description: Output type
           schema:
             type: string
-          examples: 
-            text/plain: |- 
-              "ENGLISH STANDARD LICENCE ETC..."
       tags:
         - order
       
@@ -1180,11 +1163,6 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/OrderResponse'
-          examples: 
-            application/json: |- 
-              {
-                salesOrderId: "order1"
-              }
       tags:
         - order
   /prices:
@@ -1204,26 +1182,6 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/PriceResponse'
-          examples: 
-            application/json: |- 
-              {
-                contractId: "contract_test",
-                currency: "EUR",
-                discountPercentage: 0.0,
-                discountValue: 0.0,
-                productTypes" : [
-                  amount: 200.0,
-                  areaKm2" : 20.0,
-                  discountPercentage: 0.0,
-                  discountValue: 0.0,
-                  price: 200.0,
-                  productTypeId: "PleiadesTaskingOnePlan",
-                  items: [
-                    dataStripIds: ["5015487D8"]
-                  ]
-                ],
-                totalAmount: 200.0            
-              }
       tags:
         - order
   /productTypes:
@@ -1236,56 +1194,6 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/ProductTypes'
-          examples:
-            application/json: |- 
-              {
-                productTypes: [
-                  {
-                    productTypeId: "Elevation30DSM",
-                    technicalProduct: {
-                      id: "Elevation30DSM",
-                      label: "E30 - DSM",
-                      source: {
-                        id: "ots",
-                        label: " "
-                      },
-                      sensor: {
-                        id: "elevation",
-                        label: "Elevation30"
-                      },
-                      target: {
-                        id: "dsm",
-                        label: "Elevation30 DSM"
-                      },
-                      licences: ["null"]
-                    },
-                    minimumOrderAreaApplied: 500,
-                    descriptionUrl: "https://www.intelligence-airbusds.com/elevation30/"
-                  },
-                  {
-                    productTypeId: "Elevation30DSMQualityLayers",
-                    technicalProduct: {
-                      id: "Elevation30DSMQualityLayers",
-                      label: "E30 - DSM + Quality Layers",
-                      source: {
-                        id: "ots",
-                        label: " "
-                      },
-                      sensor: {
-                        id: "elevation",
-                        label: "Elevation30"
-                      },
-                      target: {
-                        id: "dsm_layers",
-                        label: "Elevation30 - DSM + Quality Layers"
-                      },
-                      licences: ["null"]
-                    },
-                    minimumOrderAreaApplied: 500,
-                    descriptionUrl: "https://www.intelligence-airbusds.com/elevation30/"
-                  }
-                ]
-              }
       tags:
         - productType
   /productTypes/{productTypeId}/options:
@@ -1310,32 +1218,6 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/AvailableOptions'
-          examples: 
-            application/json: |- 
-              [
-                availableOptions: {
-                  category: "technical_product",
-                  defaultValue: "ortho",
-                  label: "PROCESSING_LEVEL",
-                  mandatory: "true",
-                  name: "processing_level",
-                  type: "list",
-                  values: [
-                    {
-                      id: "ortho",
-                      label: "Ortho"
-                    },
-                    {
-                      id: "projected",
-                      label: "Projected"
-                    },
-                    {
-                      id: "primary",
-                      label: "Primary"
-                    }
-                  ]
-                }
-              ]  
       tags:
         - productType
         - order
@@ -1355,18 +1237,6 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/Voucher'
-          examples:
-            application/json: |- 
-              {
-                code: "VZM8M8P5",
-                period: {
-                  startdate: "2017-01-01T01:00:00Z",
-                  endDate: "2018-01-01T01:00:00Z"
-                },
-                amount: 300,
-                currency: "EUR",
-                consumed: false
-              }
       tags:
         - order
   /tasking/capacity:
@@ -1386,30 +1256,5 @@ paths:
           description: Output type
           schema:
             $ref: '#/definitions/ProgCapacityResponseGeoconnector'
-          examples: 
-            application/json: |- 
-              {
-                progCapacity: [
-                  {
-                    mission: "PLEIADES",
-                    progTypes: 
-                    [
-                      {
-                        name: "ONEDAY",
-                        mission: "PLEIADES",
-                        available: true,
-                        progOptions: {
-                          maxIncidenceAngleExtended: 50,
-                          maxIncidenceAngleNotExtended: 30,
-                          acquisitionPeriod: {
-                            allowedValue: ["2017-08-05T17:00:00.000Z 2018-08-06T17:00:00.000Z"],
-                            defaultValue: ""
-                          }
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
       tags:
         - tasking
