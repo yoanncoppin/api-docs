@@ -28,66 +28,66 @@ This step is optional. You might want to get the remaining credit on your contra
 Using the image properties returned by the search API (step 1), you can use the order API to get the price of the image and order it, using the same POST request:
 ```json
 {
-        aoi: [
+        "aoi": [
           {
-            id: 1,
-            geometry: {
-              type: "Polygon",
-              coordinates: [[8.492431640625004, 43.04480541304369], [9.591064453125002, 43.04480541304369], [9.591064453125002, 41.10419094457646], [8.492431640625004, 41.10419094457646],[8.492431640625004, 43.04480541304369]]
+            "id": 1,
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [[8.492431640625004, 43.04480541304369], [9.591064453125002, 43.04480541304369], [9.591064453125002, 41.10419094457646], [8.492431640625004, 41.10419094457646],[8.492431640625004, 43.04480541304369]]
             },
-            name: "myAccountName"
+            "name": "myAccountName"
           }
         ],
-        contractId:  "myContractID",
-        items: [
+        "contractId":  "myContractID",
+        "items": [
           {
-            datastripIds: [
+            "datastripIds": [
               "40582651209160926432R5"
             ],
-            aoiId: 1,
-            productTypeId: "SPOTArchive10Color",
-            properties: [
+            "aoiId": 1,
+            "productTypeId": "SPOTArchive10Color",
+            "properties": [
               {
-                key: "uid",
-                value: "a4550d93280b4afc70e3949ffec78df1"
+                "key": "uid",
+                "value": "a4550d93280b4afc70e3949ffec78df1"
               }
             ]
           }
         ],
-        primaryMarket: "AGRI",
-        secondaryMarket: "AGRI_ENV",  
-        customerReference: "myReference",
-        options: [
+        "primaryMarket": "AGRI",
+        "secondaryMarket": "AGRI_ENV",  
+        "customerReference": "myReference",
+        "options": [
           {
-            key: "deliveryType",
-            value: "network"
+            "key": "deliveryType",
+            "value": "network"
           }
         ],
-        optionsPerProductType: [
+        "optionsPerProductType": [
           {
-            productTypeId: "SPOTArchive10Color",
-            licence: "eula_5",
-            options: [
+            "productTypeId": "SPOTArchive10Color",
+            "licence": "eula_5",
+            "options": [
                 {
-                  key: "image_format",
-                  value: "dimap_geotiff"
+                  "key": "image_format",
+                  "value": "dimap_geotiff"
                 },
                 {
-                  key: "Account",
-                  value: "myAccount"
+                  "key": "Account",
+                  "value": "myAccount"
                 },
                 {
-                  key: "projection_1",
-                  value: "32632"
+                  "key": "projection_1",
+                  "value": "32632"
                 },
                 {
-                  key: "processing_level",
-                  value: "level_3"
+                  "key": "processing_level",
+                  "value": "level_3"
                 }
             ]
           }
         ],
-        voucherCodes:  [
+        "voucherCodes":  [
         ]
       }
 ```
@@ -99,7 +99,7 @@ If the request above is sent to the endpoint /prices, you will get a response co
             "currency": "EUR",
             "discountPercentage": 0.0,
             "discountValue": 0.0,
-            "productTypes" : [
+            "productTypes" : [{
               "amount": 200.0,
               "areaKm2" : 20.0,
               "discountPercentage": 0.0,
@@ -107,9 +107,9 @@ If the request above is sent to the endpoint /prices, you will get a response co
               "price": 200.0,
               "productTypeId": "SPOTArchive10Color",
               "items": [
-                "dataStripIds": ["40582651209160926432R5"]
+                { "dataStripIds": ["40582651209160926432R5"] }
               ]
-            ],
+            }],
             "totalAmountCurrency": 200.0            
 }
 ```
@@ -117,7 +117,7 @@ If the request above is sent to the endpoint /prices, you will get a response co
 If the request above is sent to the endpoint /orders, the image will be produced and delivered to you. You will get a response similar to the following one:
 ```json
 {
-	salesOrderId : ”ORDER_UNIQUE_IDENTIFIER”
+	"salesOrderId" : "ORDER_UNIQUE_IDENTIFIER"
 }
 ```
 
