@@ -950,7 +950,7 @@ definitions:
       filter:
         type: string
         description: a query filter to be applied on the resulting option domain object
-      description: the constraint to be applied on the option. Contains two fields, reject (boolean) and filter (string) a query filter to be applied on the resulting option domain object)  
+    description: the constraint to be applied on the option. Contains two fields, reject (boolean) and filter (string) a query filter to be applied on the resulting option domain object)  
     example: {
       reject: true,
       filter: "processing_level:primary"
