@@ -92,7 +92,7 @@ definitions:
       - USD
   MissionName:
     type: string
-    description: Constellation Name
+    description: mission name (PLEIADES, SPOT, etc.)
     enum:
      - SPOT
      - PLEIADES
@@ -174,7 +174,7 @@ definitions:
       #   description: Calculation description at total level.
       contractId:
         type: string
-        description: Contract identifier.
+        description: identifier of your contract (contact our support to get this identifier)
       currency:
         $ref: '#/definitions/Currency'
       # customerId:
@@ -183,11 +183,11 @@ definitions:
       discountPercentage:
         type: number
         format: double
-        description: Discount percent at total level.
+        description: discount percent at total level
       discountValue:
         type: number
         format: double
-        description: Discount value at total level.
+        description: discount value at total level
       productTypes:
         type: array
         items:
@@ -201,7 +201,7 @@ definitions:
       totalAmount:
         type: number
         format: double
-        description: Work order total amount (valued  in contract currency).
+        description: work order total amount (valued  in contract currency)
       # totalAmountCurBeforeDiscount:
       #   type: number
       #   format: double
@@ -210,7 +210,7 @@ definitions:
       #   type: array
       #   items:
       #     $ref: '#/definitions/GeometryPrice'
-    description: Provices price(s) estimate for a work order. 
+    description: estimated price of the work order
   Property:
     type: object
     properties:
@@ -241,6 +241,7 @@ definitions:
     type: object
     properties:
       mission:
+        description: mission name (PLEIADES, SPOT, etc.)
         $ref: '#/definitions/MissionName'
       progTypes:
         type: array
@@ -303,7 +304,7 @@ definitions:
       price:
         type: number
         format: double
-        description: Price (valued  in contract currency).
+        description: price (valued  in contract currency)
       # priceCurrency:
       #   type: number
       #   format: double
@@ -384,6 +385,7 @@ definitions:
           - TRANSPORT
       secondaryMarket:
         type: string
+        description: prefix of secondary market must be the primary market (for example, primary market = AGRI, secondary market = AGRI_ENV)
         enum:
           - AGRI_AUTRE
           - AGRI_CTRL
@@ -457,6 +459,7 @@ definitions:
           - TRANSPORT
       customerReference:
         type: string
+        description: any reference of your choice
       options:
         type: array
         items:
@@ -674,6 +677,7 @@ definitions:
       code:
         type: string
       period:
+        description: date until the voucher remains valid 
         $ref: '#/definitions/DateRange'
       amount:
         type: number
@@ -681,6 +685,7 @@ definitions:
       currency:
         $ref: '#/definitions/Currency'
       consumed:
+        description: indicates if the voucher can still be used (consumed=false) or if it has been already used (consumed=true)
         type: boolean
         default: false
     description: a payment method. Contains the code identifying this voucher, its period of validity, amount and currency, and if it is already consumed.
@@ -723,7 +728,7 @@ definitions:
   OnePlanStandardOptions:
     type: object
     properties:
-      acquisitionPeriod: #TODO: Frédéric B. : acq or acquisition? (for all)
+      acquisitionPeriod:
         $ref: '#/definitions/DateRange'
       maxCloudCover:
         $ref: '#/definitions/ValueOption'
@@ -760,12 +765,16 @@ definitions:
       acquisitionDuration:
         $ref: '#/definitions/ValueOption'
       temporalMode:
+        description: MULTIPERIOD or REGULAR
         $ref: '#/definitions/ValueOption'
       minBH:
+        description: minimal value for the BHRange (stere/tri-stereo modes)
         $ref: '#/definitions/ValueOption'
       maxBH:
+        description: maximal value for the BHRange (stere/tri-stereo modes)
         $ref: '#/definitions/ValueOption'
       acquisitionMode:
+        description: MONO, STEREO or TRISTEREO
         $ref: '#/definitions/ValueOption'
       nbacquisitionRegularacquisition:
         $ref: '#/definitions/ValueOption'
@@ -782,8 +791,10 @@ definitions:
       name:
         $ref: '#/definitions/ProgTypeName'
       mission:
+        description: mission name (PLEIADES, SPOT, etc.)
         $ref: '#/definitions/MissionName'
       expirationDate:
+        description: limit date until you can order the new acquisition
         $ref: '#/definitions/IsoDate'
       successRate:
         description: percentage of success rate
@@ -863,16 +874,22 @@ definitions:
     type: object
     properties:
       acquisitionPeriod:
+        description: start date - end date of image acquisition
         $ref: '#/definitions/DateRange'
       maxCloudCover:
+        description: maximum cloud cover percentage you accept on image(s)
         $ref: '#/definitions/ValueOption'
       maxIncidenceAngle:
+        description: maximum incidence angle you accept (high angle value is not recommended for orthorecetified images)
         $ref: '#/definitions/ValueOption'
       acquisitionMode:
+        description: MONO, STEREO or TRISTEREO
         $ref: '#/definitions/ValueOption'
       minBH:
+        description: minimal value for the BHRange (stere/tri-stereo modes)
         $ref: '#/definitions/ValueOption'
       maxBH:
+        description: maximal value for the BHRange (stere/tri-stereo modes)
         $ref: '#/definitions/ValueOption'
       comment:
         $ref: '#/definitions/ValueOption'
@@ -960,13 +977,13 @@ definitions:
     properties:
       classification:
         type: string
-    description: the feasibility information for tasking capacity. Classification possible values are EASY and CHALLENGING.
+        description: the feasibility information for tasking capacity. Classification possible values are EASY and CHALLENGING.
   Contract:
     type: object
     properties:
       contractId:
         type: string
-        description: contract identifier
+        description: identifier of your contract (contact our support to get your contract identifier)
       name:
         type: string
         description: contract name
@@ -974,12 +991,13 @@ definitions:
         type: string
       creditRemaining:
         type: string
+        description: amount of money you have on your contract (total price of your order must not exceed your credit remaining)
       currency:
         $ref: '#/definitions/Currency'
       language:
         type: string
         format: ISO 639-1
-    description: defines a contract for a user. Contains an URL displaying the trade agreement, the remaining credit on this contract, and commercial data.
+        description: defines a contract for a user. Contains an URL displaying the trade agreement, the remaining credit on this contract, and commercial data.
   WorkOrderItem:
     type: object
     properties:
@@ -987,6 +1005,7 @@ definitions:
         type: string
       datastripIds:
         type: array
+        description: identifier(s) of segment(s) you are purchasing
         items:
           type: string
       aoiId:
@@ -1010,6 +1029,7 @@ definitions:
         items:
           $ref: '#/definitions/ProgTypeName'
       mission:
+        description: mission name (PLEIADES, SPOT, etc.)
         $ref: '#/definitions/MissionName'
       aoi:
         $ref: '#/definitions/AoiGeometry'
@@ -1227,7 +1247,7 @@ paths:
       parameters:
         - name: voucherCode
           in: path
-          description: ''
+          description: 'Optional voucher identifier'
           required: true
           type: string
       security:
