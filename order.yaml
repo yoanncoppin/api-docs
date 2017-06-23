@@ -16,18 +16,6 @@ info:
     
     __IMPORTANT -__ You should follow the [Geo APIs recommendations](/api-docs/recommendations.html) when implementing clients.
     
-    __STANDARD RULES -__ The following rules apply to attributes format when specifyed.
-    
-    Intervals for numerical values and dates are specified using the standard straights brackets.
-    * [n1,n2] equal to n1 <= field <= n2
-    * [n1,n2[ equals to n1 <= field < n2
-    * ]n1,n2[ equals to n1 < field < n2
-    * ]n1,n2] equal to n1 < field <= n2
-    * [n1 equals to n1<= field
-    * ]n1 equals to n1 < field
-    * n1] equals to field <= n1
-    * n1[ equals to field < n1
-    
     All requests must contain the following header fields
     * Field name = Authorization (value = token)
     * Field name = X-ADS-Username
