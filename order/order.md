@@ -1,4 +1,4 @@
-The ordering API allows you to order archive images and/or task the satellites for new acquisitions, from your own portal. This guide will show you step by step how to order an archive image. For more information refer to the online reference documentation : https://airbusgeo.github.io/geoapi-viewer/?url=https://airbusgeo.github.io/api-docs/order.yaml
+The ordering API allows you to order archive images and/or task the satellites for new acquisitions, from your own portal. This guide will show you step by step how to order an archive image. For more information refer to the online reference documentation : <https://airbusgeo.github.io/geoapi-viewer/?url=https://airbusgeo.github.io/api-docs/order.yaml>
 
 # Step 1
 First of all, you want to look for archive images in our catalogue in order to find the one you will order. You will then use the search API: <https://airbusgeo.github.io/api-docs/search/search.html>. 
