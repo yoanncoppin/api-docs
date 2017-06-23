@@ -5,7 +5,11 @@ First of all, you want to look for archive images in our catalogue in order to f
 The search API will return numerous properties of the images (identifier, footprint...) that you can use in the following steps.
 
 # Step 2
-In order to use the ordering API you must have a token. Contact Airbus DS support by sending an email to <contact@geoapi-airbusds.com> to get your token. Once you got a token you can start using the GeoConnector API via the following endpoint: <https://order-qual.geoapi-airbusds.com:8443>. Please insert the token in the Authorization header field of each request.
+In order to use the ordering API you must have a token. Contact Airbus DS support by sending an email to <contact@geoapi-airbusds.com> to get your token. Once you got a token you can start using the GeoConnector API via the following endpoint: <https://order-qual.geoapi-airbusds.com:8443>. Insert the token in the Authorization field of each request you send to the Order API. Note that the header of the requests must also contain the field X-ADS-Username.
+
+Requests header:
+- Field name : Authorization (value = token)
+- Field name : X-ADS-Username (value in the crypted file you received by email)
 
 # Step 3
 This step is optional. You might want to get the remaining credit on your contract. In this case, you send a GET /me/contracts to the server and get a response similar to:
