@@ -28,6 +28,11 @@ info:
     <li>* n1] equals to field <= n1</li>
     <li>* n1[ equals to field < n1 </li> </ul></p>
     
+    <p>All requests must contain the following header fields:<br />    
+    Requests header:<br />    
+    <li>* Field name : Authorization (value = token)</li>    
+    <li>* Field name : X-ADS-Username</li></p>    
+    
   version: '1.0'
 
 ###############################################################################
