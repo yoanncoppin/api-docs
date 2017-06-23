@@ -16,8 +16,6 @@ info:
     
     __IMPORTANT -__ You should follow the [Geo APIs recommendations](/api-docs/recommendations.html) when implementing clients.
     
-    You can consult the [version log](/api-docs/search/CHANGELOG.html) for information about modification history.
-    
     __STANDARD RULES -__ The following rules apply to attributes format when specifyed.
     
     Intervals for numerical values and dates are specified using the standard straights brackets.
