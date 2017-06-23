@@ -31,8 +31,8 @@ info:
     * n1[ equals to field < n1
     
     All requests must contain the following header fields
-    * Field name : Authorization (value = token)
-    * Field name : X-ADS-Username
+    * Field name = Authorization (value = token)
+    * Field name = X-ADS-Username
     
   version: '1.0'
 
