@@ -81,28 +81,28 @@ definitions:
     description: A product type.
     type: string
     enum:
-    - "PHR_0_5"
-    - "PHR_0_5_STEREO"
-    - "PHR_0_5_TRISTEREO"
-    - "SPOT_1_5"
-    - "SPOT_1_5_STEREO"
-    - "SPOT_1_5_TRISTEREO"
-    - "SPOT_2_5_BW"
-    - "SPOT_2_5_COLOR"
-    - "SPOT_5_BW"
-    - "SPOT_5_COLOR"
-    - "SPOT_10_BW"
-    - "SPOT_10_COLOR"
-    - "SPOT_20_COLOR"
-    - "High_Resolution_SpotLight"
-    - "ScanSAR"
-    - "SpotLight"
-    - "Staring_SpotLight"
-    - "StripMap"
-    - "Wide_ScanSAR"
-    - "WorldDEM"
-    - "WorldDEM_Core"
-    - "WorldDEM_DTM"
+    - "PleiadesArchiveMono"
+    - "PleiadesArchiveStereo"
+    - "PleiadesArchiveTristereo"
+    - "SPOTArchive1.5Mono"
+    - "SPOTArchive1.5Stereo"
+    - "SPOTArchive1.5Tristereo"
+    - "SPOTArchive2.5BW"
+    - "SPOTArchive2.5Color"
+    - "SPOTArchive5BW"
+    - "SPOTArchive5Color"
+    - "SPOTArchive10BW"
+    - "SPOTArchive10Color"
+    - "SPOTArchive20Color"
+    - "TSXArchiveHS"
+    - "TSXArchiveSC"
+    - "TSXArchiveSL"
+    - "TSXArchiveST"
+    - "TSXArchiveSM"
+    - "TSXArchiveWS"
+    - "WorldDEMArchiveStandard"
+    - "WorldDEMArchiveCore"
+    - "WorldDEMArchiveDTM"
 
   bbox:
     description: 'A bounding box definition. A bounding box is composed of 4 ordered values: the minimum X value, the minimum Y value, the maximum X value and the maximum Y value.'
@@ -127,6 +127,20 @@ definitions:
     - LEFT
     - RIGTH
 
+  illuminationAzimuthAngle:
+    description: "Meam illumination/solar azimuth angle given in degrees."
+    type: number
+    format: float
+
+  illuminationElevationAngle:
+    description: "Mean illumination/solar elevation angle given in degrees."
+    type: number
+    format: float
+
+  azimuthAngle:
+    description: "Angle formed between the North and the satellite."
+    type: number
+    format: float
 
   # END   ------------------ Airbus DS Geo dictionary -------------------   END
 

@@ -95,8 +95,8 @@ definitions:
         constellation: #TODO change type ?
           description: 'The satellite filter used ex: { Pleiades, SPOT 6/7 }.'
           type: string 
-        sortKeys: #TODO change type ?
-          description: 'The sort order used for the response ex: constellation,1 acquisitionDate,0'
+        sortKeys:
+          description: 'The sort order used for the response ex: acquisitionDate,,1'
           type: string
         count: #TODO change name and type ?
           description: The number of search results returned per page.
@@ -139,6 +139,12 @@ definitions:
         $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/incidenceAngle'
       cloudCover:
         $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/cloudCover'
+      illuminationAzimuthAngle:
+        $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/illuminationAzimuthAngle'
+      illuminationElevationAngle:
+        $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/illuminationElevationAngle'
+      azimuthAngle:
+        $ref: 'https://airbusgeo.github.io/api-docs/definitions.yaml#/definitions/azimuthAngle'
 
     
   searchRequest:
@@ -221,7 +227,7 @@ definitions:
         type: integer
         default: 1
       sortKeys:
-        description: "A sorting request to the server conforming the OpenSearch SRU specification. Example: sortKeys=acquisitionDate,,0 cloudCover,,1 meaning a request to sort first by newest acquired image first and then by then smallest cloud coverage percentage."
+        description: "A sorting request to the server conforming the OpenSearch SRU specification. Example: sortKeys=acquisitionDate,,0 meaning a request to sort by newest acquired image first or sortKeys=cloudCover,,1 to sort by the smallest cloud coverage percentage."
         type: string
         format: OpenSearch SRU
 
@@ -318,28 +324,28 @@ paths:
           items:
             type: string
             enum:
-            - "PHR_0_5"
-            - "PHR_0_5_STEREO"
-            - "PHR_0_5_TRISTEREO"
-            - "SPOT_1_5"
-            - "SPOT_1_5_STEREO"
-            - "SPOT_1_5_TRISTEREO"
-            - "SPOT_2_5_BW"
-            - "SPOT_2_5_COLOR"
-            - "SPOT_5_BW"
-            - "SPOT_5_COLOR"
-            - "SPOT_10_BW"
-            - "SPOT_10_COLOR"
-            - "SPOT_20_COLOR"
-            - "High_Resolution_SpotLight"
-            - "ScanSAR"
-            - "SpotLight"
-            - "Staring_SpotLight"
-            - "StripMap"
-            - "Wide_ScanSAR"
-            - "WorldDEM"
-            - "WorldDEM_Core"
-            - "WorldDEM_DTM"
+            - "PleiadesArchiveMono"
+            - "PleiadesArchiveStereo"
+            - "PleiadesArchiveTristereo"
+            - "SPOTArchive1.5Mono"
+            - "SPOTArchive1.5Stereo"
+            - "SPOTArchive1.5Tristereo"
+            - "SPOTArchive2.5BW"
+            - "SPOTArchive2.5Color"
+            - "SPOTArchive5BW"
+            - "SPOTArchive5Color"
+            - "SPOTArchive10BW"
+            - "SPOTArchive10Color"
+            - "SPOTArchive20Color"
+            - "TSXArchiveHS"
+            - "TSXArchiveSC"
+            - "TSXArchiveSL"
+            - "TSXArchiveST"
+            - "TSXArchiveSM"
+            - "TSXArchiveWS"
+            - "WorldDEMArchiveStandard"
+            - "WorldDEMArchiveCore"
+            - "WorldDEMArchiveDTM"
           collectionFormat: csv
         - description: "The polarization channels used by the sensor during the product acquisition. Only products acquired with one of the listed polarisation channel will be returned in the response."
           in: query
@@ -385,7 +391,7 @@ paths:
           required: false
           type: integer
           default: 1
-        - description: "A sorting request to the server conforming the OpenSearch SRU specification. Example: sortKeys=acquisitionDate,,0 cloudCover,,1 meaning a request to sort first by newest acquired image first and then by then smallest cloud coverage percentage."
+        - description: "A sorting request to the server conforming the OpenSearch SRU specification. Example: sortKeys=acquisitionDate,,0 meaning a request to sort by newest acquired image first or sortKeys=cloudCover,,1 to sort by the smallest cloud coverage percentage."
           in: query
           name: sortKeys
           required: false
